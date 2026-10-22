@@ -273,7 +273,7 @@ body.compact.short .card .ds{display:none}
         </div>
         <div class="rankLine" id="rankLine"></div>
         <div class="nameRow" id="nameAsk" hidden>
-          <label for="goName">Anotate en el ranking:</label>
+          <label for="goName" id="goNameLabel">Anotate en el ranking:</label>
           <input id="goName" maxlength="16" placeholder="Tu nombre" autocomplete="nickname">
           <button id="goNameOk">Guardar</button>
         </div>
@@ -380,7 +380,7 @@ const IMG_FILES=['sofi','sofi_hoodie','deisy','leandro','cinthia','dina','frutil
 
 /* ---------- guardado (tolerante a fallos) ---------- */
 const KEY='tortaRunner.v15';
-const save={total:0,best:0,char:'sofi',outfit:'default',muted:false,seen:['sofi','default'],name:'',runs:[],pending:[],avatars:{}};
+const save={total:0,best:0,char:'sofi',outfit:'default',muted:false,seen:['sofi','default'],name:'',runs:[],pending:[],avatars:{},anonBest:null,lastTop:[]};
 try{
   const raw=localStorage.getItem(KEY);
   if(raw) Object.assign(save,JSON.parse(raw));
@@ -965,7 +965,7 @@ async function submitRun(run){
 async function fetchTop(){
   if(!RANKING_URL) return {mode:'local',top:localTop()};
   try{const r=await fetch(RANKING_URL+(RANKING_URL.includes('?')?'&':'?')+'t='+Date.now());const j=await r.json();
-    if(j&&j.ok&&Array.isArray(j.top)) return {mode:'online',top:j.top}}catch(e){}
+    if(j&&j.ok&&Array.isArray(j.top)){save.lastTop=j.top.slice(0,20);persist();return {mode:'online',top:j.top}}}catch(e){}
   return {mode:'offline',top:localTop()};
 }
 function renderRank(top){
@@ -983,29 +983,68 @@ function renderRank(top){
 }
 async function openRank(){
   $('nameIn').value=save.name;show('rank',true);renderAvatars();
-  $('rankMode').textContent='Cargando…';renderRank(localTop());
+  $('rankMode').textContent='Actualizando…';renderRank(knownTop());
   const {mode,top}=await fetchTop();
   $('rankMode').textContent=mode==='online'?'Récords de toda la familia':mode==='offline'?'Sin conexión: récords de este dispositivo':'Récords de este dispositivo';
   renderRank(top);
 }
 let lastRun=null;
+// el último ranking conocido (de internet si lo hubo, si no el del dispositivo) + lo que este dispositivo ya sabe
+function knownTop(){
+  const base=(RANKING_URL&&save.lastTop.length)?save.lastTop:localTop();
+  const best={};
+  for(const r of [...base,...localTop()]){const k=r.nombre.toLowerCase();if(!best[k]||r.metros>best[k].metros)best[k]={...r}}
+  for(const k in best){const av=save.avatars[k];if(av)best[k].avatar=av}
+  return Object.values(best).sort((a,b)=>b.metros-a.metros);
+}
+function placeOf(top,name){const i=top.findIndex(r=>sameName(r.nombre,name));return i>=0?i+1:0}
+function bestOf(top,name){const r=top.find(x=>sameName(x.nombre,name));return r?r.metros:0}
 async function rankAfterRun(run){
   lastRun=run;
-  if(!save.name){ $('rankLine').textContent=''; $('goName').value=''; show('nameAsk',true); return }
+  if(!save.name){
+    // sin nombre todavía: se guarda la mejor partida para subirla cuando ponga su nombre
+    if(!save.anonBest||run.metros>save.anonBest.metros){save.anonBest={...run};persist()}
+    $('rankLine').textContent='';$('goName').value='';
+    $('goNameLabel').textContent=`Anotate en el ranking (se guarda tu mejor partida: ${save.anonBest.metros} m):`;
+    show('nameAsk',true);return;
+  }
   show('nameAsk',false);
-  $('rankLine').textContent='Anotado en el ranking como '+save.name+'…';
-  await submitRun({...run,nombre:save.name,avatar:myAvatar()});lastRun=null;
-  const {top}=await fetchTop();
-  const i=top.findIndex(r=>sameName(r.nombre,save.name));
-  $('rankLine').textContent=i>=0?`🏆 ${save.name}: puesto #${i+1} en el ranking`:'Anotado en el ranking como '+save.name;
+  const prev=bestOf(knownTop(),save.name);
+  await showPlace(run,prev);
 }
+// muestra el puesto al instante con lo que se sabe y lo confirma cuando responde el ranking
+async function showPlace(run,prev){
+  const name=save.name;
+  const sub=submitRun({...run,nombre:name,avatar:myAvatar()});
+  const mine=Math.max(prev,run.metros);
+  const pos=placeOf(knownTop(),name);
+  const recTxt=run.metros>prev?' · ¡tu mejor récord!':` · tu mejor: ${mine} m`;
+  $('rankLine').textContent=`🏆 ${name}: puesto #${pos}${recTxt}`+(RANKING_URL?' · guardando…':'');
+  await sub;
+  if(!RANKING_URL) return;
+  const {mode,top}=await fetchTop();
+  const p2=placeOf(mode==='online'?top:knownTop(),name)||pos;
+  $('rankLine').textContent=`🏆 ${name}: puesto #${p2}${recTxt}`+(mode==='online'&&!save.pending.length?' ✓':' · se enviará cuando haya conexión');
+}
+let nameSync=Promise.resolve();
 function setName(v){
   const n=cleanName(v); if(!n) return false;
-  save.name=n;persist();return true;
+  save.name=n;persist();
+  // si jugó antes de poner el nombre, su mejor partida pasa a su nombre
+  nameSync=Promise.resolve();
+  if(save.anonBest){const r=save.anonBest;save.anonBest=null;persist();
+    nameSync=submitRun({...r,nombre:n,avatar:myAvatar()});}
+  return true;
 }
-$('goNameOk').onclick=()=>{ if(setName($('goName').value)&&lastRun) rankAfterRun(lastRun) };
+$('goNameOk').onclick=async()=>{
+  const best=save.anonBest; // incluye la partida que acaba de terminar
+  save.anonBest=null;
+  if(!setName($('goName').value)){save.anonBest=best;return}
+  show('nameAsk',false);
+  if(best){lastRun=best;await showPlace(best,bestOf(knownTop(),save.name));}
+};
 $('goName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('goNameOk').click()}});
-$('nameSave').onclick=()=>{ if(setName($('nameIn').value)){ $('nameIn').value=save.name; openRank(); } };
+$('nameSave').onclick=async()=>{ if(setName($('nameIn').value)){ $('nameIn').value=save.name; renderAvatars(); await nameSync; openRank(); } };
 function renderAvatars(){
   const row=$('avRow');row.textContent='';const cur=myAvatar();
   $('avLabel').textContent=save.name?'Elegí tu favorito de la familia: aparece al lado de tu nombre':'Poné tu nombre para elegir tu favorito de la familia';
