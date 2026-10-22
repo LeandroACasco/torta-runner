@@ -1,0 +1,22 @@
+{
+ "name": "Torta Runner",
+ "short_name": "Torta Runner",
+ "start_url": ".",
+ "display": "fullscreen",
+ "orientation": "landscape",
+ "background_color": "#FFEFF5",
+ "theme_color": "#FF4D6D",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
