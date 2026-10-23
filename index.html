@@ -90,14 +90,16 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .menuTop .grp{display:flex;gap:8px;flex-wrap:wrap}
 .secTitle{font-family:var(--hand);font-weight:700;font-size:28px;margin:0 auto 8px;display:flex;align-items:center;gap:8px;max-width:716px}
 .secTitle .n{background:var(--white);border-radius:999px;padding:0 12px;line-height:1.2}
-.chars{display:grid;grid-template-columns:repeat(4,minmax(0,170px));justify-content:center;gap:12px;margin-bottom:16px}
+.chars{display:grid;grid-template-columns:repeat(5,minmax(0,140px));justify-content:center;gap:12px;margin-bottom:16px}
 .card{position:relative;background:var(--white);border-radius:18px;padding:8px;text-align:left;border:4px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
 .card.sel{background:var(--cream);transform:translateY(-2px)}
 .card .pic{aspect-ratio:1;max-width:100%;background:var(--bg);border:3px solid var(--ink);border-radius:12px;display:grid;place-items:center;overflow:hidden;position:relative}
 .card .pic img{width:88%;height:88%;object-fit:contain;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.9))}
 .card.locked .pic img{filter:grayscale(1) contrast(.8)}
 .card .lock{position:absolute;inset:0;background:rgba(0,0,0,.28);display:grid;place-items:center}
-.card .lock span{background:var(--white);border:3px solid var(--ink);border-radius:999px;padding:1px 10px;font-size:13px}
+.card .lock .lf{font-style:normal}
+.card .lock span{background:var(--white);border:3px solid var(--ink);border-radius:999px;padding:1px 8px;font-size:13px;white-space:nowrap}
+body.compact .card .lock span{font-size:11px;padding:0 5px;border-width:2px}
 .card .nm{font-size:16px;margin:6px 2px 0;line-height:1.1}
 .card .ds{font-family:var(--hand);font-size:15px;line-height:1.05;opacity:.75;margin:0 2px}
 .card .chk{position:absolute;top:12px;left:12px;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--white);display:grid;place-items:center;font-size:13px}
@@ -292,7 +294,8 @@ body.compact .hero,body.compact .chips{display:none}
 body.compact #stage{border-radius:0;border:0;box-shadow:none}
 body.portrait #rotate{display:block}
 @media (max-width:720px){
-  .chars,.outfits{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .outfits{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chars{grid-template-columns:repeat(5,minmax(0,1fr))}
   .menuTop .grp{gap:6px}
   #hud .pill{padding:3px 10px}
   .hFruP{width:84px;font-size:17px}
@@ -301,7 +304,8 @@ body.portrait #rotate{display:block}
   #hudBtns .ibtn{width:40px;height:40px}
   .secTitle{font-size:24px}
 }
-body.compact.short .chars,body.compact.short .outfits{grid-template-columns:repeat(4,minmax(0,1fr))}
+body.compact.short .chars{grid-template-columns:repeat(5,minmax(0,1fr))}
+body.compact.short .outfits{grid-template-columns:repeat(4,minmax(0,1fr))}
 body.compact.short .card .ds{display:none}
 
 /* ---------- celular parado ---------- */
@@ -310,13 +314,14 @@ body.compact.short .card .ds{display:none}
   body.compact .menuTop{margin-bottom:8px;gap:6px}
   body.compact .ibtn{width:36px;height:36px;font-size:16px}
   body.compact.portrait #playBtn2{display:none} /* parado: el botón grande ¡A CORRER! ya está a la vista y así entran todos los íconos */
-  body.compact .chars{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
+  body.compact .chars{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:10px}
   body.compact .card{padding:4px;border-width:3px;box-shadow:3px 3px 0 var(--ink);border-radius:12px!important}
   body.compact .card .pic{border-width:2px;border-radius:8px}
   body.compact .card .nm{font-size:12px;margin:3px 1px 0;text-align:center}
   body.compact .card .ds{display:none}
   body.compact .card .chk{top:6px;left:6px;width:20px;height:20px;font-size:11px}
-  body.compact .card .lock span{font-size:10px;padding:0 5px;border-width:2px}
+  body.compact .card .lock span{font-size:10px;padding:0 4px;border-width:2px}
+  body.compact .card .lock .lf{display:none} /* celular parado: "🔒 170" entra en la tarjeta */
   body.compact .outfits{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
   body.compact .ofit{flex-direction:column;gap:2px;padding:6px 3px;text-align:center;box-shadow:3px 3px 0 var(--ink)}
   body.compact .ofit .t{font-size:11px}
@@ -802,6 +807,7 @@ const CHARS=[
   {id:'sofi',   name:'Sofi',         need:0,   img:'sofi',    desc:'Corre con estilo'},
   {id:'deisy',  name:'Deisy',        need:50,  img:'deisy',   desc:'Pelo gris y remera celeste'},
   {id:'leandro',name:'Leandro',      need:120, img:'leandro', desc:'Corazones rosas power'},
+  {id:'nora',   name:'Nora',         need:170, img:'nora',    desc:'Ojos grandes, sorpresas grandes'},
   {id:'cinthia',name:'Cinthia',      need:220, img:'cinthia', desc:'¡La cumpleañera! Deja confeti', confetti:true},
 ];
 const OUTFITS=[
@@ -810,7 +816,7 @@ const OUTFITS=[
   {id:'corazon',name:'Corazón',     need:45, em:'💘', desc:'Corazón flotante'},
   {id:'corona', name:'Torta Queen', need:90, em:'👑', desc:'Corona de cumple'},
 ];
-const IMG_FILES=['sofi','sofi_hoodie','deisy','leandro','cinthia','dina','frutilla','torta','nubes','texto','pancito','kampito','kampito_verde','kampito_tropical','dina_corre'];
+const IMG_FILES=['sofi','sofi_hoodie','deisy','leandro','nora','cinthia','dina','frutilla','torta','nubes','texto','pancito','kampito','kampito_verde','kampito_tropical','dina_corre'];
 
 /* comiditas de la fiesta: el pancito con salame vale 5 y cada sabor de Kampito da su poder */
 const PAN_VALUE=5;
@@ -827,7 +833,7 @@ const CUMPLES=[
   {nombre:'Sofi',    char:'sofi',    dia:4,  mes:8},
   {nombre:'Deisy',   char:'deisy',   dia:25, mes:7},
   {nombre:'Leandro', char:'leandro', dia:25, mes:11},
-  {nombre:'Nora',    char:'',        dia:5,  mes:10},
+  {nombre:'Nora',    char:'nora',    dia:5,  mes:10},
 ];
 let fakeToday=null; // solo para pruebas
 const hoy=()=>fakeToday||new Date();
@@ -836,8 +842,13 @@ const bdayChar=id=>hoyCumple().some(c=>c.char===id);
 const cinthiaDay=()=>bdayChar('cinthia');
 
 /* novedades: cada versión que ven los jugadores, la más nueva primero */
-const VERSION='2.1';
+const VERSION='2.2';
 const NEWS=[
+  {v:'2.2',fecha:'octubre 2026',titulo:'¡Llegó Nora!',items:[
+    ['👵','Nora ya es jugable: se desbloquea con 170 frutillas. El día de su cumple, todos pueden correr con ella y lleva corona.'],
+    ['🎨','Dibujos nuevos de Sofía: Nora, Cinthia y Dina corriendo. Ahora todos los personajes son dibujos de Sofía.'],
+    ['👯','El logro "Corre toda la familia" ahora pide jugar con los 5 personajes (si ya lo tenías, lo seguís teniendo).'],
+  ]},
   {v:'2.1',fecha:'octubre 2026',titulo:'Caja fuerte, tutorial y cumpleaños',items:[
     ['☁️','Caja fuerte: guardá tu progreso con tu nombre y 4 números secretos, y seguí jugando en otro celular o en la compu. Si te olvidás los números, la abrís respondiendo tus preguntas secretas con alguien de la familia.'],
     ['👆','Carrera de práctica la primera vez que jugás: un dedito te muestra cuándo saltar y cuándo hacer el doble salto, y después vienen el pancito y un Kampito. Cada cosa nueva lleva un cartelito la primera vez que aparece.'],
@@ -885,7 +896,7 @@ const ACH=[
   {id:'tres',    em:'✨',name:'Los tres poderes',     desc:'Tomá los 3 sabores de Kampito'},
   {id:'escudo',  em:'🛡️',name:'¡Crash!',              desc:'Rompé una torta con el escudo'},
   {id:'tortas100',em:'🍰',name:'Esquiva tortas',      desc:'Esquivá 100 tortas en total'},
-  {id:'cuatro',  em:'👯',name:'Corre toda la familia',desc:'Jugá con los 4 personajes'},
+  {id:'cuatro',  em:'👯',name:'Corre toda la familia',desc:'Jugá con los 5 personajes'},
   {id:'familia', em:'🔓',name:'Familia completa',     desc:'Desbloqueá a Cinthia'},
   {id:'fiesta',  em:'🎂',name:'¡A soplar!',           desc:'Soplá la vela en la fiesta'},
   {id:'casi',    em:'😅',name:'¡Casi!',               desc:'Escapate de Dina: que se canse después de un tropezón'},
@@ -1508,7 +1519,7 @@ function achCheck(live,silent){
     primera:S.runs>=1, fru100:tot>=100, fru500:tot>=500, run50:runFru>=50,
     m300:runM>=300, m1000:runM>=1000, pan5:runPans>=5, pan20:pans>=20,
     kamp10:S.kamps+(l?R.kamps:0)>=10, tres:powers.size>=3, escudo:S.escudos+(l?R.escudos:0)>=1,
-    tortas100:S.tortas+(l?R.tortas:0)>=100, cuatro:chars.size>=4,
+    tortas100:S.tortas+(l?R.tortas:0)>=100, cuatro:CHARS.every(c=>chars.has(c.id)),
     familia:tot>=CHARS[CHARS.length-1].need, fiesta:!!S.fiesta,
     casi:S.escapes+(l?R.escapes:0)>=1, fuera:S.scared+(l?R.scared:0)>=1,
     escurridiza:Math.max(S.bestEscapes,l?R.escapes:0)>=3,
@@ -1611,7 +1622,7 @@ function renderMenu(){
     b.className='card btn'+(sel?' sel':'')+(un?'':' locked');
     b.style.borderRadius='18px';
     b.setAttribute('aria-pressed',sel);
-    b.innerHTML=`<div class="pic"><img src="assets/${c.img}.webp" alt="${c.name}">${un?'':`<div class="lock"><span>🔒 ${c.need} 🍓</span></div>`}</div>
+    b.innerHTML=`<div class="pic"><img src="assets/${c.img}.webp" alt="${c.name}">${un?'':`<div class="lock"><span>🔒 ${c.need}<i class="lf"> 🍓</i></span></div>`}</div>
       <div class="nm">${c.name}${bdayChar(c.id)?' 🎂':''}</div><div class="ds">${bdayChar(c.id)?'¡Hoy es su cumple!':c.desc}</div>${sel?'<div class="chk">✓</div>':''}`;
     b.onclick=()=>{
       if(!un){toast(`${c.name} necesita ${c.need} 🍓 — tenés ${save.total}`);return}
@@ -2553,6 +2564,9 @@ if(save.seenVersion!==VERSION&&location.hash!=='#fiesta'&&location.hash!=='#prue
 {const pre=achCheck(false,true); // logros que ya se habían ganado antes de esta versión
  if(pre) setTimeout(()=>toast(`¡Ya tenías ${pre} ${pre===1?'logro':'logros'}! Miralos en 🏅`),600);}
 rollWeek();
+// personajes nuevos que ya alcanzás con tus frutillas (como Nora en la 2.2): se presentan una vez
+{const nuevos=CHARS.filter(c=>c.need>0&&save.total>=c.need&&!save.seen.includes(c.id));
+ if(nuevos.length){nuevos.forEach(c=>save.seen.push(c.id));persist();unlockQueue.push(...nuevos.map(c=>({k:'char',...c})));setTimeout(nextUnlock,location.hash==='#prueba'?300:1200)}}
 renderMenu();layout();cloudUI();
 if(RANKING_URL&&!(save.prevWin&&save.prevWin.key===prevWeek().key)) setTimeout(()=>fetchTop().then(()=>{if(state==='menu')renderMenu()}),2000);
 if(save.cloud&&save.cloud.key) setTimeout(cloudSync,1200);

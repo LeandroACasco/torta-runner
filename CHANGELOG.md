@@ -1,5 +1,11 @@
 # Novedades de Torta Runner
 
+## Versión 2.2 — octubre 2026: ¡Llegó Nora!
+
+- 👵 **Nora ya es jugable:** se desbloquea con 170 frutillas. El día de su cumple, todos pueden correr con ella y lleva corona.
+- 🎨 **Dibujos nuevos de Sofía:** Nora, Cinthia y Dina corriendo. Ahora todos los personajes son dibujos de Sofía.
+- 👯 El logro "Corre toda la familia" ahora pide jugar con los 5 personajes (si ya lo tenías, lo seguís teniendo).
+
 ## Versión 2.1 — octubre 2026: Caja fuerte, tutorial y cumpleaños
 
 - ☁️ **Caja fuerte:** guardá tu progreso con tu nombre y 4 números secretos, y seguí jugando en otro celular o en la compu. Si te olvidás los números, la abrís respondiendo tus preguntas secretas con alguien de la familia.

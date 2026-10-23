@@ -2,7 +2,7 @@
 
 Un *infinite runner* de cumpleaños hecho en familia para Cinthia, con dibujos y animación de Sofía.
 
-Corrés con Sofi, Deisy, Leandro o Cinthia, juntás frutillas y esquivás porciones de torta. Si chocás… Dina se come la torta.
+Corrés con Sofi, Deisy, Leandro, Nora o Cinthia, juntás frutillas y esquivás porciones de torta. Si chocás… Dina se come la torta.
 
 **▶ Jugar:** https://LeandroACasco.github.io/torta-runner/
 
@@ -49,11 +49,12 @@ Todos los lunes sale un desafío nuevo (más pancitos en una partida, llegar lo 
 | Sofi | Desde el inicio |
 | Deisy | 50 |
 | Leandro | 120 |
+| Nora | 170 |
 | Cinthia, la cumpleañera | 220 (deja un rastro de confeti) |
 
 También hay outfits para ponerle a tu personaje: Hoodie Rosa, Corazón flotante y Corona Torta Queen.
 
-![Menú de personajes y outfits](docs/menu.webp)
+![Menú con los 5 personajes y los outfits](docs/menu.webp)
 
 ## La fiesta
 
@@ -98,8 +99,7 @@ Cada vez que sale una versión nueva, el juego muestra sus novedades al abrirlo.
 
 | Qué | Quién |
 | --- | --- |
-| Dibujos, personajes y animación (también el pancito y los Kampitos) | **Sofía** 🎨 |
-| Dina corriendo | Hecha con IA a partir del dibujo de Sofía |
+| Dibujos, personajes y animación (todos los personajes, Dina, el pancito y los Kampitos) | **Sofía** 🎨 |
 | Idea y producción | Leandro |
 | Programación | Leandro, con asistencia de IA (Meta AI en los prototipos, Claude en la versión actual) |
 | Música | Partida: melodía original. Fiesta: *Happy Birthday to You* (dominio público) |

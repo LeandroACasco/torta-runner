@@ -11,7 +11,7 @@
  */
 const HOJA = 'Ranking';
 const COLUMNAS = ['fecha', 'nombre', 'metros', 'frutillas', 'personaje', 'logros', 'semana', 'reto', 'valor'];
-const PERSONAJES = ['sofi', 'deisy', 'leandro', 'cinthia'];
+const PERSONAJES = ['sofi', 'deisy', 'leandro', 'nora', 'cinthia'];
 const FAVORITOS = ['sofi', 'deisy', 'leandro', 'cinthia', 'nora', 'dina'];
 const HOJA_FAV = 'Favoritos';
 const TOP = 20;
