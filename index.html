@@ -58,11 +58,30 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 #game{display:block;width:100%;height:100%}
 
 /* HUD */
-#hud{position:absolute;inset:0 0 auto 0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:10px;pointer-events:none}
-#hud .grp{display:flex;gap:8px;flex-wrap:wrap}
+#hud{position:absolute;inset:0 0 auto 0;padding:10px;pointer-events:none}
+/* marcador: cada caja tiene ancho fijo y lugar fijo, así nada salta cuando cambian los números */
+.hudRow{display:flex;gap:8px;flex-wrap:nowrap;align-items:stretch}
+.hudStat{margin-top:8px}
+#hud .pill{font-variant-numeric:tabular-nums;justify-content:space-between;white-space:nowrap}
+#hud .pill b{text-align:right;flex:1 1 auto}
+#hud .em{flex:0 0 auto}
+.hFruP{width:96px;font-size:20px}
+.hDistP{width:104px;flex-direction:column;align-items:flex-end!important;justify-content:center!important;gap:0!important;line-height:1;padding:3px 12px!important;background:var(--cream)!important}
+.hDistP .dv{font-size:20px;display:flex;gap:4px;width:100%;justify-content:flex-end}
+.hDistP small{font-size:11px;letter-spacing:.06em;opacity:.7;margin-top:1px}
+.hSlot{width:118px}
+/* el lugar del poder y el de Dina quedan reservados aunque estén vacíos */
+#hud #hPow[hidden],#hud #hDina[hidden]{display:inline-flex!important;visibility:hidden}
+#hudBtns{position:absolute;top:10px;right:10px;display:flex;gap:10px;align-items:center;pointer-events:auto}
+#hudBtns .ibtn{width:44px;height:44px}
+/* pausa: grande, siempre en el mismo lugar, con las dos barras dibujadas (se ve igual en todos los celulares) */
+.hudPause{width:54px;height:54px;border-radius:50%;background:var(--sun);border:4px solid var(--ink);box-shadow:4px 4px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:7px;padding:0;touch-action:manipulation;transition:transform .06s,box-shadow .06s}
+.hudPause span{width:8px;height:22px;background:var(--ink);border-radius:3px}
+.hudPause:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+/* área de toque más grande que el dibujo, para no errarle con el dedo */
+.hudPause{position:relative}.hudPause:before{content:'';position:absolute;inset:-10px}
 #hud .pill{font-size:18px;font-variant-numeric:tabular-nums}
 .ibtn{pointer-events:auto;width:40px;height:40px;border-radius:50%;background:var(--white);display:grid;place-items:center;font-size:18px;padding:0}
-#speedPill{background:var(--ink);color:var(--white);font-size:12px!important;letter-spacing:.1em;border:3px solid var(--ink)}
 
 /* overlays */
 .overlay{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -183,6 +202,7 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .avBtn.sel{background:var(--sun);transform:scale(1.12)}
 .avBtn:disabled{opacity:.4;cursor:default}
 .ibtn.off{opacity:.4}
+.ibtn.cloudOn{background:#C9F5D2}
 .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:16px;font-size:11px}
 .chips span{background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:4px 12px}
 
@@ -192,6 +212,8 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .tabs button.sel{background:var(--sun);box-shadow:3px 3px 0 var(--ink)}
 .retoBox{margin-top:8px;font-size:14px;line-height:1.25}
 .retoBox b{font-family:var(--hand);font-size:22px;display:block;color:var(--pink)}
+.kingLine{margin-top:6px;display:inline-block;background:var(--sun);border:2px solid var(--ink);border-radius:999px;padding:2px 12px;font-size:13px}
+.rankList li.king{box-shadow:3px 3px 0 var(--sun),3px 3px 0 1px var(--ink)}
 .retoPill{display:flex;margin:0 auto 12px;max-width:716px;width:100%;align-items:center;justify-content:center;gap:6px;background:var(--cream);border-radius:999px;padding:5px 14px;font-size:14px;text-align:center;line-height:1.15}
 
 /* power-up del Kampito en el HUD */
@@ -212,6 +234,7 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .achLine{margin-top:8px;font-size:14px}
 #achPop{position:absolute;z-index:40;top:58px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:var(--sun);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:999px;padding:5px 16px 5px 8px;white-space:nowrap;pointer-events:none;animation:achIn .4s cubic-bezier(.34,1.56,.64,1)}
 #achPop .e{font-size:24px}
+#stage.tall #achPop{top:118px} /* celular parado: debajo de la segunda fila del marcador */
 #achPop small{display:block;font-size:11px;letter-spacing:.12em}
 @keyframes achIn{0%{transform:translateX(-50%) translateY(-20px) scale(.7);opacity:0}100%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}}
 
@@ -228,6 +251,15 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .newsTag{display:inline-block;background:var(--red);color:var(--white);border-radius:999px;padding:1px 10px;font-size:11px;letter-spacing:.1em;font-family:var(--ui)}
 .verLink{background:none;border:0;font-size:12px;opacity:.7;text-decoration:underline;padding:2px}
 
+/* tutorial */
+#tip{position:absolute;z-index:35;top:62px;left:50%;transform:translateX(-50%);max-width:min(92%,520px);background:var(--white);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:16px;padding:8px 16px;font-family:var(--hand);font-size:24px;line-height:1.05;text-align:center;pointer-events:none;animation:achIn .35s cubic-bezier(.34,1.56,.64,1)}
+#tip.wait{background:var(--sun)}
+/* cumpleaños */
+.bdayBanner{display:block;margin:0 auto 10px;max-width:716px;background:var(--rosa);color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:16px;padding:6px 14px;text-align:center;font-family:var(--hand);font-size:24px;line-height:1.05}
+.bdayBanner.big{background:var(--sun);font-size:28px}
+#bdayConf{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+body.compact.short .bdayBanner{grid-column:1/-1;font-size:19px;padding:3px 12px;margin-bottom:6px}
+
 /* Dina con el pancito */
 .dinaWrap{position:relative;width:150px;max-width:42%}
 .dinaWrap .dinaPan{position:absolute;width:30%;right:-6%;bottom:2%;transform:rotate(14deg);filter:drop-shadow(2px 2px 0 var(--ink))}
@@ -242,7 +274,7 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 
 @keyframes pop{0%{transform:scale(.7) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 @keyframes munch{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(-2deg) translateY(-3px)}}
-@media (prefers-reduced-motion:reduce){.goCard,#unlock .box,.dinaRow .dinaImg,#achPop{animation:none}}
+@media (prefers-reduced-motion:reduce){.goCard,#unlock .box,.dinaRow .dinaImg,#achPop,#tip{animation:none}}
 
 /* listas largas (novedades, logros, ranking): la tarjeta entra en la pantalla,
    la lista se desliza por dentro y el botón de abajo siempre queda a la vista */
@@ -262,7 +294,11 @@ body.portrait #rotate{display:block}
 @media (max-width:720px){
   .chars,.outfits{grid-template-columns:repeat(2,minmax(0,1fr))}
   .menuTop .grp{gap:6px}
-  #hud .pill{font-size:15px;padding:3px 10px}
+  #hud .pill{padding:3px 10px}
+  .hFruP{width:84px;font-size:17px}
+  .hDistP{width:92px}.hDistP .dv{font-size:17px}
+  .hSlot{width:100px}.hSlot .pbar{width:50px}
+  #hudBtns .ibtn{width:40px;height:40px}
   .secTitle{font-size:24px}
 }
 body.compact.short .chars,body.compact.short .outfits{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -273,6 +309,7 @@ body.compact.short .card .ds{display:none}
   body.compact #menu{padding:12px 10px}
   body.compact .menuTop{margin-bottom:8px;gap:6px}
   body.compact .ibtn{width:36px;height:36px;font-size:16px}
+  body.compact.portrait #playBtn2{display:none} /* parado: el botón grande ¡A CORRER! ya está a la vista y así entran todos los íconos */
   body.compact .chars{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
   body.compact .card{padding:4px;border-width:3px;box-shadow:3px 3px 0 var(--ink);border-radius:12px!important}
   body.compact .card .pic{border-width:2px;border-radius:8px}
@@ -303,9 +340,10 @@ body.compact.short .card .ds{display:none}
 
 /* ---------- celular acostado (pantalla baja) ---------- */
 body.compact.short #menu{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,250px);column-gap:16px;align-content:start;padding:8px 14px;
-  grid-template-areas:"top top" "toast toast" "reto reto" "s1 go" "chars go" "s2 go" "out go";grid-template-rows:auto auto auto auto auto auto 1fr}
+  grid-template-areas:"top top" "toast toast" "bday bday" "reto reto" "s1 go" "chars go" "s2 go" "out go";grid-template-rows:auto auto auto auto auto auto auto 1fr}
 body.compact.short .menuTop{grid-area:top}
 body.compact.short #toast{grid-area:toast}
+body.compact.short #bday{grid-area:bday}
 body.compact.short .retoPill{grid-area:reto}
 body.compact.short #sec1{grid-area:s1}
 body.compact.short .chars{grid-area:chars}
@@ -377,10 +415,150 @@ body.compact.short .partyMsg{font-size:18px}
 body.compact.short .mesa{margin-bottom:8px}
 body.compact.short .mesa img{height:40px}body.compact.short .mesa img.p{height:24px}body.compact.short .mesa img.k{height:44px}
 body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
+
+/* ---------- caja fuerte (progreso en la nube) ---------- */
+#vault{background:rgba(255,239,245,.97);display:flex;padding:14px}
+.vaultCard{max-width:460px;display:flex;flex-direction:column;max-height:100%;padding:16px 16px 14px}
+.vaultCard .goTitle{font-size:34px;text-align:center}
+#vBody{overflow-y:auto;min-height:0;flex:1 1 auto;-webkit-overflow-scrolling:touch;padding:2px 4px 6px;margin:0 -4px}
+.vClose{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:3px solid var(--ink);background:var(--white);font-size:15px;padding:0;z-index:2}
+.vTxt{font-size:15px;line-height:1.3;margin:8px 0 0}
+.vHand{font-family:var(--hand);font-size:21px;line-height:1.05;margin:6px 0 0}
+.vErr{min-height:22px;margin-top:6px;font-size:14px;color:#D1004D;font-weight:600}
+.vBtns{display:flex;flex-direction:column;gap:9px;align-items:center;margin-top:12px}
+.vBtns .btn{width:min(100%,300px);padding:9px 16px;font-size:16px;background:var(--white);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.vBtns .btn.main{background:var(--red);color:var(--white)}
+.vBtns .btn.sun{background:var(--sun)}
+.vBtns .btn:disabled{opacity:.45;cursor:default}
+.vLink{background:none;border:0;text-decoration:underline;font-size:13px;opacity:.75;padding:4px;margin-top:2px}
+.vInput{font:inherit;font-size:18px;color:var(--ink);background:var(--white);border:3px solid var(--ink);border-radius:999px;padding:7px 16px;width:min(100%,260px);text-align:center;margin-top:10px}
+.vDemo{margin-top:10px;font-size:12px;background:var(--cream);border:2px dashed var(--ink);border-radius:12px;padding:5px 10px;line-height:1.25}
+.vStep{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-top:4px}
+.vSum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.vSum div{background:var(--white);border:3px solid var(--ink);border-radius:12px;padding:5px 2px;font-size:12px;line-height:1.1}
+.vSum b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+
+/* la caja fuerte dibujada */
+.safe{position:relative;width:132px;height:108px;margin:10px auto 2px;background:#FFD6E4;border:4px solid var(--ink);border-radius:20px;box-shadow:5px 5px 0 var(--ink);perspective:420px}
+.safe:before,.safe:after{content:'';position:absolute;bottom:-12px;width:18px;height:10px;background:var(--ink);border-radius:0 0 6px 6px}
+.safe:before{left:16px}.safe:after{right:16px}
+.safe .inside{position:absolute;inset:9px;border-radius:12px;background:#FFF7FB;border:3px solid var(--ink);display:grid;place-items:center;font-size:30px;overflow:hidden}
+.safe .door{position:absolute;inset:7px;border-radius:13px;background:var(--rosa);border:3px solid var(--ink);transform-origin:0 50%;transition:transform .7s cubic-bezier(.5,1.6,.6,1);display:grid;place-items:center}
+.safe .dial{width:46px;height:46px;border-radius:50%;background:var(--white);border:3px solid var(--ink);transition:transform .25s;position:relative;
+  background-image:repeating-conic-gradient(var(--ink) 0 3deg,transparent 3deg 30deg);background-size:100% 100%}
+.safe .dial:after{content:'';position:absolute;inset:9px;border-radius:50%;background:var(--sun);border:3px solid var(--ink)}
+.safe .handle{position:absolute;right:9px;top:50%;width:8px;height:26px;margin-top:-13px;background:var(--white);border:3px solid var(--ink);border-radius:6px}
+.safe .heart{position:absolute;left:9px;top:7px;font-size:13px}
+.safe.open .door{transform:rotateY(-108deg)}
+.safe.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px) rotate(-2deg)}40%{transform:translateX(8px) rotate(2deg)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+
+/* los 4 números: se muestran como frutillas */
+.pinCells{display:flex;justify-content:center;gap:10px;margin-top:10px}
+.pinCells span{width:44px;height:50px;border:3px solid var(--ink);border-radius:14px;background:var(--white);display:grid;place-items:center;font-size:24px;box-shadow:3px 3px 0 var(--ink)}
+.pinCells span.on{background:var(--cream);animation:achIn .25s}
+.pinCells span.on.reveal{font-size:26px;font-weight:600}
+/* el tecladito */
+.keypad{display:grid;grid-template-columns:repeat(3,64px);gap:9px;justify-content:center;margin-top:12px}
+.key{height:54px;border-radius:16px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);background:var(--white);font-size:24px;font-weight:600;padding:0;display:grid;place-items:center;transition:transform .06s,box-shadow .06s;touch-action:manipulation}
+.key:nth-child(3n+1){background:#FFE4EC}.key:nth-child(3n+2){background:var(--white)}.key:nth-child(3n){background:#FFF6C9}
+.key:active,.key.hit{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.key.fn{font-size:19px;background:var(--rosa)!important}
+.key:disabled{opacity:.4}
+
+/* preguntas secretas */
+.qList{display:grid;gap:7px;margin-top:10px;text-align:left}
+.qItem{display:flex;align-items:center;gap:8px;background:var(--white);border:3px solid var(--ink);border-radius:14px;padding:7px 10px;font-size:15px;line-height:1.15}
+.qItem .ck{flex:0 0 auto;width:24px;height:24px;border:3px solid var(--ink);border-radius:8px;display:grid;place-items:center;font-size:13px;background:var(--white)}
+.qItem.sel{background:var(--cream);box-shadow:3px 3px 0 var(--ink)}
+.qItem.sel .ck{background:var(--red);color:var(--white)}
+.qItem:disabled{opacity:.45}
+.qBig{font-family:var(--hand);font-size:27px;line-height:1.05;margin-top:10px;text-wrap:balance}
+.famPick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.famBtn{background:var(--white);border:3px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:6px 4px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:14px}
+.famBtn img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.85))}
+.famBtn.sel{background:var(--sun);transform:translateY(-2px)}
+.ansRow{display:flex;align-items:center;gap:8px;background:var(--white);border:3px solid var(--ink);border-radius:12px;padding:5px 8px;margin-top:7px;text-align:left;font-size:14px;line-height:1.15}
+.ansRow img{width:38px;height:38px;object-fit:contain;flex:0 0 auto}
+.ansRow span{flex:1 1 auto}
+
+/* barra de versión nueva */
+.updBar{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 10px;max-width:716px;width:100%;background:#C9F5D2;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:999px;padding:6px 14px;font-size:15px;animation:wiggle 1.6s ease-in-out infinite}
+#overCard .updBar{margin:10px auto 0;font-size:14px;max-width:none}
+
+/* ajustes */
+#settings{background:rgba(255,239,245,.97);display:flex;padding:14px}
+.setCard{max-width:440px;text-align:left}
+.setCard .goTitle{text-align:center;font-size:34px}
+.setRow{display:flex;align-items:center;gap:10px;background:var(--white);border:3px solid var(--ink);border-radius:14px;padding:8px 12px;margin-top:9px}
+.setRow .e{font-size:22px;width:28px;text-align:center;flex:0 0 auto}
+.setRow .lbl{flex:1 1 auto;font-size:15px;line-height:1.15}
+.setRow .lbl small{display:block;font-size:12px;opacity:.65}
+.setRow input[type=range]{width:120px;accent-color:var(--red)}
+.setRow .val{width:38px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
+.tog{flex:0 0 auto;width:56px;height:30px;border-radius:999px;border:3px solid var(--ink);background:#eee;position:relative;padding:0}
+.tog:after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--white);border:2px solid var(--ink);transition:left .15s}
+.tog[aria-checked=true]{background:#7BE08F}
+.tog[aria-checked=true]:after{left:28px}
+
+/* cuenta 3-2-1 al volver de la pausa */
+#count{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:36}
+#count b{font-family:var(--hand);font-size:120px;line-height:1;color:var(--pink);-webkit-text-stroke:3px var(--ink);text-shadow:6px 6px 0 var(--ink);animation:countIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes countIn{0%{transform:scale(1.8);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* mis números */
+.statGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:12px;text-align:center}
+.statBox{background:var(--white);border:3px solid var(--ink);border-radius:14px;padding:7px 4px;box-shadow:3px 3px 0 var(--ink)}
+.statBox .e{font-size:22px}
+.statBox b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.1}
+.statBox small{font-size:12px;opacity:.7;line-height:1.1;display:block}
+#statGrid{overflow-y:auto;min-height:0;flex:1 1 auto;padding:2px 6px 6px 2px;margin-right:-6px}
+
+/* menos confeti y animaciones */
+body.calm .partyBtn,body.calm .blowBtn,body.calm .goCard,body.calm #unlock .box,body.calm .dinaRow .dinaImg,body.calm #achPop,body.calm #tip,body.calm .updBar,body.calm #count b,body.calm .pinCells span.on{animation:none}
+body.calm .safe .door{transition:none}
+
+@media (max-width:560px){
+  body.compact #vault,body.compact #settings{padding:8px}
+  .vaultCard .goTitle,.setCard .goTitle{font-size:30px}
+  .keypad{grid-template-columns:repeat(3,60px);gap:8px}
+  .key{height:50px}
+}
+/* juego bajito (compu: 500 px de alto, o celular acostado): caja fuerte y ajustes compactos */
+#stage.low #vault,#stage.low #settings{padding:6px}
+#stage.low .vaultCard{max-width:620px;padding:8px 14px 10px}
+#stage.low .vaultCard .goTitle,#stage.low .setCard .goTitle{font-size:26px}
+#stage.low .safe{width:96px;height:76px;margin-top:4px;border-radius:16px}
+#stage.low .safe .dial{width:32px;height:32px}
+#stage.low .safe .dial:after{inset:6px}
+#stage.low .safe .inside{font-size:22px}
+#stage.low .pinCells{margin-top:6px}
+#stage.low .pinCells span{width:38px;height:40px;font-size:20px}
+#stage.low .keypad{grid-template-columns:repeat(6,52px);gap:7px;margin-top:8px}
+#stage.low .key{height:42px;font-size:20px;border-radius:13px}
+#stage.low .vHand{font-size:19px;margin-top:2px}
+#stage.low .vBtns{margin-top:8px;gap:7px}
+#stage.low .vBtns .btn{padding:7px 14px;font-size:15px}
+#stage.low .famPick{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+#stage.low .famBtn img{width:48px;height:48px}
+#stage.low .qList{grid-template-columns:1fr 1fr;gap:6px}
+#stage.low .qItem{padding:5px 8px;font-size:13px}
+#stage.low .qBig{font-size:23px;margin-top:4px}
+#stage.low .vSum{margin-top:6px}
+#stage.low .vSum b{font-size:17px}
+#stage.low .setCard{max-width:680px;padding:10px 14px}
+#stage.low .setRows{display:grid;grid-template-columns:1fr 1fr;column-gap:10px}
+#stage.low .setRow{margin-top:7px;padding:6px 10px}
+#stage.low .setRow input[type=range]{width:90px}
+#stage.low .statGrid{grid-template-columns:repeat(5,minmax(0,1fr))}
 </style>
 
 </head>
 <body>
+
+
+
+
 <div id="app">
   <header class="hero" id="hero">
     <div class="eyebrow">Infinite Runner</div>
@@ -392,16 +570,19 @@ body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
     <canvas id="game" aria-label="Juego: tocá para saltar"></canvas>
 
     <div id="hud" hidden>
-      <div class="grp">
-        <div class="pill thick-sm">🍓 <b id="hFru">0</b></div>
-        <div class="pill thick-sm" style="background:var(--cream)"><b id="hDist">0</b>&nbsp;m</div>
-        <div class="pill thick-sm" id="hDina" hidden style="background:#FFD9B0">🐱 <span class="pbar"><i id="hDinaBar" style="background:#F5A04A"></i></span></div>
-        <div class="pill thick-sm" id="hPow" hidden><span id="hPowEm">🧲</span><span class="pbar"><i id="hPowBar"></i></span></div>
+      <!-- marcador con lugares fijos: los números cambian, las cajas no se mueven -->
+      <div class="hudRow">
+        <div class="pill thick-sm hFruP"><span class="em">🍓</span><b id="hFru">0</b></div>
+        <div class="pill thick-sm hDistP"><span class="dv"><b id="hDist">0</b> m</span><small id="speedPill"><span id="hSpd">0</span> km/h</small></div>
       </div>
-      <div class="grp">
-        <div class="pill" id="speedPill"><span id="hSpd">0</span>&nbsp;km/h</div>
+      <div class="hudRow hudStat">
+        <div class="pill thick-sm hSlot" id="hPow" hidden><span class="em" id="hPowEm">🧲</span><span class="pbar"><i id="hPowBar"></i></span></div>
+        <div class="pill thick-sm hSlot" id="hDina" hidden style="background:#FFD9B0"><span class="em">🐱</span><span class="pbar"><i id="hDinaBar" style="background:#F5A04A"></i></span></div>
+      </div>
+      <!-- botones siempre en la misma esquina, aunque aparezcan barras de Dina o de un Kampito -->
+      <div id="hudBtns">
         <button class="ibtn thick-sm" id="musicHud" aria-label="Música">🎵</button>
-        <button class="ibtn thick-sm" id="pauseBtn" aria-label="Pausa">⏸</button>
+        <button class="hudPause" id="pauseBtn" aria-label="Pausa" title="Pausa (P)"><span></span><span></span></button>
       </div>
     </div>
 
@@ -415,13 +596,16 @@ body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
           <button class="btn thick-sm" id="playBtn2" style="background:var(--red);color:var(--white);padding:4px 16px;font-size:16px">¡Correr! ▶</button>
           <button class="ibtn thick-sm" id="rankBtn" aria-label="Ranking">🏆</button>
           <button class="ibtn thick-sm" id="achBtn" aria-label="Logros">🏅</button>
+          <button class="ibtn thick-sm" id="cloudBtn" aria-label="Mi caja fuerte">☁️</button>
           <button class="ibtn thick-sm" id="newsBtn" aria-label="Novedades">📣</button>
           <button class="ibtn thick-sm" id="musicMenu" aria-label="Música">🎵</button>
-          <button class="ibtn thick-sm" id="soundBtn" aria-label="Sonido">🔊</button>
+          <button class="ibtn thick-sm" id="setBtn" aria-label="Ajustes">⚙️</button>
           <button class="ibtn thick-sm" id="fsBtn" aria-label="Pantalla completa">⛶</button>
         </div>
       </div>
+      <button class="btn updBar" id="updMenu" hidden>✨ ¡Hay una versión nueva! Tocá para actualizar</button>
       <div id="toast" hidden></div>
+      <div class="bdayBanner" id="bday" hidden></div>
       <button class="btn thick-sm retoPill" id="retoPill"></button>
       <h2 class="secTitle" id="sec1"><span class="n thick-sm">1</span> Elegí tu corredor</h2>
       <div class="chars" id="chars"></div>
@@ -433,9 +617,10 @@ body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
         <div class="help">Tocá la pantalla (o Espacio) para saltar, y otra vez en el aire para el doble salto. Juntá frutillas 🍓 y pancitos 🥪, tomá Kampitos para tener poderes y esquivá las tortas: si chocás, ¡Dina te persigue! 🐱</div>
         <div class="credit">Dibujos y animación de Sofía 🎨</div>
         <button class="verLink" id="verLink"></button>
+        <button class="verLink" id="tutLink">Repetir la carrera de práctica</button>
         <button class="btn partyBtn" id="partyBtn" disabled>🔒 La fiesta</button>
         <div><button class="linkBtn" id="resetBtn">Borrar mi progreso</button>
-          <span class="resetAsk" id="resetAsk" hidden>¿Seguro? Se pierden las frutillas, los desbloqueos y los logros. <button id="resetYes">Sí, borrar</button><button id="resetNo">No</button></span></div>
+          <span class="resetAsk" id="resetAsk" hidden><span id="resetTxt">¿Seguro? Se pierden las frutillas, los desbloqueos y los logros.</span> <button id="resetYes">Sí, borrar</button><button id="resetNo">No</button></span></div>
         <div id="rotate">📱↻ Girá el teléfono para jugar más cómodo</div>
       </div>
     </div>
@@ -472,7 +657,8 @@ body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
           <button class="btn thick-sm" id="partyBtn2" style="background:var(--sun)" hidden>🎉 Fiesta</button>
           <button class="btn thick-sm" id="againBtn" style="background:var(--red);color:var(--white)">¡Otra vez! →</button>
         </div>
-        <div class="note">Total: <span id="oTotal">0</span> 🍓 · tu progreso queda guardado en este dispositivo</div>
+        <div class="note">Total: <span id="oTotal">0</span> 🍓 · <span id="oSaved">tu progreso queda guardado en este dispositivo</span></div>
+        <button class="btn updBar" id="updOver" hidden>✨ ¡Hay una versión nueva! Tocá para actualizar</button>
         </div>
       </div>
     </div>
@@ -522,11 +708,41 @@ body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
     <div id="ach" class="overlay" hidden>
       <div class="goCard achCard thick">
         <div class="goTitle" style="font-size:38px">🏅 Logros</div>
+        <div class="tabs" role="tablist">
+          <button id="tabAch" class="sel" role="tab">🏅 Logros</button>
+          <button id="tabStat" role="tab">📊 Mis números</button>
+        </div>
         <div class="achCount" id="achCount"></div>
         <div class="achGrid" id="achGrid"></div>
+        <div class="statGrid" id="statGrid" hidden></div>
         <div class="goBtns"><button class="btn thick-sm" id="achBack" style="background:var(--red);color:var(--white)">Volver</button></div>
       </div>
     </div>
+    <div id="vault" class="overlay" hidden>
+      <div class="goCard vaultCard thick">
+        <button class="vClose" id="vClose" aria-label="Cerrar">✕</button>
+        <div class="goTitle" id="vTitle">☁️ Mi caja fuerte</div>
+        <div id="vBody"></div>
+      </div>
+    </div>
+
+    <div id="settings" class="overlay" hidden>
+      <div class="goCard setCard thick">
+        <div class="goTitle">⚙️ Ajustes</div>
+        <div class="setRows">
+        <div class="setRow"><span class="e" id="soundEm">🔊</span><span class="lbl">Sonido<small>apaga todo: música y efectos</small></span><button class="tog" id="soundBtn" role="switch" aria-label="Sonido"></button></div>
+        <label class="setRow"><span class="e">🎵</span><span class="lbl">Música</span><input type="range" id="setMusic" min="0" max="100" step="5"><span class="val" id="setMusicV"></span></label>
+        <label class="setRow"><span class="e">🔊</span><span class="lbl">Efectos<small>saltos, frutillas, choques</small></span><input type="range" id="setSfx" min="0" max="100" step="5"><span class="val" id="setSfxV"></span></label>
+        <div class="setRow" id="setVibRow"><span class="e">📳</span><span class="lbl">Vibración<small id="setVibNote">al saltar y al chocar</small></span><button class="tog" id="setVib" role="switch" aria-label="Vibración"></button></div>
+        <div class="setRow"><span class="e">⏯️</span><span class="lbl">Cuenta 3-2-1<small>al volver de la pausa</small></span><button class="tog" id="setCount" role="switch" aria-label="Cuenta 3-2-1"></button></div>
+        <div class="setRow"><span class="e">🌙</span><span class="lbl">Menos confeti y animaciones<small>para celulares lentos o si marea</small></span><button class="tog" id="setCalm" role="switch" aria-label="Menos confeti y animaciones"></button></div>
+        </div>
+        <div class="goBtns"><button class="btn thick-sm" id="setBack" style="background:var(--red);color:var(--white)">Listo</button></div>
+      </div>
+    </div>
+    <div id="count" hidden><b id="countN">3</b></div>
+    <div id="tip" hidden></div>
+    <canvas id="bdayConf" hidden></canvas>
     <div id="achPop" hidden><span class="e" id="achPopEm"></span><span><small>¡NUEVO LOGRO!</small><b id="achPopNm"></b></span></div>
 
     <div id="party" class="overlay" hidden>
@@ -556,7 +772,7 @@ body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
   <div class="chips" id="chips">
     <span>Dibujos y animación: Sofía 🎨</span>
     <span>Doble salto</span>
-    <span>Progreso guardado en este dispositivo</span>
+    <span id="chipSave">Progreso guardado en este dispositivo</span>
     <span>PC: Espacio / ↑ · P para pausa</span>
   </div>
 </div>
@@ -604,9 +820,36 @@ const POWERS={
   escudo:{em:'🛡️',name:'Citrus: ¡Escudo!',          dur:480,img:'kampito',         glow:'#FFB27A'},
 };
 
+/* cumpleaños de la familia: ese día el juego los saluda.
+   char: personaje jugable (corre con corona) o '' si no es jugable. El de Cinthia abre la fiesta para todos. */
+const CUMPLES=[
+  {nombre:'Cinthia', char:'cinthia', dia:10, mes:10},
+  {nombre:'Sofi',    char:'sofi',    dia:4,  mes:8},
+  {nombre:'Deisy',   char:'deisy',   dia:25, mes:7},
+  {nombre:'Leandro', char:'leandro', dia:25, mes:11},
+  {nombre:'Nora',    char:'',        dia:5,  mes:10},
+];
+let fakeToday=null; // solo para pruebas
+const hoy=()=>fakeToday||new Date();
+const hoyCumple=()=>{const d=hoy();return CUMPLES.filter(c=>c.dia===d.getDate()&&c.mes===d.getMonth()+1)};
+const bdayChar=id=>hoyCumple().some(c=>c.char===id);
+const cinthiaDay=()=>bdayChar('cinthia');
+
 /* novedades: cada versión que ven los jugadores, la más nueva primero */
-const VERSION='2.0';
+const VERSION='2.1';
 const NEWS=[
+  {v:'2.1',fecha:'octubre 2026',titulo:'Caja fuerte, tutorial y cumpleaños',items:[
+    ['☁️','Caja fuerte: guardá tu progreso con tu nombre y 4 números secretos, y seguí jugando en otro celular o en la compu. Si te olvidás los números, la abrís respondiendo tus preguntas secretas con alguien de la familia.'],
+    ['👆','Carrera de práctica la primera vez que jugás: un dedito te muestra cuándo saltar y cuándo hacer el doble salto, y después vienen el pancito y un Kampito. Cada cosa nueva lleva un cartelito la primera vez que aparece.'],
+    ['👑','Ganador del desafío: quien ganó la semana pasada lleva corona en el ranking, y al lado de cada nombre se ven los desafíos que ganó.'],
+    ['🎂','Cumpleaños de la familia (Cinthia, Sofi, Deisy, Leandro y Nora): ese día el juego saluda con confeti, y todos pueden correr con el cumpleañero, que lleva corona.'],
+    ['🎉','El día del cumple de Cinthia, la fiesta se abre para todos.'],
+    ['🔁','"Repetir la carrera de práctica", abajo en el menú.'],
+    ['⚙️','Ajustes: volumen de la música y de los efectos por separado, vibración, cuenta 3-2-1 al volver de la pausa y "menos confeti y animaciones".'],
+    ['📊','Mis números: tus estadísticas, en la pantalla de logros.'],
+    ['✨','Cuando sale una versión nueva, el menú te avisa y con un toque se actualiza.'],
+    ['⏸','Marcador más ordenado: cada número y cada barra tiene su lugar fijo, y la pausa queda siempre en la esquina, más grande y fácil de tocar.'],
+  ]},
   {v:'2.0',fecha:'octubre 2026',titulo:'¡Llegó la comida de la fiesta!',items:[
     ['🥪','Pancito con salame: vale 5 frutillas.'],
     ['🧃','Kampito en sus 3 sabores, cada uno con su poder: Green 🧲 imán, Tropical ✖️2 frutillas dobles y Citrus 🛡️ escudo.'],
@@ -675,7 +918,7 @@ const whenNext=w=>w.daysLeft===1?'mañana':`en ${w.daysLeft} días`;
 /* ---------- guardado (tolerante a fallos) ---------- */
 const KEY='tortaRunner.v15';
 const save={total:0,best:0,char:'sofi',outfit:'default',muted:false,seen:['sofi','default'],name:'',runs:[],pending:[],avatars:{},anonBest:null,lastTop:[],
-  ach:{},st:{},wk:{key:'',rows:{}},lastWeek:{key:'',reto:'',top:[]}};
+  ach:{},st:{},wk:{key:'',rows:{}},lastWeek:{key:'',reto:'',top:[]},tips:{},set:{},cloud:null};
 try{
   const raw=localStorage.getItem(KEY);
   if(raw) Object.assign(save,JSON.parse(raw));
@@ -683,11 +926,18 @@ try{
     const t=parseInt(localStorage.getItem('sofi_total')||'0',10); if(t>0) save.total=t;
   }
 }catch(e){}
-save.st=Object.assign({runs:0,pans:0,kamps:0,tortas:0,escudos:0,bestFru:0,bestPans:0,powers:[],chars:[],fiesta:false,escapes:0,scared:0,bestEscapes:0,cleanBest:0},save.st);
+const ST0=()=>({runs:0,pans:0,kamps:0,tortas:0,escudos:0,bestFru:0,bestPans:0,powers:[],chars:[],fiesta:false,escapes:0,scared:0,bestEscapes:0,cleanBest:0,meters:0});
+save.st=Object.assign(ST0(),save.st);
+// ajustes de este dispositivo (no viajan a la caja fuerte)
+const calmDefault=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}})();
+save.set=Object.assign({music:100,sfx:100,vib:true,count:true,calm:calmDefault},save.set);
+const calm=()=>!!save.set.calm;
+document.body.classList.toggle('calm',calm());
+function vib(p){if(save.set.vib&&navigator.vibrate)try{navigator.vibrate(p)}catch(e){}}
 if(!save.st.runs&&(save.best>0||save.total>0)) save.st.runs=1; // ya había jugado antes de los logros
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
-const charUnlocked=c=>save.total>=c.need;
-const partyOpen=()=>CHARS.every(c=>save.total>=c.need);
+const charUnlocked=c=>save.total>=c.need||bdayChar(c.id); // el día de su cumple, cualquiera puede correr con el cumpleañero
+const partyOpen=()=>CHARS.every(c=>save.total>=c.need)||cinthiaDay(); // el día del cumple de Cinthia la fiesta se abre para todos
 const outfitUnlocked=o=>save.total>=o.need;
 
 /* ---------- imágenes ---------- */
@@ -705,7 +955,8 @@ const ok=im=>im&&im.complete&&im.naturalWidth>0;
 let AC=null;
 function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){} } if(AC&&AC.state==='suspended') AC.resume(); return AC; }
 function tone(type,f1,f2,dur,vol,delay=0){
-  if(save.muted) return; const a=ac(); if(!a) return;
+  if(save.muted||!save.set.sfx) return; const a=ac(); if(!a) return;
+  vol*=save.set.sfx/100;
   try{const t=a.currentTime+delay,o=a.createOscillator(),g=a.createGain();
     o.type=type;o.frequency.setValueAtTime(f1,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+dur*.6);
     g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
@@ -748,6 +999,7 @@ function layout(){
   dpr=Math.min(window.devicePixelRatio||1,2);
   cv.width=Math.round(cssW*dpr); cv.height=Math.round(cssH*dpr);
   stage.classList.toggle('tall',cssH>cssW*1.05);
+  stage.classList.toggle('low',cssH<600); // compu o celular acostado: pantallas compactas
   // celular parado: mundo un poco más angosto (personajes más grandes) y el piso más arriba
   const tall=cssH>cssW;
   const minVW=tall?560:720;
@@ -776,7 +1028,7 @@ function reset(){
   R={pans:0,kamps:0,tortas:0,escudos:0,sinKamp:null,powers:[],escapes:0,scared:0,stumbles:0}; // lo que pasó en esta partida
   pow={type:'',t:0,max:1};
   dina={stage:0,x:-260,calm:0,caught:false}; // Dina te persigue (prueba)
-  kampIn=2400+Math.random()*1600; // el primer Kampito sale a los ~7-10 s
+  kampIn=(Object.keys(save.tips).some(k=>k.startsWith('kamp_'))?2400:1500)+Math.random()*1600; // el primer Kampito sale a los ~7-10 s (antes la primera vez)
   P.y=GROUND;
 }
 reset();
@@ -789,10 +1041,14 @@ function pw(){const im=curSprite();return ok(im)?PH*im.naturalWidth/im.naturalHe
 
 function jump(){
   if(state!=='playing') return;
+  if(PR&&PR.wait){ // carrera de práctica: el toque que esperaba el dedito
+    if(PR.wait==='tap'&&PR.cur&&PR.cur.dbl) PR.dbl=1; // en esta torta después se enseña el doble salto
+    PR.wait='';PR.cur=null;timeScale=1;PR.ok++;
+  }
   if(P.onG||P.coyote>0){P.vy=JUMP;P.onG=false;P.coyote=0;P.jumps=1;P.squash=.75;sJump();dust(6);}
   else if(P.jumps>0){P.vy=JUMP2;P.jumps=0;P.squash=.8;sJump2();sparkle();}
   else P.buffer=8;
-  if(navigator.vibrate) try{navigator.vibrate(12)}catch(e){}
+  vib(12);
 }
 function dust(n){const w=pw();for(let i=0;i<n;i++)parts.push({x:PX+w*.4,y:P.y-4,vx:-Math.random()*3-1,vy:-Math.random()*2,life:1,type:'dust'})}
 function sparkle(){const w=pw();for(let i=0;i<6;i++)parts.push({x:PX+w/2+(Math.random()-.5)*w,y:P.y-PH*.3,vx:(Math.random()-.5)*3,vy:Math.random()*2+1,life:1,type:'star'})}
@@ -808,7 +1064,7 @@ function spawnChunk(){
   const r=Math.random();
   let extra=0;
   if(r<.38){ // arco sobre la torta (sigue la curva del salto); a veces la punta es un pancito
-    const pan=Math.random()<.22;
+    const pan=Math.random()<(save.tips.pan?.22:.6);
     for(let i=0;i<5;i++){const dx=(i-2)*46;fru.push({x:x+span/2+dx,y:GROUND-170+Math.abs(i-2)**2*14,bob:Math.random()*6,kind:(pan&&i===2)?'pan':''})}
   }else if(r<.72){ // línea a ras del piso después de la torta
     for(let i=0;i<4;i++) fru.push({x:x+span+150+i*44,y:GROUND-40,bob:Math.random()*6});
@@ -821,7 +1077,7 @@ function spawnChunk(){
   nextSpawn=Math.max(minGap+Math.random()*320,extra+130);
   // Kampito: más raro, flotando a media altura en el hueco entre dos tortas
   if(kampIn<=0&&!extra){
-    fru.push({x:x+span+Math.max(170,nextSpawn*.5),y:GROUND-150,bob:Math.random()*6,kind:'kamp',flavor:['iman','doble','escudo'][Math.random()*3|0]});
+    fru.push({x:x+span+Math.max(170,nextSpawn*.5),y:GROUND-150,bob:Math.random()*6,kind:'kamp',flavor:pickFlavor()});
     kampIn=4800+Math.random()*3600;
   }
 }
@@ -832,7 +1088,7 @@ function setPower(type){
   $('hPowEm').textContent=p.em;show('hPow',true);
   parts.push({x:PX+pw()/2,y:P.y-PH-22,vx:0,vy:-.9,life:1.4,type:'plus',txt:p.name,big:1});
 }
-function say(t,x,y){parts.push({x,y,vx:0,vy:-.8,life:1.5,type:'plus',txt:t,big:1})}
+function say(t,x,y,life=1.5,vy=-.8){parts.push({x,y,vx:0,vy,life,type:'plus',txt:t,big:1})}
 function dinaAway(t){dina.stage=0;dina.calm=0;show('hDina',false);say(t,PX+60,P.y-PH-30)}
 function stumble(o){ // primer choque: tropezás, perdés velocidad y Dina se acerca
   o.gone=true;
@@ -840,8 +1096,11 @@ function stumble(o){ // primer choque: tropezás, perdés velocidad y Dina se ac
   speed=Math.max(6.5,speed-1.6);P.inv=50;P.vy=Math.min(P.vy,-7);P.onG=false;
   dina.stage=1;dina.calm=DINA_CALM;R.stumbles++;show('hDina',true);
   tone('sawtooth',260,150,.25,.22);tone('triangle',700,1100,.18,.16,.15); // ¡miau!
-  say('¡Uy! Dina te persigue 🐱',PX+90,P.y-PH-30);
-  if(navigator.vibrate) try{navigator.vibrate(40)}catch(e){}
+  // ~2,5 s a la vista (la primera vez ~3,5 s), subiendo despacio para que se pueda leer
+  if(save.tips.dina) say('¡Uy! Dina te persigue 🐱',VW/2,Math.min(P.y,GROUND)-PH-40,3,-.3);
+  else{say('¡Dina te persigue! 🐱',VW/2,Math.min(P.y,GROUND)-PH-70,4.2,-.25);say('No choques hasta que se canse',VW/2,Math.min(P.y,GROUND)-PH-30,4.2,-.25)}
+  save.tips.dina=1;
+  vib(40);
 }
 function breakCake(o){ // el escudo rompe la torta en migas
   o.gone=true;R.escudos++;
@@ -892,9 +1151,10 @@ function update(){
       if(pow.type==='escudo'){ // el escudo rompe la torta (y la de al lado) y se gasta
         for(const o2 of obs) if(Math.abs(o2.x-o.x)<140) breakCake(o2);
         sCrash();pow.t=0;pow.type='';show('hPow',false);P.inv=30;
-        if(navigator.vibrate) try{navigator.vibrate(25)}catch(e){}
+        vib(25);
         continue;
       }
+      if(PR){ PR.hits++;breakCake(o);R.escudos--;P.inv=30;say('¡Uy! Saltá cuando aparece el dedito 👆',PX+90,P.y-PH-30);continue; }
       if(!dina.stage){ stumble(o); continue; }
       dina.caught=true; die(); return;
     }
@@ -920,8 +1180,9 @@ function update(){
     }
   }
   if(tick%20===0) achCheck(true);
+  if(PR) practiceStep(); else tipsWatch();
   // confeti de Cinthia
-  if(save.char==='cinthia'&&Math.random()<.45) conf.push({x:PX+w*.2,y:P.y-PH*.5,vx:-Math.random()*2-.5-speed*.3,vy:(Math.random()-.5)*2,rot:Math.random()*6,vr:(Math.random()-.5)*.25,c:['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'][Math.random()*5|0],life:1});
+  if(save.char==='cinthia'&&Math.random()<(calm()?.1:.45)) conf.push({x:PX+w*.2,y:P.y-PH*.5,vx:-Math.random()*2-.5-speed*.3,vy:(Math.random()-.5)*2,rot:Math.random()*6,vr:(Math.random()-.5)*.25,c:['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'][Math.random()*5|0],life:1});
   stepParts();
   hud();
 }
@@ -985,7 +1246,8 @@ function drawPlayer(){
   if(save.outfit==='corazon'){
     const hx=w*.42,hy=-PH-6+Math.sin(tick*.12)*5;
     ctx.fillStyle='#FF4D6D';ctx.strokeStyle='#000';ctx.lineWidth=3;heartPath(hx,hy,16);ctx.fill();ctx.stroke();
-  }else if(save.outfit==='corona'){
+  }
+  if(save.outfit==='corona'||bdayChar(save.char)){ // el cumpleañero corre con corona
     const cw=w*.5,cy=-PH+4;
     ctx.fillStyle='#FFD93D';ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.lineJoin='round';ctx.beginPath();
     ctx.moveTo(-cw/2,cy);ctx.lineTo(-cw/2,cy-18);ctx.lineTo(-cw/4,cy-8);ctx.lineTo(0,cy-24);ctx.lineTo(cw/4,cy-8);ctx.lineTo(cw/2,cy-18);ctx.lineTo(cw/2,cy);ctx.closePath();ctx.fill();ctx.stroke();
@@ -1049,18 +1311,112 @@ function draw(){
       if(ok(ki)) ctx.drawImage(ki,f.x-15,fy-46,30,92);
     }
     else if(ok(fi)) ctx.drawImage(fi,f.x-14,fy-20,28,41);
+    if(f.label) drawLabel(f.label,f.x,fy-(f.kind==='kamp'?52:28));
   }
   drawDina();
   drawPlayer();
   drawParts();
+  drawPractice();
 }
+
+/* ---------- tutorial: cada consejo aparece una sola vez, cuando hace falta ---------- */
+let timeScale=1,tipT=0,tipWait='';
+const KAMP_TIP={iman:'Kampito Green 🟢: te da un imán 🧲',doble:'Kampito Tropical 🟡: duplica las frutillas ✖️2',escudo:'Kampito Citrus 🟠: te da un escudo 🛡️'};
+function tipShow(key,txt,o={}){
+  if(save.tips[key]) return false;
+  save.tips[key]=1;persist();
+  const el=$('tip');el.textContent=txt;el.classList.toggle('wait',!!o.wait);el.hidden=true;void el.offsetWidth;el.hidden=false;
+  clearTimeout(tipT);tipWait=o.wait||'';
+  timeScale=o.wait?0:1; // solo el primer salto espera; el resto se lee sin frenar el juego
+  if(!o.wait) tipT=setTimeout(tipHide,o.ms||3600);
+  return true;
+}
+function tipHide(){clearTimeout(tipT);show('tip',false);timeScale=1;tipWait=''}
+const KAMP_LABEL={iman:'🧲 Imán',doble:'✖️2 Frutillas dobles',escudo:'🛡️ Escudo'};
+function tipsWatch(){ // cada cosa nueva lleva un cartelito encima la primera vez que aparece (sin carteles arriba)
+  if(!save.tips.pan){const f=fru.find(f=>f.kind==='pan'&&f.x<VW+20);if(f){f.label='+5 🍓';save.tips.pan=1;persist()}}
+  const k=fru.find(f=>f.kind==='kamp'&&f.x<VW+20&&!save.tips['kamp_'+f.flavor]);
+  if(k){k.label=KAMP_LABEL[k.flavor];save.tips['kamp_'+k.flavor]=1;persist()}
+}
+function oldTipsWatch(){
+  if(!save.tips.pan){const f=fru.find(f=>f.kind==='pan'&&f.x<VW+20);if(f&&tipShow('pan','🥪 Pancito con salame: ¡vale 5 frutillas!'))f.label='+5 🍓'}
+  const k=fru.find(f=>f.kind==='kamp'&&f.x<VW+20&&!save.tips['kamp_'+f.flavor]);
+  if(k&&!tipWait&&tipShow('kamp_'+k.flavor,'🧃 '+KAMP_TIP[k.flavor]+'. ¡Agarralo!'))k.label=KAMP_LABEL[k.flavor];
+}
+function drawLabel(t,x,y){ // cartelito sobre el objeto que explica el tutorial
+  ctx.save();ctx.font='700 22px Caveat, cursive';const w=ctx.measureText(t).width+18;
+  ctx.fillStyle='#FFF';ctx.strokeStyle='#000';ctx.lineWidth=3;
+  ctx.beginPath();ctx.roundRect?ctx.roundRect(x-w/2,y-30,w,28,10):ctx.rect(x-w/2,y-30,w,28);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-6,y-2);ctx.lineTo(x,y+6);ctx.lineTo(x+6,y-2);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.fillStyle='#000';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(t,x,y-16);ctx.restore();
+}
+/* ---------- carrera de práctica (primera partida) ----------
+   Los primeros tramos están armados a mano: una cosa nueva por vez, con espacio entre cada una.
+   En el momento justo el juego se queda quieto y un dedito pide el toque; casi sin texto. */
+let PR=null;
+const PR_JUMP=72; // a qué distancia de la torta conviene saltar
+function pickFlavor(){
+  const fl=['iman','doble','escudo'],nuevos=fl.filter(f=>!save.tips['kamp_'+f]);
+  return nuevos.length&&Math.random()<.85?nuevos[Math.random()*nuevos.length|0]:fl[Math.random()*3|0];
+}
+function practiceStart(){
+  PR={wait:'',cur:null,dbl:0,ok:0,hits:0,endX:0,t0:performance.now()};
+  nextSpawn=1e9;kampIn=1e9;
+  const X=VW+120;
+  // 1) una torta sola: aprender a saltar
+  obs.push({x:X,w:60,h:64,pr:1});
+  // 2) otra torta con frutillas arriba: doble salto
+  const X2=X+760;
+  obs.push({x:X2,w:60,h:64,pr:1,dbl:1});
+  [[95,236],[135,258],[175,236]].forEach(([dx,dy])=>fru.push({x:X2+dx,y:GROUND-dy,bob:0}));
+  // 3) pancito a ras del piso, con su cartelito
+  const X3=X2+760;
+  fru.push({x:X3,y:GROUND-40,bob:1},{x:X3+44,y:GROUND-40,bob:2},{x:X3+92,y:GROUND-46,bob:0,kind:'pan',label:'+5 🍓'},{x:X3+140,y:GROUND-40,bob:3});
+  // 4) un Kampito Green al alcance, y frutillas que el imán trae
+  const X4=X3+620;
+  fru.push({x:X4,y:GROUND-70,bob:0,kind:'kamp',flavor:'iman',label:KAMP_LABEL.iman});
+  for(let i=0;i<6;i++) fru.push({x:X4+200+i*60,y:GROUND-(i%2?200:120),bob:i});
+  PR.endX=X4+620;
+}
+function practiceStep(){
+  const w=pw();
+  if(!PR.wait){
+    for(const o of obs) if(o.pr&&!o.asked&&o.x+o.w*.14-(PX+w*.73)<=PR_JUMP){
+      o.asked=1; if(P.onG){PR.wait='tap';PR.cur=o;timeScale=0;PR.since=performance.now();return}
+    }
+    // en lo más alto del salto: ahora el doble salto
+    if(PR.dbl&&!P.onG&&P.jumps===1&&P.vy>=-1.5){PR.dbl=0;PR.wait='tap2';timeScale=0;PR.since=performance.now();return}
+  }
+  PR.endX-=speed;
+  if(PR.endX<=PX) practiceEnd();
+}
+function practiceEnd(){
+  say('¡Listo! ¡A correr! 🎉',PX+120,GROUND-220);
+  Object.assign(save.tips,{practica:1,jump:1,doble:1,pan:1,kamp_iman:1});persist();
+  PR=null;nextSpawn=240;kampIn=4800+Math.random()*3600;
+}
+function drawPractice(){ // el dedito que late donde hay que tocar
+  if(!PR||!PR.wait) return;
+  const t=(performance.now()-PR.since)/1000,beat=(Math.sin(t*7)+1)/2;
+  const x=PX+pw()+90,y=(PR.wait==='tap2'?P.y-PH*.5:GROUND-130);
+  ctx.save();
+  ctx.fillStyle='rgba(255,247,251,.45)';ctx.fillRect(0,0,VW,VH); // la escena se aclara un poco mientras espera
+  for(let k=0;k<2;k++){const ph=(t*1.2+k*.5)%1;ctx.globalAlpha=1-ph;ctx.strokeStyle='#FF4D6D';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,y+6,18+ph*46,0,7);ctx.stroke()}
+  ctx.globalAlpha=1;ctx.font=(46+beat*8)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('👆',x,y+24-beat*10);
+  ctx.font='700 32px Caveat, cursive';ctx.lineWidth=5;ctx.strokeStyle='#000';ctx.fillStyle='#FFD93D';
+  const txt=PR.wait==='tap2'?'¡Otra vez, en el aire!':'¡Tocá para saltar!';
+  ctx.strokeText(txt,x+20,y-50);ctx.fillText(txt,x+20,y-50);
+  ctx.restore();
+}
+$('tutLink').onclick=()=>{save.tips={};persist();toast('Listo: la carrera de práctica vuelve en la próxima partida')};
 
 /* ---------- bucle con paso fijo (misma velocidad en 60, 90 o 120 Hz) ---------- */
 let last=performance.now(),acc=0;
 function loop(now){
   let dt=Math.min(100,now-last);last=now;
   if(state==='playing'||state==='dying'){
-    acc+=dt;
+    acc+=dt*(state==='dying'?1:timeScale);
     while(acc>=1000/60){update();acc-=1000/60;}
   }else{
     acc=0;
@@ -1085,14 +1441,15 @@ function show(id,on){$(id).hidden=!on}
 function start(){
   ac();
   if(!charUnlocked(CHARS.find(c=>c.id===save.char))) save.char='sofi';
-  reset();state='playing';hudCache='';powCache=-1;achThisRun=0;hud();
+  reset();PR=null;state='playing';hudCache='';powCache=-1;achThisRun=0;hud();tipHide();
+  if(!save.tips.practica) practiceStart(); // primera partida: carrera de práctica
   show('menu',false);show('over',false);show('pause',false);show('rank',false);show('ach',false);show('news',false);show('hPow',false);show('hDina',false);show('hud',true);
   refreshMusic();
   stage.focus?.();
 }
 function die(){
-  state='dying';sHit();P.vy=-9;P.rot=0;dieT=0;pow.type='';pow.t=0;show('hDina',false);show('hPow',false);refreshMusic();
-  if(navigator.vibrate) try{navigator.vibrate([30,40,60])}catch(e){}
+  tipHide();state='dying';sHit();P.vy=-9;P.rot=0;dieT=0;pow.type='';pow.t=0;show('hDina',false);show('hPow',false);refreshMusic();
+  vib([30,40,60]);
 }
 function gameOver(){
   state='over';show('hud',false);
@@ -1102,7 +1459,7 @@ function gameOver(){
   const rec=m>save.best; if(rec) save.best=m;
   // estadísticas para los logros
   const S=save.st;
-  S.runs++;S.pans+=R.pans;S.kamps+=R.kamps;S.tortas+=R.tortas;S.escudos+=R.escudos;
+  S.runs++;S.meters+=m;S.pans+=R.pans;S.kamps+=R.kamps;S.tortas+=R.tortas;S.escudos+=R.escudos;
   S.bestFru=Math.max(S.bestFru,got);S.bestPans=Math.max(S.bestPans,R.pans);
   S.escapes+=R.escapes;S.scared+=R.scared;S.bestEscapes=Math.max(S.bestEscapes,R.escapes);
   if(!R.stumbles) S.cleanBest=Math.max(S.cleanBest,m);
@@ -1118,9 +1475,13 @@ function gameOver(){
   show('dinaPan',panDina);
   $('goSub').textContent=R&&dina.caught?'¡Dina te alcanzó y se comió la torta! 🐱':panDina?'Dina se comió la torta… ¡y el pancito! 🥪':'Dina se comió la torta 🍰';
   $('dinaTxt').textContent=panDina?'miau… ¡el pancito con salame también era mío!':'miau… ¡la torta era mía!';
+  if(dina.caught&&!save.tips.dinaOver){ // consejo justo cuando sirve, sin apuro
+    save.tips.dinaOver=1;persist();
+    $('dinaTxt').textContent='¡Te alcancé! 😼 Si te tropezás, corré un ratito sin chocar y me canso';
+  }
   const nAch=Object.keys(save.ach).length,nNew=achThisRun;
   $('achLine').textContent=`🏅 Logros: ${nAch} de ${ACH.length}`+(nNew?` · ¡${nNew===1?'uno nuevo':nNew+' nuevos'}!`:'');
-  show('over',true);
+  show('over',true);showUpd();
   const run={metros:m,frutillas:got,pans:R.pans,kamps:R.kamps,tortas:R.tortas,sinKamp:R.sinKamp===null?m:R.sinKamp};
   const wk=weekInfo();
   const val=wk.reto.val(run)|0;
@@ -1131,8 +1492,9 @@ function gameOver(){
   const news=[...CHARS.map(c=>({k:'char',...c})),...OUTFITS.map(o=>({k:'outfit',...o}))]
     .filter(x=>x.need>before&&x.need<=save.total&&!save.seen.includes(x.id));
   if(news.length){news.forEach(n=>save.seen.push(n.id));persist();unlockQueue.push(...news);setTimeout(nextUnlock,700)}
+  cloudSync();
 }
-function toMenu(){state='menu';reset();show('over',false);show('pause',false);show('hud',false);show('rank',false);show('ach',false);renderMenu();show('menu',true);refreshMusic()}
+function toMenu(){showUpd();state='menu';reset();show('over',false);show('pause',false);show('hud',false);show('rank',false);show('ach',false);renderMenu();show('menu',true);refreshMusic()}
 
 /* ---------- logros ---------- */
 let achThisRun=0;const achQueue=[];let achT=0;
@@ -1175,7 +1537,7 @@ function openAch(){
     d.innerHTML=`<span class="e">${a.em}</span><span><div class="t">${a.name}${has?' ✓':''}</div><div class="d">${a.desc}</div></span>`;
     g.appendChild(d);
   }
-  show('ach',true);
+  setAchTab('ach');show('ach',true);
 }
 function openNews(){
   const box=$('newsList');box.textContent='';
@@ -1195,16 +1557,53 @@ function closeNews(){show('news',false);if(save.seenVersion!==VERSION){save.seen
 $('newsBtn').onclick=openNews;$('verLink').onclick=openNews;$('newsOk').onclick=closeNews;
 $('achBtn').onclick=openAch;$('achBtn2').onclick=openAch;$('achBack').onclick=()=>show('ach',false);
 function pause(){if(state!=='playing')return;state='paused';show('pause',true);refreshMusic()}
-function resume(){if(state!=='paused')return;state='playing';last=performance.now();show('pause',false);refreshMusic()}
+let counting=0,countTimer=0;
+function resume(){
+  if(state!=='paused'||counting)return;
+  show('pause',false);
+  if(!save.set.count){goOn();return}
+  counting=3;countStep();
+}
+function countStep(){
+  if(state!=='paused'){cancelCount();return}
+  if(!counting){show('count',false);goOn();return}
+  const b=$('countN');b.textContent=counting;show('count',true);b.style.animation='none';void b.offsetWidth;b.style.animation='';
+  tone('sine',counting===1?880:660,0,.14,.2);
+  counting--;countTimer=setTimeout(countStep,560);
+}
+function cancelCount(){clearTimeout(countTimer);counting=0;show('count',false);if(state==='paused')show('pause',true)}
+function goOn(){state='playing';last=performance.now();acc=0;refreshMusic()}
 
 let toastT=0;
 function toast(msg){const t=$('toast');t.textContent='💬 '+msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2200)}
 
+function renderBday(){
+  const hc=hoyCumple(),b=$('bday');
+  if(!hc.length){b.hidden=true;return}
+  const ci=hc.find(c=>c.char==='cinthia'),otros=hc.filter(c=>c.char!=='cinthia');
+  const partes=[];
+  if(ci) partes.push('🎉 ¡Hoy es el cumple de Cinthia! La fiesta está abierta para todos 🎂');
+  if(otros.length){const n=otros.map(c=>c.nombre);const lista=n.length>1?n.slice(0,-1).join(', ')+' y '+n[n.length-1]:n[0];
+    partes.push('🎂 ¡Hoy es el cumple de '+lista+'!'+(otros.some(c=>c.char)?' Hoy todos pueden correr con '+(otros.filter(c=>c.char).length>1?'ellos':otros.find(c=>c.char).nombre)+' 👑':''))}
+  b.textContent=partes.join(' · ');b.classList.toggle('big',!!ci);b.hidden=false;
+}
+let bdayFired='';
+function bdayConfetti(){ // confeti una vez por día al abrir el juego
+  const k=hoy().toDateString(); if(!hoyCumple().length||bdayFired===k) return; bdayFired=k;
+  const c=$('bdayConf');c.hidden=false;const x=c.getContext('2d');c.width=c.offsetWidth;c.height=c.offsetHeight;
+  const cols=['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'];
+  const ps=Array.from({length:calm()?28:110},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.8,vx:(Math.random()-.5)*2,vy:Math.random()*2+1.5,c:cols[Math.random()*5|0],r:Math.random()*6}));
+  const t0=performance.now();
+  (function f(t){x.clearRect(0,0,c.width,c.height);for(const p of ps){p.x+=p.vx;p.y+=p.vy;p.r+=.08;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-4,-6,8,12);x.restore()}
+    if(t-t0<4500)requestAnimationFrame(f);else{x.clearRect(0,0,c.width,c.height);c.hidden=true}})(t0);
+}
 function renderMenu(){
   $('mTotal').textContent=save.total;$('mBest').textContent=save.best;
+  $('setBtn').textContent=save.muted?'🔇':'⚙️';$('setBtn').title=save.muted?'Ajustes (sonido apagado)':'Ajustes';
+  renderBday();
   const wk=weekInfo();
-  $('retoPill').textContent=`🎯 Desafío de la semana: ${wk.reto.name} · el próximo sale el lunes (${whenNext(wk)})`;
-  $('soundBtn').textContent=save.muted?'🔇':'🔊';
+  const pw=prevWinner();
+  $('retoPill').textContent=(pw&&wk.daysLeft>=5?`👑 ${cleanName(pw.nombre)} ganó la semana pasada · `:'')+`🎯 Desafío de la semana: ${wk.reto.name} · el próximo sale el lunes (${whenNext(wk)})`;
   const ch=$('chars');ch.innerHTML='';
   for(const c of CHARS){
     const un=charUnlocked(c),sel=save.char===c.id;
@@ -1213,7 +1612,7 @@ function renderMenu(){
     b.style.borderRadius='18px';
     b.setAttribute('aria-pressed',sel);
     b.innerHTML=`<div class="pic"><img src="assets/${c.img}.webp" alt="${c.name}">${un?'':`<div class="lock"><span>🔒 ${c.need} 🍓</span></div>`}</div>
-      <div class="nm">${c.name}</div><div class="ds">${c.desc}</div>${sel?'<div class="chk">✓</div>':''}`;
+      <div class="nm">${c.name}${bdayChar(c.id)?' 🎂':''}</div><div class="ds">${bdayChar(c.id)?'¡Hoy es su cumple!':c.desc}</div>${sel?'<div class="chk">✓</div>':''}`;
     b.onclick=()=>{
       if(!un){toast(`${c.name} necesita ${c.need} 🍓 — tenés ${save.total}`);return}
       save.char=c.id; if(save.outfit==='hoodie'&&c.id!=='sofi') save.outfit='default';
@@ -1252,7 +1651,7 @@ function nextUnlock(){
   $('uOk').textContent=u.id==='cinthia'?'¡Ir a la fiesta! 🎉':'¡A jugar! 🎉';
   show('unlock',true);
   const c=$('confetti'),x=c.getContext('2d');c.width=c.offsetWidth;c.height=c.offsetHeight;
-  const ps=Array.from({length:90},()=>({x:Math.random()*c.width,y:-20-Math.random()*240,vx:(Math.random()-.5)*3,vy:Math.random()*3+2,c:['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'][Math.random()*5|0],r:Math.random()*6}));
+  const ps=Array.from({length:calm()?24:90},()=>({x:Math.random()*c.width,y:-20-Math.random()*240,vx:(Math.random()-.5)*3,vy:Math.random()*3+2,c:['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'][Math.random()*5|0],r:Math.random()*6}));
   cancelAnimationFrame(confRAF);
   (function f(){x.clearRect(0,0,c.width,c.height);for(const p of ps){p.x+=p.vx;p.y+=p.vy;p.vy+=.03;p.r+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-4,-6,8,12);x.restore()}confRAF=requestAnimationFrame(f)})();
 }
@@ -1266,6 +1665,8 @@ stage.addEventListener('pointerdown',e=>{
 },{passive:false});
 $('pause').addEventListener('pointerdown',e=>{if(!e.target.closest('button'))resume()});
 window.addEventListener('keydown',e=>{
+  if(!$('vault').hidden){vKey(e);return}
+  if(!$('settings').hidden){ if(e.code==='Escape') $('setBack').click(); return }
   if(e.target&&e.target.tagName==='INPUT') return; // escribiendo un nombre
   if(!$('rank').hidden){ if(e.code==='Escape') show('rank',false); return }
   if(!$('ach').hidden){ if(e.code==='Escape') show('ach',false); return }
@@ -1278,11 +1679,11 @@ window.addEventListener('keydown',e=>{
     if(e.target.closest&&e.target.closest('button')&&state!=='playing') return; // deja que el botón haga lo suyo
     e.preventDefault();
     if(state==='playing') jump(); else if(state==='menu') start(); else if(state==='over') start(); else if(state==='paused') resume();
-  }else if(k==='KeyP'||k==='Escape'){ state==='playing'?pause():resume() }
+  }else if(k==='KeyP'||k==='Escape'){ if(counting)cancelCount(); else state==='playing'?pause():resume() }
   else if(k==='Enter'&&state==='menu'){start()}
 });
-document.addEventListener('visibilitychange',()=>{if(document.hidden){pause();stopMusic();stopRunMusic()}else refreshMusic()});
-window.addEventListener('blur',pause);
+document.addEventListener('visibilitychange',()=>{if(document.hidden){if(counting)cancelCount();pause();stopMusic();stopRunMusic()}else{refreshMusic();cloudSoon()}});
+window.addEventListener('blur',()=>{if(counting)cancelCount();pause()});
 
 $('playBtn').onclick=start;
 $('playBtn2').onclick=start;
@@ -1290,7 +1691,7 @@ $('againBtn').onclick=start;
 $('menuBtn').onclick=toMenu;
 $('pauseBtn').onclick=pause;
 $('resumeBtn').onclick=resume;
-$('soundBtn').onclick=()=>{save.muted=!save.muted;persist();renderMenu();refreshMusic();if(!save.muted)sFru()};
+$('soundBtn').onclick=()=>{save.muted=!save.muted;persist();setTog('soundBtn',!save.muted);$('soundEm').textContent=save.muted?'🔇':'🔊';refreshMusic();if(!save.muted)sFru()};
 $('fsBtn').onclick=async()=>{
   try{
     if(document.fullscreenElement){await document.exitFullscreen();return}
@@ -1321,7 +1722,7 @@ function boxNote(a,out,f,t,dur,vol){ // timbre de cajita musical
 function playHB(){
   stopMusic(); if(!musicOn||save.muted) return;
   const a=ac(); if(!a) return;
-  musicGain=a.createGain();musicGain.gain.value=.5;musicGain.connect(a.destination);
+  musicGain=a.createGain();musicGain.gain.value=.5*musicVol();musicGain.connect(a.destination);
   const t0=a.currentTime+.1;let b=0;
   for(const [n,d] of MELODY){boxNote(a,musicGain,N[n],t0+b*BEAT,d*BEAT,.32);b+=d}
   for(const [bb,n] of BASS){boxNote(a,musicGain,N[n],t0+bb*BEAT,BEAT*2,.22);boxNote(a,musicGain,N[n]*3,t0+(bb+1)*BEAT,BEAT,.06);boxNote(a,musicGain,N[n]*3,t0+(bb+2)*BEAT,BEAT,.06)}
@@ -1333,17 +1734,17 @@ function stopMusic(){
   musicGain=null;
 }
 function blowSound(){
-  if(save.muted) return; const a=ac(); if(!a) return;
+  if(save.muted||!save.set.sfx) return; const a=ac(); if(!a) return;
   const len=a.sampleRate*.7,buf=a.createBuffer(1,len,a.sampleRate),d=buf.getChannelData(0);
   for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2);
   const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
-  f.type='lowpass';f.frequency.value=1200;g.gain.value=.5;s.buffer=buf;s.connect(f);f.connect(g);g.connect(a.destination);s.start();
+  f.type='lowpass';f.frequency.value=1200;g.gain.value=.5*save.set.sfx/100;s.buffer=buf;s.connect(f);f.connect(g);g.connect(a.destination);s.start();
 }
 function partyConfetti(){
   const c=$('partyConf'),x=c.getContext('2d');c.width=c.offsetWidth;c.height=c.offsetHeight;
   const cols=['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'];
   const mk=()=>({x:Math.random()*c.width,y:-10-Math.random()*c.height,vx:(Math.random()-.5)*1.5,vy:Math.random()*1.5+1,c:cols[Math.random()*5|0],r:Math.random()*6});
-  const ps=Array.from({length:70},mk);
+  const ps=Array.from({length:calm()?18:70},mk);
   cancelAnimationFrame(partyRAF);
   (function f(){x.clearRect(0,0,c.width,c.height);for(const p of ps){p.x+=p.vx;p.y+=p.vy;p.r+=.08;if(p.y>c.height+12)Object.assign(p,mk(),{y:-12});x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-3,-5,6,10);x.restore()}partyRAF=requestAnimationFrame(f)})();
 }
@@ -1367,7 +1768,7 @@ function blow(){
   if(partyStage!=='vela') return; partyStage='fiesta';
   countT.forEach(clearTimeout);
   show('blowBtn',false);blowSound();show('blackout',true);
-  if(!save.st.fiesta){save.st.fiesta=true;persist();setTimeout(()=>achCheck(false),1200)}
+  if(!save.st.fiesta){save.st.fiesta=true;persist();setTimeout(()=>{achCheck(false);cloudSync()},1200)}
   $('partyMsg').textContent='¡Se apagó!';
   setTimeout(()=>{
     $('vVela').hidden=true;show('blackout',false);
@@ -1392,12 +1793,15 @@ $('musicBtn').onclick=toggleMusic;$('musicHud').onclick=toggleMusic;$('musicMenu
 musicLabel();
 $('partyBtn').onclick=()=>{if(partyOpen())openParty()};
 $('partyBtn2').onclick=openParty;
-$('resetBtn').onclick=()=>{show('resetAsk',true);$('resetBtn').hidden=true};
+$('resetBtn').onclick=()=>{
+  $('resetTxt').textContent=save.cloud&&save.cloud.key?'¿Seguro? Se borra de este dispositivo y salís de tu caja fuerte (en la nube queda guardado).':'¿Seguro? Se pierden las frutillas, los desbloqueos y los logros.';
+  show('resetAsk',true);$('resetBtn').hidden=true};
 $('resetNo').onclick=()=>{show('resetAsk',false);$('resetBtn').hidden=false};
 $('resetYes').onclick=()=>{
-  Object.assign(save,{total:0,best:0,char:'sofi',outfit:'default',seen:['sofi','default'],ach:{},
-    st:{runs:0,pans:0,kamps:0,tortas:0,escudos:0,bestFru:0,bestPans:0,powers:[],chars:[],fiesta:false,escapes:0,scared:0,bestEscapes:0,cleanBest:0}});persist();
-  show('resetAsk',false);$('resetBtn').hidden=false;renderMenu();toast('Progreso borrado. ¡A empezar de nuevo!');
+  const hadCloud=!!(save.cloud&&save.cloud.key);
+  Object.assign(save,{total:0,best:0,char:'sofi',outfit:'default',seen:['sofi','default'],ach:{},st:ST0(),tips:{},cloud:null});persist();
+  show('resetAsk',false);$('resetBtn').hidden=false;renderMenu();cloudUI();
+  toast(hadCloud?'Borrado de este dispositivo. Tu caja fuerte ☁️ sigue guardada':'Progreso borrado. ¡A empezar de nuevo!');
 };
 
 /* ---------- música suave durante la partida (composición propia) ---------- */
@@ -1420,7 +1824,7 @@ function schedRun(){
 }
 function startRunMusic(){
   stopRunMusic(); const a=ac(); if(!a) return;
-  runGain=a.createGain();runGain.gain.setValueAtTime(0,a.currentTime);runGain.gain.linearRampToValueAtTime(.38,a.currentTime+.8);runGain.connect(a.destination);
+  runGain=a.createGain();runGain.gain.setValueAtTime(0,a.currentTime);runGain.gain.linearRampToValueAtTime(.38*musicVol(),a.currentTime+.8);runGain.connect(a.destination);
   runNext=a.currentTime+.08; schedRun(); runT=setInterval(schedRun,80);
 }
 function stopRunMusic(){
@@ -1428,8 +1832,14 @@ function stopRunMusic(){
   if(runGain&&AC){const g=runGain;try{g.gain.cancelScheduledValues(AC.currentTime);g.gain.setTargetAtTime(0,AC.currentTime,.06);setTimeout(()=>g.disconnect(),400)}catch(e){}}
   runGain=null;
 }
+const musicVol=()=>save.set.music/100;
+function setMusicVol(){ // cambia el volumen de lo que ya está sonando
+  if(!AC) return;
+  try{if(musicGain)musicGain.gain.setTargetAtTime(.5*musicVol(),AC.currentTime,.05);
+      if(runGain){runGain.gain.cancelScheduledValues(AC.currentTime);runGain.gain.setTargetAtTime(.38*musicVol(),AC.currentTime,.05)}}catch(e){}
+}
 function refreshMusic(){ // decide qué suena según la pantalla
-  const want=(!musicOn||save.muted)?'':state==='playing'?'run':(state==='party'&&partyStage==='fiesta')?'hb':'';
+  const want=(!musicOn||save.muted||!save.set.music)?'':state==='playing'?'run':(state==='party'&&partyStage==='fiesta')?'hb':'';
   if(want!=='run') stopRunMusic();
   if(want!=='hb') stopMusic();
   if(want==='run'&&!runGain) startRunMusic();
@@ -1459,6 +1869,26 @@ function localWeek(){
   if(save.wk.key!==wk.key||save.wk.reto!==wk.reto.id) return [];
   return Object.values(save.wk.rows);
 }
+/* ganador del desafío: el de la semana pasada y cuántas semanas ganó cada uno */
+const prevWeek=()=>weekInfo(new Date(Date.now()-7*86400000));
+const retoById=id=>RETOS.find(r=>r.id===id)||RETOS[0];
+function rollWeek(){ // cierra la semana guardada en este dispositivo y anota quién ganó
+  const old=save.wk; if(!old||!old.key||old.key===weekInfo().key) return;
+  let g=null;for(const r of Object.values(old.rows||{})) if((r.valor|0)>0&&(!g||r.valor>g.valor)) g=r;
+  if(g){save.champsLocal=save.champsLocal||{};const k=g.nombre.toLowerCase();save.champsLocal[k]=(save.champsLocal[k]|0)+1;
+    save.prevWinLocal={key:old.key,nombre:g.nombre,valor:g.valor|0,reto:old.reto,avatar:g.avatar||''}}
+  save.wk={key:'',rows:{}};persist();
+}
+function prevWinner(){
+  const pk=prevWeek().key;
+  if(RANKING_URL&&save.prevWin&&save.prevWin.key===pk) return save.prevWin.nombre?save.prevWin:null;
+  return save.prevWinLocal&&save.prevWinLocal.key===pk?save.prevWinLocal:null;
+}
+function champsOf(name){
+  const k=String(name).toLowerCase();
+  const m=RANKING_URL&&save.champs?save.champs:(save.champsLocal||{});
+  return m[k]|0;
+}
 function knownWeek(){
   const wk=weekInfo(),best={};
   const srv=(save.lastWeek.key===wk.key&&save.lastWeek.reto===wk.reto.id)?save.lastWeek.top:[];
@@ -1479,7 +1909,7 @@ async function submitRun(run){
   save.logrosBy=save.logrosBy||{};save.logrosBy[k]=Math.max(save.logrosBy[k]|0,run.logros|0);
   const wk=weekInfo();
   if(run.semana===wk.key&&run.reto===wk.reto.id){
-    if(save.wk.key!==wk.key||save.wk.reto!==wk.reto.id) save.wk={key:wk.key,reto:wk.reto.id,rows:{}};
+    if(save.wk.key!==wk.key||save.wk.reto!==wk.reto.id){rollWeek();save.wk={key:wk.key,reto:wk.reto.id,rows:{}};}
     const o=save.wk.rows[k];
     if(!o||run.valor>o.valor) save.wk.rows[k]={nombre:run.nombre,valor:run.valor|0,personaje:run.personaje,avatar:run.avatar||''};
   }
@@ -1489,8 +1919,10 @@ async function submitRun(run){
 async function fetchTop(){
   if(!RANKING_URL) return {mode:'local',top:localTop()};
   const wk=weekInfo();
-  try{const r=await fetch(RANKING_URL+(RANKING_URL.includes('?')?'&':'?')+'semana='+wk.key+'&reto='+wk.reto.id+'&t='+Date.now());const j=await r.json();
+  try{const r=await fetch(RANKING_URL+(RANKING_URL.includes('?')?'&':'?')+'semana='+wk.key+'&reto='+wk.reto.id+'&anterior='+prevWeek().key+'&t='+Date.now());const j=await r.json();
     if(j&&j.ok&&Array.isArray(j.top)){
+      if(j.campeones&&typeof j.campeones==='object') save.champs=j.campeones;
+      if('anterior' in j) save.prevWin=Object.assign({key:prevWeek().key,nombre:''},j.anterior||{});
       save.lastTop=j.top.slice(0,20);
       if(Array.isArray(j.semana)) save.lastWeek={key:wk.key,reto:wk.reto.id,top:j.semana.slice(0,20)};
       persist();return {mode:'online',top:j.top}}}catch(e){}
@@ -1510,7 +1942,11 @@ function renderRank(top){
     const who=document.createElement('span');who.className='who';who.textContent=cleanName(r.nombre)||'Alguien';
     const me=save.name&&sameName(r.nombre,save.name);
     const nl=Math.max(r.logros|0,me?myN:0);
-    if(nl||me){const lg=document.createElement('small');lg.textContent=`🏅 ${nl}/${ACH.length} logros`;who.appendChild(lg)}
+    const pw=prevWinner(),king=pw&&sameName(pw.nombre,r.nombre),nc=champsOf(r.nombre);
+    if(king) who.prepend('👑 ');
+    if(nl||me||nc){const lg=document.createElement('small');
+      lg.textContent=[nl||me?`🏅 ${nl}/${ACH.length} logros`:'',nc?`🏆 ${nc===1?'ganó 1 desafío':'ganó '+nc+' desafíos'}`:''].filter(Boolean).join(' · ');who.appendChild(lg)}
+    if(king) li.classList.add('king');
     const sc=document.createElement('span');sc.className='sc';
     if(reto){sc.textContent=(r.valor|0)+' '+wk.reto.unit;}
     else{sc.textContent=(r.metros|0)+' m';const sm=document.createElement('small');sm.textContent=(r.frutillas|0)+' 🍓';sc.appendChild(sm);}
@@ -1523,7 +1959,10 @@ function setRankTab(t){
   const wk=weekInfo();show('retoBox',t==='reto');
   $('retoBox').innerHTML='';
   if(t==='reto'){const b=document.createElement('b');b.textContent=wk.reto.em+' '+wk.reto.name;
-    $('retoBox').append(b,`Vale tu mejor partida de esta semana. El próximo desafío sale el lunes (${whenNext(wk)}).`)}
+    $('retoBox').append(b,`Vale tu mejor partida de esta semana. El próximo desafío sale el lunes (${whenNext(wk)}).`);
+    const pw=prevWinner();
+    if(pw){const d=document.createElement('div');d.className='kingLine';const rt=retoById(pw.reto);
+      d.textContent=`👑 La semana pasada ganó ${cleanName(pw.nombre)} con ${pw.valor|0} ${rt.unit}`;$('retoBox').append(d)}}
 }
 const modeTxt=()=>{const t=$('rankMode').textContent;if(t.startsWith('Récords de toda')||t.startsWith('Desafío de toda'))$('rankMode').textContent=rankTab==='reto'?'Desafío de toda la familia':'Récords de toda la familia'};
 $('tabRec').onclick=()=>{setRankTab('rec');modeTxt();renderRank(knownTop())};
@@ -1531,6 +1970,8 @@ $('tabReto').onclick=()=>{setRankTab('reto');modeTxt();renderRank([])};
 async function openRank(tab){
   setRankTab(tab==='reto'?'reto':'rec');
   $('nameIn').value=save.name;show('rank',true);renderAvatars();
+  const locked=!!(save.cloud&&save.cloud.key);$('nameIn').disabled=locked;$('nameSave').hidden=locked;
+  $('nameIn').title=locked?'Es el nombre de tu caja fuerte ☁️':'';
   $('rankMode').textContent='Actualizando…';renderRank(knownTop());
   const {mode,top}=await fetchTop();
   $('rankMode').textContent=mode==='online'?(rankTab==='reto'?'Desafío de toda la familia':'Récords de toda la familia'):mode==='offline'?'Sin conexión: récords de este dispositivo':'Récords de este dispositivo';
@@ -1617,23 +2058,524 @@ $('retoPill').onclick=()=>openRank('reto');
 $('rankBack').onclick=()=>show('rank',false);
 flushPending();
 
+/* ---------- caja fuerte: el progreso guardado en la nube ----------
+   Se guarda en la misma hoja de Google del ranking (pestaña "Cuentas").
+   Cada persona tiene su nombre, 4 números secretos y de 1 a 3 preguntas secretas
+   que se responden eligiendo a alguien de la familia (por si se olvida los números).
+   Sin RANKING_URL (enlace de Claude) funciona en modo de prueba, solo en este dispositivo. */
+const CLOUD_DEMO=!RANKING_URL;
+const PREGUNTAS=[
+  {id:'quiero',  t:'💖 ¿A quién querés más de la familia?'},
+  {id:'risa',    t:'😂 ¿Quién te hace reír más?'},
+  {id:'jugar',   t:'🎮 ¿Con quién te gusta más jugar?'},
+  {id:'abrazos', t:'🤗 ¿Quién da los mejores abrazos?'},
+  {id:'cocina',  t:'🍳 ¿Quién cocina más rico?'},
+  {id:'dormilon',t:'😴 ¿Quién es más dormilón?'},
+  {id:'secreto', t:'🤫 ¿A quién le contarías un secreto?'},
+  {id:'baila',   t:'💃 ¿Quién baila mejor?'},
+  {id:'viaje',   t:'🏖️ ¿Con quién te irías de vacaciones?'},
+  {id:'travieso',t:'😼 ¿Quién es más travieso?'},
+];
+const qText=id=>(PREGUNTAS.find(q=>q.id===id)||{t:id}).t;
+
+/* el progreso que viaja a la nube (lo demás, como ajustes y personaje elegido, queda en el dispositivo) */
+const PROG_ADD=['total','st.runs','st.pans','st.kamps','st.tortas','st.escudos','st.escapes','st.scared','st.meters'];
+const PROG_MAX=['best','st.bestFru','st.bestPans','st.bestEscapes','st.cleanBest'];
+const PROG_SET=['seen','st.powers','st.chars'];
+const pGet=(o,p)=>p.split('.').reduce((a,k)=>a&&a[k],o);
+const pSet=(o,p,v)=>{const ks=p.split('.');let a=o;for(let i=0;i<ks.length-1;i++)a=a[ks[i]]=a[ks[i]]||{};a[ks[ks.length-1]]=v};
+const pNum=v=>Math.max(0,Math.min(1e7,Math.floor(Number(v)||0)));
+function progOf(s){return JSON.parse(JSON.stringify({total:s.total,best:s.best,seen:s.seen,ach:s.ach,tips:s.tips,st:s.st}))}
+// misma regla que en la hoja de Google: lo nuevo de cada dispositivo se suma, los récords se quedan con el más alto
+function mergeProg(srv,loc,base){
+  srv=srv||{};loc=loc||{};base=base||{};const o={st:{}};
+  for(const k of PROG_ADD) pSet(o,k,pNum(pGet(srv,k))+Math.max(0,pNum(pGet(loc,k))-pNum(pGet(base,k))));
+  for(const k of PROG_MAX) pSet(o,k,Math.max(pNum(pGet(srv,k)),pNum(pGet(loc,k))));
+  for(const k of PROG_SET) pSet(o,k,[...new Set([...(pGet(srv,k)||[]),...(pGet(loc,k)||[])])]);
+  o.st.fiesta=!!(srv.st&&srv.st.fiesta)||!!(loc.st&&loc.st.fiesta);
+  o.ach={};for(const src of [srv.ach||{},loc.ach||{}])for(const k in src){const t=pNum(src[k])||1;o.ach[k]=o.ach[k]?Math.min(o.ach[k],t):t}
+  o.tips={};for(const src of [srv.tips||{},loc.tips||{}])for(const k in src)o.tips[k]=1;
+  return o;
+}
+function applyProg(p){
+  save.total=pNum(p.total);save.best=pNum(p.best);
+  save.seen=[...new Set([...(p.seen||[]),'sofi','default'])];
+  save.ach=Object.assign({},p.ach);save.tips=Object.assign({},p.tips);
+  save.st=Object.assign(ST0(),p.st);
+  // lo que ya estaba desbloqueado en la nube no vuelve a mostrar el cartel de desbloqueo
+  for(const x of [...CHARS,...OUTFITS]) if(save.total>=x.need&&!save.seen.includes(x.id)) save.seen.push(x.id);
+  if(!charUnlocked(CHARS.find(c=>c.id===save.char)||CHARS[0])) save.char='sofi';
+  persist();achCheck(false,true);
+  if(state==='menu') renderMenu();
+}
+const hasLocalProgress=()=>save.total>0||save.st.runs>0||save.best>0;
+const rnd=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+
+/* modo de prueba: la misma lógica que la hoja de Google, guardada en este dispositivo */
+const DEMO_KEY='tortaRunner.cajaPrueba';
+async function sha(s){
+  try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return btoa(String.fromCharCode(...new Uint8Array(b)))}
+  catch(e){let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))|0;return 'h'+h}
+}
+async function demoServer(accion,d){
+  let db={};try{db=JSON.parse(localStorage.getItem(DEMO_KEY)||'{}')}catch(e){}
+  const keep=()=>{try{localStorage.setItem(DEMO_KEY,JSON.stringify(db))}catch(e){}};
+  const nombre=cleanName(d.nombre);if(!nombre) return {ok:false,error:'nombre'};
+  const k=nombre.toLowerCase(),c=db[k];
+  const open=c=>{c.intentos=0;c.bloqueoHasta=0;keep();return {ok:true,nombre:c.nombre,llave:c.llave,progreso:c.progreso,preguntas:c.preguntas}};
+  const fail=(c,err)=>{c.intentos=(c.intentos||0)+1;if(c.intentos>=5){c.bloqueoHasta=Date.now()+15*60000;c.intentos=0}keep();
+    return c.bloqueoHasta>Date.now()?{ok:false,error:'bloqueo',minutos:15}:{ok:false,error:err,quedan:5-c.intentos}};
+  await new Promise(r=>setTimeout(r,250)); // como si viajara por internet
+  if(accion==='preguntas') return c?{ok:true,existe:true,nombre:c.nombre,preguntas:c.preguntas}:{ok:true,existe:false};
+  if(accion==='crear'){
+    if(c) return {ok:false,error:'existe'};
+    const sal=rnd('s'),resp={};for(const r of d.preguntas)resp[r.q]=await sha(sal+'|'+r.q+'|'+r.a);
+    db[k]={nombre,sal,pin:await sha(sal+'|pin|'+d.pin),llave:rnd('k'),preguntas:d.preguntas.map(r=>r.q),respuestas:resp,progreso:mergeProg({},d.progreso,{}),ultimoSync:''};
+    keep();return {ok:true,nombre,llave:db[k].llave,progreso:db[k].progreso,preguntas:db[k].preguntas};
+  }
+  if(!c) return {ok:false,error:'noexiste'};
+  if(accion==='sync'){
+    if(d.llave!==c.llave) return {ok:false,error:'llave'};
+    if(!d.syncId||d.syncId!==c.ultimoSync){c.progreso=mergeProg(c.progreso,d.local,d.base);c.ultimoSync=d.syncId;keep()}
+    return {ok:true,progreso:c.progreso};
+  }
+  if(c.bloqueoHasta>Date.now()) return {ok:false,error:'bloqueo',minutos:Math.ceil((c.bloqueoHasta-Date.now())/60000)};
+  if(accion==='entrar') return (await sha(c.sal+'|pin|'+d.pin))===c.pin?open(c):fail(c,'pin');
+  if(accion==='recuperar'){
+    const resp={};for(const r of d.respuestas||[])resp[r.q]=r.a;
+    let bien=c.preguntas.length>0;for(const q of c.preguntas)if((await sha(c.sal+'|'+q+'|'+resp[q]))!==c.respuestas[q])bien=false;
+    if(!bien) return fail(c,'respuestas');
+    c.pin=await sha(c.sal+'|pin|'+d.pinNuevo);c.llave=rnd('k');return open(c);
+  }
+  if(accion==='cambiarPin'){
+    if((await sha(c.sal+'|pin|'+d.pin))!==c.pin) return fail(c,'pin');
+    c.pin=await sha(c.sal+'|pin|'+d.pinNuevo);c.llave=rnd('k');return open(c);
+  }
+  return {ok:false,error:'accion'};
+}
+async function cloudCall(accion,data){
+  if(CLOUD_DEMO) return demoServer(accion,data);
+  try{const r=await fetch(RANKING_URL,{method:'POST',body:JSON.stringify({tipo:'cuenta',accion,...data})});return await r.json()}
+  catch(e){return {ok:false,error:'red'}}
+}
+
+/* sincronizar: se manda lo que cambió desde la última vez; si el envío se corta,
+   el reintento manda exactamente lo mismo (con el mismo número) para no sumar dos veces */
+let syncBusy=false,syncAgain=false;
+async function cloudSync(){
+  const c=save.cloud; if(!c||!c.key) return false;
+  if(syncBusy){syncAgain=true;return false}
+  syncBusy=true;cloudUI();let ok=false;
+  try{
+    if(!c.pend){c.pend={id:rnd('y'),sent:progOf(save),base:c.base||{}};persist()}
+    const pd=c.pend;
+    const r=await cloudCall('sync',{nombre:c.name,llave:c.key,local:pd.sent,base:pd.base,syncId:pd.id});
+    if(save.cloud!==c) return false; // salió de la cuenta mientras tanto
+    if(r&&r.ok){
+      applyProg(mergeProg(r.progreso,progOf(save),pd.sent));
+      c.base=r.progreso;c.pend=null;c.last=Date.now();c.err='';ok=true;
+    }else if(r&&(r.error==='llave'||r.error==='noexiste')){
+      c.key='';c.pend=null;c.err='llave';
+      toast('Tus números de la caja fuerte cambiaron: abrila de nuevo ☁️');
+    }else c.err='red';
+    persist();
+  }finally{
+    syncBusy=false;cloudUI();
+    if(syncAgain){syncAgain=false;setTimeout(cloudSync,50)}
+  }
+  return ok;
+}
+let syncSoonT=0;
+function cloudSoon(){ // al volver a la app: si pasó un rato, se trae lo que se haya jugado en otro dispositivo
+  const c=save.cloud;if(!c||!c.key)return;
+  if(Date.now()-(c.last||0)>60000){clearTimeout(syncSoonT);syncSoonT=setTimeout(cloudSync,800)}
+}
+function cloudUI(){
+  const c=save.cloud,on=!!(c&&c.key);
+  $('cloudBtn').classList.toggle('cloudOn',on);
+  $('cloudBtn').title=on?'Caja fuerte de '+c.name:'Mi caja fuerte: guardá tu progreso';
+  $('oSaved').textContent=on?(CLOUD_DEMO?'guardado en tu caja fuerte de prueba 🔐':'guardado en tu caja fuerte ☁️'):'tu progreso queda guardado en este dispositivo';
+  $('chipSave').textContent=on?'Progreso en tu caja fuerte ☁️':'Progreso guardado en este dispositivo';
+  if(!$('vault').hidden&&V.step==='acct') vRender();
+}
+
+/* ---------- pantallas de la caja fuerte ---------- */
+const V={step:'home',mode:'',name:'',pin:'',pin2:'',old:'',qs:[],ans:{},qi:0,err:'',busy:false,res:null,srvQs:[]};
+function openVault(){
+  if(save.cloud&&save.cloud.key) vGo('acct');
+  else if(save.cloud&&save.cloud.err==='llave') {V.mode='open';V.name=save.cloud.name;vGo('pin')}
+  else vGo('home');
+  show('vault',true);
+}
+function closeVault(){show('vault',false);renderMenu();cloudUI()}
+function vGo(step,o={}){Object.assign(V,{step,err:''},o);vRender()}
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+function vBtn(txt,cls,fn,dis){const b=el('button',cls==='vLink'?'vLink':'btn '+(cls||''),txt);b.onclick=fn;b.disabled=!!dis;return b}
+function safeEl(open){
+  const s=el('div','safe'+(open?' open':''));
+  s.innerHTML='<div class="inside">🍓</div><div class="door"><span class="heart">💗</span><div class="dial"></div><span class="handle"></span></div>';
+  return s;
+}
+let vSafe=null;
+function vShake(){if(!vSafe)return;vSafe.classList.remove('shake');void vSafe.offsetWidth;vSafe.classList.add('shake');tone('sawtooth',220,120,.25,.18);vib([20,30,20])}
+function vOpenAnim(){if(!vSafe)return;setTimeout(()=>{vSafe.classList.add('open');sUnlock()},150)}
+const errTxt=r=>!r?'':r.error==='red'||r.error==='ocupado'?'No hay conexión. Probá de nuevo en un ratito 📶'
+  :r.error==='bloqueo'?`Demasiados intentos 😿 La caja fuerte se abre de nuevo en ${r.minutos} min.`
+  :r.error==='pin'?`Esos no son tus números.${r.quedan?' Te quedan '+r.quedan+' intentos.':''}`
+  :r.error==='respuestas'?`Alguna respuesta no coincide.${r.quedan?' Te quedan '+r.quedan+' intentos.':''}`
+  :r.error==='noexiste'?'No encontré una caja fuerte con ese nombre.'
+  :r.error==='existe'?'Ese nombre ya tiene caja fuerte.':'Algo salió mal. Probá de nuevo.';
+
+function vRender(){
+  const b=$('vBody');b.textContent='';vSafe=null;
+  const st=V.step,c=save.cloud;
+  const add=(...xs)=>{for(const x of xs)if(x)b.appendChild(x)};
+  const back=(to,o)=>vBtn('← Volver','vLink',()=>vGo(to,o));
+  const err=el('div','vErr',V.err);
+  const demo=()=>CLOUD_DEMO?el('div','vDemo','🧪 Estás en el enlace de prueba: la caja fuerte se guarda solo en este dispositivo. En el juego de GitHub se guarda en la nube y la abrís desde cualquier celular o compu.'):null;
+  $('vTitle').textContent=st==='acct'?'☁️ Tu caja fuerte':st.startsWith('q')?'🔐 Pregunta secreta':'☁️ Mi caja fuerte';
+
+  if(st==='home'){
+    vSafe=safeEl(false);add(vSafe);
+    add(el('p','vHand','Guardá tu progreso en una caja fuerte y seguí jugando en otro celular o en la compu, sin empezar de cero.'));
+    const bx=el('div','vBtns');
+    bx.append(vBtn('🔐 Crear mi caja fuerte','main',()=>vGo('name',{mode:'create',name:save.name||''})),
+              vBtn('🔓 Ya tengo una: abrirla','sun',()=>vGo('name',{mode:'open',name:save.name||''})));
+    add(bx,demo());return;
+  }
+
+  if(st==='name'){
+    vSafe=safeEl(false);add(vSafe);
+    add(el('div','vStep',V.mode==='create'?'Paso 1 · tu nombre':V.mode==='forgot'?'Recuperar mis números':'Abrir mi caja fuerte'));
+    add(el('p','vTxt',V.mode==='create'?'¿Cómo te llamás? Es el mismo nombre del ranking.':'¿De quién es la caja fuerte?'));
+    const inp=el('input','vInput');inp.maxLength=16;inp.placeholder='Tu nombre';inp.autocomplete='nickname';inp.value=V.name;
+    add(inp,err);
+    const go=async()=>{
+      const n=cleanName(inp.value);if(!n){V.err='Escribí tu nombre';vRender();return}
+      V.name=n;V.busy=true;nb.disabled=true;nb.textContent='Buscando…';
+      const r=await cloudCall('preguntas',{nombre:n});V.busy=false;
+      if(!r||!r.ok){vGo('name',{err:errTxt(r)});return}
+      if(V.mode==='create'){
+        if(r.existe){vGo('taken',{name:r.nombre});return}
+        vGo('pin',{pin:'',pin2:''});
+      }else{
+        if(!r.existe){vGo('missing');return}
+        V.name=r.nombre;V.srvQs=r.preguntas||[];
+        if(V.mode==='forgot') vGo('qanswer',{qs:V.srvQs.slice(),ans:{},qi:0});
+        else vGo('pin',{pin:''});
+      }
+    };
+    const nb=vBtn('Seguir →','main',go);
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go()}});
+    const bx=el('div','vBtns');bx.append(nb,back('home'));add(bx);
+    setTimeout(()=>inp.focus(),50);return;
+  }
+
+  if(st==='taken'||st==='missing'){
+    vSafe=safeEl(false);add(vSafe);
+    add(el('p','vHand',st==='taken'?`“${V.name}” ya tiene una caja fuerte. ¿Es tuya?`:`No encontré una caja fuerte de “${V.name}”.`));
+    const bx=el('div','vBtns');
+    if(st==='taken') bx.append(vBtn('🔓 Sí, abrirla','main',()=>vGo('pin',{mode:'open',pin:''})),vBtn('Usar otro nombre','',()=>vGo('name',{mode:'create'})));
+    else bx.append(vBtn('🔐 Crear una con ese nombre','main',()=>vGo('pin',{mode:'create',pin:'',pin2:''})),vBtn('Probar otro nombre','',()=>vGo('name',{mode:'open'})));
+    add(bx);return;
+  }
+
+  if(st==='pin'){ // teclado: crear (2 veces), abrir, cambiar o PIN nuevo al recuperar
+    vSafe=safeEl(false);add(vSafe);
+    const m=V.mode;
+    const title=m==='create'?(V.pin?'Repetilos para confirmar':'Elegí 4 números secretos')
+      :m==='open'?`Hola, ${V.name} 👋 Escribí tus 4 números`
+      :m==='change'?(!V.old?'Escribí tus números de ahora':V.pin?'Repetí los nuevos':'Elegí 4 números nuevos')
+      :m==='forgot'?(V.pin?'Repetilos para confirmar':'¡Bien! Elegí 4 números nuevos'):'';
+    add(el('div','vStep',m==='create'?(V.pin?'Paso 2 · confirmar':'Paso 2 · tus números'):m==='change'?'Cambiar mis números':m==='forgot'?'Números nuevos':'Abrir'));
+    add(el('p','vHand',title));
+    if(m==='create'&&!V.pin) add(el('p','vTxt','Que no sea tu cumple ni 1234 😉'));
+    add(keypad(async code=>{
+      if(m==='create'||m==='forgot'||(m==='change'&&V.old)){
+        if(!V.pin){vGo('pin',{pin:code});return}
+        if(code!==V.pin){vShake();setTimeout(()=>vGo('pin',{pin:'',err:'No coinciden. Probemos de nuevo 🙂'}),450);return}
+        if(m==='create'){vGo('qintro',{qs:[],ans:{}});return}
+        if(m==='forgot'){await vRecover(code);return}
+        await vChange(code);return;
+      }
+      if(m==='change'){ // primero se revisan los números de ahora, así el error sale enseguida
+        V.busy=true;const r=await cloudCall('entrar',{nombre:save.cloud.name,pin:code});V.busy=false;
+        if(!r||!r.ok){vShake();setTimeout(()=>vGo('pin',{old:'',pin:'',err:errTxt(r)}),450);return}
+        if(r.llave&&save.cloud){save.cloud.key=r.llave;persist()}
+        vGo('pin',{old:code,pin:'',err:''});tone('triangle',880,1200,.15,.16);return}
+      await vOpen(code);
+    }),err);
+    const bx=el('div','vBtns');
+    if(m==='open') bx.append(vBtn('🤔 Me olvidé los números','vLink',()=>vGo('name',{mode:'forgot'})));
+    bx.append(back(m==='change'?'acct':'home'));add(bx);return;
+  }
+
+  if(st==='qintro'){ // elegir de 1 a 3 preguntas
+    add(el('p','vHand','Si un día te olvidás tus números, vas a poder abrir tu caja fuerte respondiendo estas preguntas con alguien de la familia.'));
+    add(el('div','vStep',`Elegí de 1 a 3 · llevás ${V.qs.length}`));
+    const list=el('div','qList');
+    for(const q of PREGUNTAS){
+      const on=V.qs.includes(q.id);
+      const it=el('button','qItem'+(on?' sel':''));it.disabled=!on&&V.qs.length>=3;it.setAttribute('aria-pressed',on);
+      const ck=el('span','ck',on?'✓':'');it.append(ck,el('span','',q.t));
+      it.onclick=()=>{V.qs=on?V.qs.filter(x=>x!==q.id):[...V.qs,q.id];tone('triangle',on?500:760,0,.1,.15);vRender()};
+      list.appendChild(it);
+    }
+    add(list);
+    add(el('p','vTxt',V.qs.length>=3?'¡Máximo! Con 3 preguntas es la más segura 🔒':V.qs.length?'Cuantas más elegís, más difícil de adivinar.':'Es obligatorio elegir al menos una 🔐'));
+    const bx=el('div','vBtns');
+    bx.append(vBtn('Responder →','main',()=>vGo('qanswer',{qi:0}),!V.qs.length),back('pin',{pin:'',pin2:''}));add(bx);return;
+  }
+
+  if(st==='qanswer'){ // responder con la familia (crear o recuperar)
+    const q=V.qs[V.qi];
+    add(el('div','vStep',`Pregunta ${V.qi+1} de ${V.qs.length}`));
+    add(el('p','qBig',qText(q)));
+    const g=el('div','famPick');
+    for(const a of AVATARS){
+      const bt=el('button','famBtn'+(V.ans[q]===a.id?' sel':''));
+      const im=el('img');im.src=avImg(a.id);im.alt='';bt.append(im,el('span','',a.name));
+      bt.onclick=()=>{
+        V.ans[q]=a.id;bt.classList.add('sel');tone('triangle',700,1000,.12,.16);
+        setTimeout(()=>{
+          if(V.qi<V.qs.length-1) vGo('qanswer',{qi:V.qi+1});
+          else if(V.mode==='forgot') vGo('pin',{pin:'',pin2:''});
+          else vGo('qsum');
+        },220);
+      };
+      g.appendChild(bt);
+    }
+    add(g,err);
+    const bx=el('div','vBtns');
+    bx.append(V.qi>0?back('qanswer',{qi:V.qi-1}):V.mode==='forgot'?back('home'):back('qintro'));add(bx);return;
+  }
+
+  if(st==='qsum'){
+    add(el('p','vHand','Tus respuestas secretas. Acordátelas: nadie más las ve 🤫'));
+    for(const q of V.qs){
+      const r=el('div','ansRow');const im=el('img');im.src=avImg(V.ans[q]);im.alt='';
+      r.append(el('span','',qText(q)),im,el('b','',(AVATARS.find(a=>a.id===V.ans[q])||{}).name||''));add(r);
+    }
+    add(err);
+    const bx=el('div','vBtns');
+    const cb=vBtn('✓ Guardar mi caja fuerte','main',async()=>{cb.disabled=true;cb.textContent='Guardando…';await vCreate()});
+    bx.append(cb,vBtn('Cambiar las respuestas','',()=>vGo('qanswer',{qi:0})),back('qintro'));add(bx);return;
+  }
+
+  if(st==='merge'){ // este dispositivo ya tenía progreso de antes
+    vSafe=safeEl(true);add(vSafe);
+    const p=V.res.progreso||{};
+    add(el('p','vHand',`¡Abierta! Pero este dispositivo ya tiene progreso guardado. ¿Qué hacemos?`));
+    const mk=(t,a,b2,c2)=>{const d=el('div','vSum');d.innerHTML=`<div>🍓<b>${a}</b>frutillas</div><div>⭐<b>${b2}</b>récord</div><div>🏅<b>${c2}</b>logros</div>`;return [el('div','vStep',t),d]};
+    add(...mk('Este dispositivo',save.total,save.best+' m',Object.keys(save.ach).length));
+    add(...mk('Tu caja fuerte',pNum(p.total),pNum(p.best)+' m',Object.keys(p.ach||{}).length));
+    const bx=el('div','vBtns');
+    bx.append(vBtn('➕ Sumar los dos','main',()=>vFinishLogin('sumar')),
+      vBtn('☁️ Usar solo el de la caja fuerte','sun',()=>vFinishLogin('nube')));
+    add(bx,el('p','vTxt','Si este dispositivo es de otra persona, elegí “usar solo el de la caja fuerte”.'));return;
+  }
+
+  if(st==='done'){
+    vSafe=safeEl(false);add(vSafe);vOpenAnim();
+    add(el('p','vHand',V.mode==='create'?`¡Listo, ${c.name}! Tu caja fuerte está guardada 🎉`:`¡Hola de nuevo, ${c.name}! Ya tenés tu progreso 🎉`));
+    const d=el('div','vSum');d.innerHTML=`<div>🍓<b>${save.total}</b>frutillas</div><div>⭐<b>${save.best}</b>récord (m)</div><div>🏅<b>${Object.keys(save.ach).length}</b>logros</div>`;add(d);
+    add(el('p','vTxt',V.mode==='create'?'Para seguir en otro celular o en la compu: tocá ☁️, “Ya tengo una”, y escribí tu nombre y tus números.':'Se guarda sola cada vez que terminás una partida.'));
+    const bx=el('div','vBtns');bx.append(vBtn('¡A jugar! →','main',closeVault));add(bx,demo());return;
+  }
+
+  if(st==='acct'){
+    vSafe=safeEl(true);add(vSafe);
+    add(el('p','vHand',`Caja fuerte de ${c.name} ✓`));
+    const d=el('div','vSum');d.innerHTML=`<div>🍓<b>${save.total}</b>frutillas</div><div>⭐<b>${save.best}</b>récord (m)</div><div>🏅<b>${Object.keys(save.ach).length}</b>logros</div>`;add(d);
+    const ago=c.last?Math.round((Date.now()-c.last)/60000):-1;
+    add(el('p','vTxt',syncBusy?'Guardando… ☁️':c.err==='red'?'📶 Sin conexión: se guarda apenas haya internet.':
+      ago<0?'Todavía no se guardó.':ago<1?'Guardado hace un momento ✓':`Guardado hace ${ago<60?ago+' min':Math.round(ago/60)+' h'} ✓`));
+    add(el('p','vTxt','Se guarda sola cada vez que terminás una partida.'));
+    const bx=el('div','vBtns');
+    const sb=vBtn('🔄 Guardar ahora','main',async()=>{sb.disabled=true;sb.textContent='Guardando…';const ok=await cloudSync();if(!ok&&save.cloud&&save.cloud.err==='red')toast('Sin conexión: se guarda más tarde 📶');vRender()},syncBusy);
+    bx.append(sb,vBtn('🔢 Cambiar mis números','',()=>vGo('pin',{mode:'change',old:'',pin:'',pin2:''})),
+      vBtn('🚪 Salir en este dispositivo','',()=>vGo('logout')));
+    add(bx,demo());return;
+  }
+
+  if(st==='logout'){
+    vSafe=safeEl(false);add(vSafe);
+    add(el('p','vHand','¿Salir de tu caja fuerte en este dispositivo?'));
+    add(el('p','vTxt','Tu caja fuerte sigue guardada en la nube. Lo que jugaste acá queda en este dispositivo, pero ya no se guarda en la caja fuerte.'));
+    const bx=el('div','vBtns');
+    bx.append(vBtn('Sí, salir','main',async()=>{
+      if(save.cloud&&save.cloud.key){await cloudSync();if(save.cloud){save.cloud.key='';save.cloud.err=''}persist()}
+      cloudUI();toast('Saliste de tu caja fuerte en este dispositivo');vGo('home');
+    }),back('acct'));add(bx);return;
+  }
+}
+
+/* tecladito numérico tipo caja fuerte (también anda con el teclado de la compu) */
+let vKeyFn=null;
+function keypad(onDone){
+  const wrap=el('div');let code='';
+  const cells=el('div','pinCells');for(let i=0;i<4;i++)cells.appendChild(el('span'));
+  const pad=el('div','keypad');
+  const paint=()=>{[...cells.children].forEach((s,i)=>{s.textContent=i<code.length?'🍓':'';s.classList.toggle('on',i<code.length)})};
+  const dial=d=>{const di=vSafe&&vSafe.querySelector('.dial');if(di)di.style.transform=`rotate(${(code.length*97+d*36)%360}deg)`};
+  let lock=false;
+  const press=k=>{
+    if(lock||V.busy)return;
+    if(k==='del'){code=code.slice(0,-1);tone('triangle',420,0,.08,.14)}
+    else if(k==='clr'){code='';tone('triangle',360,0,.1,.14)}
+    else if(code.length<4){code+=k;tone('triangle',620+(+k)*45,0,.1,.18);dial(+k);vib(8)}
+    paint();
+    const kb=pad.querySelector(`[data-k="${k}"]`);if(kb){kb.classList.add('hit');setTimeout(()=>kb.classList.remove('hit'),90)}
+    if(code.length===4){lock=true;setTimeout(()=>onDone(code),260)}
+  };
+  for(const k of ['1','2','3','4','5','6','7','8','9','clr','0','del']){
+    const b=el('button','key'+(k.length>1?' fn':''),k==='del'?'⌫':k==='clr'?'🧹':k);
+    b.dataset.k=k;b.setAttribute('aria-label',k==='del'?'Borrar uno':k==='clr'?'Borrar todo':k);
+    b.onclick=()=>press(k);pad.appendChild(b);
+  }
+  vKeyFn=e=>{
+    if(/^[0-9]$/.test(e.key)){e.preventDefault();press(e.key)}
+    else if(e.key==='Backspace'){e.preventDefault();press('del')}
+  };
+  wrap.append(cells,pad);paint();return wrap;
+}
+function vKey(e){ // la caja fuerte abierta se queda con el teclado
+  if(e.key==='Escape'){e.preventDefault();closeVault();return}
+  if(e.target&&e.target.tagName==='INPUT')return;
+  if(vKeyFn&&V.step==='pin')vKeyFn(e);
+}
+
+async function vCreate(){
+  V.busy=true;
+  const r=await cloudCall('crear',{nombre:V.name,pin:V.pin,preguntas:V.qs.map(q=>({q,a:V.ans[q]})),progreso:progOf(save)});
+  V.busy=false;
+  if(!r||!r.ok){vGo(r&&r.error==='existe'?'taken':'qsum',{err:errTxt(r)});return}
+  save.cloud={name:r.nombre,key:r.llave,base:r.progreso,pend:null,last:Date.now(),err:''};
+  applyProg(mergeProg(r.progreso,progOf(save),r.progreso));
+  setName(r.nombre);persist();cloudUI();
+  vGo('done',{mode:'create'});
+}
+async function vOpen(code){
+  V.busy=true;const r=await cloudCall('entrar',{nombre:V.name,pin:code});V.busy=false;
+  if(!r||!r.ok){vShake();setTimeout(()=>vGo('pin',{err:errTxt(r)}),450);return}
+  V.res=r;
+  const prev=save.cloud;
+  // este dispositivo ya estuvo en esta caja fuerte: se suma solo lo nuevo
+  if(prev&&prev.base&&sameName(prev.name,r.nombre)){vFinishLogin('misma');return}
+  if(hasLocalProgress()){vGo('merge');return}
+  vFinishLogin('nube');
+}
+async function vFinishLogin(how){
+  const r=V.res,prev=save.cloud;
+  if(how==='misma'){
+    save.cloud={name:r.nombre,key:r.llave,base:prev.base,pend:prev.pend||null,last:0,err:''};
+  }else if(how==='sumar'){
+    save.cloud={name:r.nombre,key:r.llave,base:{},pend:null,last:0,err:''};
+  }else{ // usar solo lo de la caja fuerte
+    applyProg(r.progreso||{});
+    save.cloud={name:r.nombre,key:r.llave,base:r.progreso||{},pend:null,last:Date.now(),err:''};
+  }
+  setName(r.nombre);persist();
+  if(how!=='nube') await cloudSync();
+  cloudUI();vGo('done',{mode:'open'});
+}
+async function vRecover(code){
+  V.busy=true;
+  const r=await cloudCall('recuperar',{nombre:V.name,respuestas:V.qs.map(q=>({q,a:V.ans[q]})),pinNuevo:code});
+  V.busy=false;
+  if(!r||!r.ok){vShake();setTimeout(()=>vGo(r&&r.error==='respuestas'?'qanswer':'pin',{qi:0,ans:{},pin:'',err:errTxt(r)}),450);return}
+  toast('¡Listo! Ya tenés números nuevos 🔐');
+  V.res=r;
+  const prev=save.cloud;
+  if(prev&&prev.base&&sameName(prev.name,r.nombre)){vFinishLogin('misma');return}
+  if(hasLocalProgress()){vGo('merge');return}
+  vFinishLogin('nube');
+}
+async function vChange(code){
+  V.busy=true;const r=await cloudCall('cambiarPin',{nombre:save.cloud.name,pin:V.old,pinNuevo:code});V.busy=false;
+  if(!r||!r.ok){vShake();setTimeout(()=>vGo('pin',{old:'',pin:'',err:errTxt(r)}),450);return}
+  save.cloud.key=r.llave;persist();
+  toast('¡Números cambiados! En tus otros dispositivos vas a tener que abrir la caja fuerte de nuevo');
+  vGo('acct');
+}
+$('cloudBtn').onclick=openVault;
+$('vClose').onclick=closeVault;
+
+/* ---------- ajustes ---------- */
+function setTog(id,on){$(id).setAttribute('aria-checked',on?'true':'false')}
+function openSettings(){
+  $('setMusic').value=save.set.music;$('setMusicV').textContent=save.set.music+'%';
+  $('setSfx').value=save.set.sfx;$('setSfxV').textContent=save.set.sfx+'%';
+  setTog('soundBtn',!save.muted);$('soundEm').textContent=save.muted?'🔇':'🔊';setTog('setVib',save.set.vib);setTog('setCount',save.set.count);setTog('setCalm',save.set.calm);
+  const canVib=!!navigator.vibrate;
+  $('setVib').disabled=!canVib;$('setVibNote').textContent=canVib?'al saltar y al chocar':'este dispositivo no vibra (iPhone y compu)';
+  show('settings',true);
+}
+$('setBtn').onclick=openSettings;
+$('setBack').onclick=()=>{show('settings',false);renderMenu()};
+$('setMusic').oninput=e=>{save.set.music=+e.target.value;$('setMusicV').textContent=save.set.music+'%';persist();setMusicVol();refreshMusic()};
+$('setSfx').oninput=e=>{save.set.sfx=+e.target.value;$('setSfxV').textContent=save.set.sfx+'%';persist()};
+$('setSfx').onchange=()=>sFru(); // para escuchar cómo quedó
+$('setVib').onclick=()=>{save.set.vib=!save.set.vib;setTog('setVib',save.set.vib);persist();vib(30)};
+$('setCount').onclick=()=>{save.set.count=!save.set.count;setTog('setCount',save.set.count);persist()};
+$('setCalm').onclick=()=>{save.set.calm=!save.set.calm;setTog('setCalm',save.set.calm);persist();document.body.classList.toggle('calm',calm())};
+
+/* ---------- mis números (en la pantalla de logros) ---------- */
+function renderStats(){
+  const S=save.st,g=$('statGrid');g.textContent='';
+  const fmt=n=>Number(n||0).toLocaleString('es-AR');
+  const items=[['🏃',S.runs,'partidas'],['👟',S.meters,'metros en total'],['⭐',save.best,'récord (m)'],['🍓',save.total,'frutillas en total'],
+    ['🍰',S.tortas,'tortas esquivadas'],['🥪',S.pans,'pancitos'],['🧃',S.kamps,'Kampitos'],['🛡️',S.escudos,'tortas rotas con escudo'],
+    ['😅',S.escapes,'veces que escapaste de Dina'],['💥',S.bestFru,'más frutillas en una partida']];
+  for(const [e,v,t] of items){const d=el('div','statBox');d.append(el('div','e',e),el('b','',fmt(v)),el('small','',t));g.appendChild(d)}
+  if(!S.meters&&S.runs) {const n=el('p','vTxt','Los metros en total se cuentan desde la versión 2.1.');n.style.gridColumn='1/-1';g.appendChild(n)}
+}
+function setAchTab(t){
+  $('tabAch').classList.toggle('sel',t==='ach');$('tabStat').classList.toggle('sel',t==='stat');
+  $('tabAch').setAttribute('aria-selected',t==='ach');$('tabStat').setAttribute('aria-selected',t==='stat');
+  show('achCount',t==='ach');show('achGrid',t==='ach');show('statGrid',t==='stat');
+  if(t==='stat') renderStats();
+}
+$('tabAch').onclick=()=>setAchTab('ach');$('tabStat').onclick=()=>setAchTab('stat');
+
+/* ---------- aviso de versión nueva ----------
+   La app instalada se actualiza sola, pero la versión nueva se ve recién al volver a abrirla.
+   Cuando ya se descargó, el menú lo avisa y con un toque se recarga. */
+let updReady=false;
+function showUpd(){ if(!updReady) return; show('updMenu',true); show('updOver',true); }
+$('updMenu').onclick=$('updOver').onclick=()=>{ if(state!=='playing'&&state!=='paused') location.reload() };
+
 /* ---------- arranque ---------- */
 $('verLink').textContent=`Versión ${VERSION} · ver novedades`;
+setTimeout(bdayConfetti,600);
 // al abrir una versión nueva por primera vez se muestran las novedades
 if(save.seenVersion!==VERSION&&location.hash!=='#fiesta'&&location.hash!=='#prueba') setTimeout(openNews,400);
 {const pre=achCheck(false,true); // logros que ya se habían ganado antes de esta versión
  if(pre) setTimeout(()=>toast(`¡Ya tenías ${pre} ${pre===1?'logro':'logros'}! Miralos en 🏅`),600);}
-renderMenu();layout();
+rollWeek();
+renderMenu();layout();cloudUI();
+if(RANKING_URL&&!(save.prevWin&&save.prevWin.key===prevWeek().key)) setTimeout(()=>fetchTop().then(()=>{if(state==='menu')renderMenu()}),2000);
+if(save.cloud&&save.cloud.key) setTimeout(cloudSync,1200);
 requestAnimationFrame(loop);
 ready.then(()=>{$('loadPill').textContent='Familia cargada ✓';layout();});
 if(location.hash==='#fiesta') openParty(); // vista previa del final
 if(location.hash==='#prueba') window.TR={ // solo para pruebas automáticas
   get R(){return R},get pow(){return pow},get got(){return got},get state(){return state},get obs(){return obs},save,
   item(kind,dx,dy,flavor){fru.push({x:PX+pw()/2+dx,y:GROUND-dy,bob:0,kind,flavor})},cake(dx){obs.push({x:PX+dx,w:60,h:64})},
-  get dina(){return dina},setDist(v){dist=v},power:setPower,hold(){nextSpawn=1e9;kampIn=1e9},weekInfo};
-if(window.PWA&&'serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+  get dina(){return dina},setDist(v){dist=v},get tipWait(){return tipWait},get PR(){return PR},get timeScale(){return timeScale},setToday(d){fakeToday=d;bdayFired='';renderMenu();bdayConfetti()},CUMPLES,power:setPower,hold(){nextSpawn=1e9;kampIn=1e9},weekInfo,rollWeek,prevWinner,prevWeek,
+  mergeProg,progOf,cloudSync,get V(){return V},vGo,set got(v){got=v},die(){dina.caught=true;die()},newVersion(){updReady=true;showUpd()},get counting(){return counting}};
+if(window.PWA&&'serviceWorker' in navigator){
+  const had=!!navigator.serviceWorker.controller; // la primera vez que se instala no es "versión nueva"
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(had&&!updReady){updReady=true;if(state==='menu'||state==='over')showUpd()} });
+  navigator.serviceWorker.register('sw.js').then(reg=>{
+    document.addEventListener('visibilitychange',()=>{ if(!document.hidden) reg.update().catch(()=>{}) });
+    setInterval(()=>reg.update().catch(()=>{}),30*60000);
+  }).catch(()=>{});
+}
 })();
 </script>
+
+
 
 </body>
 </html>
