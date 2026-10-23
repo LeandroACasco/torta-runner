@@ -106,10 +106,11 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .stat .k{font-size:12px;opacity:.7;letter-spacing:.06em}
 .stat .v{font-size:24px;font-variant-numeric:tabular-nums}
 .dinaRow{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px}
-.dinaRow img{width:150px;max-width:42%;height:auto;filter:drop-shadow(4px 4px 0 var(--ink));transform:rotate(-6deg);animation:munch 1.2s ease-in-out infinite}
+.dinaRow .dinaImg{width:100%;height:auto;filter:drop-shadow(4px 4px 0 var(--ink));transform:rotate(-6deg);animation:munch 1.2s ease-in-out infinite}
 .bubble{background:var(--white);border-radius:12px;padding:8px 12px;font-family:var(--hand);font-size:19px;line-height:1.05;transform:rotate(1deg);text-align:left}
-.goBtns{display:flex;gap:12px;justify-content:center;margin-top:16px}
-.goBtns .btn{padding:8px 22px;font-size:16px}
+.goBtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+.goBtns .btn{padding:8px 20px;font-size:16px;white-space:nowrap}
+#rankBtn2,#achBtn2{padding:8px 13px}
 .newRec{display:inline-block;margin-top:8px;background:var(--sun);border:3px solid var(--ink);border-radius:999px;padding:2px 12px;font-size:13px}
 .note{margin-top:10px;font-family:var(--hand);font-size:14px;opacity:.6}
 
@@ -185,9 +186,73 @@ button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:16px;font-size:11px}
 .chips span{background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:4px 12px}
 
+.rankList .who small{display:block;font-size:11px;opacity:.65;line-height:1.1}
+.tabs{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.tabs button{border:3px solid var(--ink);border-radius:999px;padding:3px 14px;background:var(--white);font-size:14px}
+.tabs button.sel{background:var(--sun);box-shadow:3px 3px 0 var(--ink)}
+.retoBox{margin-top:8px;font-size:14px;line-height:1.25}
+.retoBox b{font-family:var(--hand);font-size:22px;display:block;color:var(--pink)}
+.retoPill{display:flex;margin:0 auto 12px;max-width:716px;width:100%;align-items:center;justify-content:center;gap:6px;background:var(--cream);border-radius:999px;padding:5px 14px;font-size:14px;text-align:center;line-height:1.15}
+
+/* power-up del Kampito en el HUD */
+.pbar{display:inline-block;width:64px;height:10px;border:2px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--white)}
+.pbar i{display:block;height:100%;width:100%;background:#FFA36C}
+
+/* logros */
+#ach{background:rgba(255,239,245,.96);display:flex;padding:14px}
+.achCard{max-width:620px}
+.achCount{font-family:var(--hand);font-size:22px;margin-top:2px}
+.achGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-top:12px;text-align:left}
+.achItem{display:flex;gap:8px;align-items:center;background:var(--white);border:3px solid var(--ink);border-radius:12px;padding:6px 8px}
+.achItem.got{background:var(--cream);box-shadow:3px 3px 0 var(--ink)}
+.achItem .e{font-size:26px;width:34px;text-align:center;flex:0 0 auto}
+.achItem:not(.got) .e{filter:grayscale(1);opacity:.45}
+.achItem .t{font-size:14px;line-height:1.05}
+.achItem .d{font-family:var(--hand);font-size:15px;line-height:1;opacity:.75}
+.achLine{margin-top:8px;font-size:14px}
+#achPop{position:absolute;z-index:40;top:58px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:var(--sun);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:999px;padding:5px 16px 5px 8px;white-space:nowrap;pointer-events:none;animation:achIn .4s cubic-bezier(.34,1.56,.64,1)}
+#achPop .e{font-size:24px}
+#achPop small{display:block;font-size:11px;letter-spacing:.12em}
+@keyframes achIn{0%{transform:translateX(-50%) translateY(-20px) scale(.7);opacity:0}100%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}}
+
+/* novedades */
+#news{background:rgba(255,239,245,.96);display:flex;padding:14px}
+.newsCard{max-width:520px;text-align:left}
+.newsCard .goTitle{text-align:center}
+.newsVer{margin-top:14px;border:3px solid var(--ink);border-radius:14px;padding:10px 14px;background:var(--white)}
+.newsVer.now{background:var(--cream);box-shadow:4px 4px 0 var(--ink)}
+.newsVer h3{margin:0;font-family:var(--hand);font-size:26px;line-height:1;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.newsVer h3 small{font-family:var(--ui);font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.65}
+.newsVer ul{margin:8px 0 0;padding:0 0 0 4px;list-style:none;display:grid;gap:5px;font-size:14px;line-height:1.25}
+.newsVer li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:4px}
+.newsTag{display:inline-block;background:var(--red);color:var(--white);border-radius:999px;padding:1px 10px;font-size:11px;letter-spacing:.1em;font-family:var(--ui)}
+.verLink{background:none;border:0;font-size:12px;opacity:.7;text-decoration:underline;padding:2px}
+
+/* Dina con el pancito */
+.dinaWrap{position:relative;width:150px;max-width:42%}
+.dinaWrap .dinaPan{position:absolute;width:30%;right:-6%;bottom:2%;transform:rotate(14deg);filter:drop-shadow(2px 2px 0 var(--ink))}
+
+/* mesa de la fiesta */
+.mesa{display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:0 14px 2px;border-bottom:5px solid var(--ink);position:relative;margin-bottom:12px}
+.mesa:before,.mesa:after{content:'';position:absolute;bottom:-14px;width:5px;height:12px;background:var(--ink);border-radius:2px}
+.mesa:before{left:12px}.mesa:after{right:12px}
+.mesa img{height:56px;width:auto;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.85))}
+.mesa img.p{height:34px}.mesa img.k{height:62px}
+#stage.tall .mesa img{height:42px}#stage.tall .mesa img.p{height:26px}#stage.tall .mesa img.k{height:46px}
+
 @keyframes pop{0%{transform:scale(.7) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 @keyframes munch{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(-2deg) translateY(-3px)}}
-@media (prefers-reduced-motion:reduce){.goCard,#unlock .box,.dinaRow img{animation:none}}
+@media (prefers-reduced-motion:reduce){.goCard,#unlock .box,.dinaRow .dinaImg,#achPop{animation:none}}
+
+/* listas largas (novedades, logros, ranking): la tarjeta entra en la pantalla,
+   la lista se desliza por dentro y el botón de abajo siempre queda a la vista */
+#news .goCard,#ach .goCard{display:flex;flex-direction:column;max-height:100%}
+#newsList,#achGrid{overflow-y:auto;min-height:0;flex:1 1 auto;-webkit-overflow-scrolling:touch;padding:2px 6px 6px 2px;margin-right:-6px}
+#news .goBtns,#ach .goBtns{flex:0 0 auto;margin-top:12px}
+#rank .goCard{display:flex;flex-direction:column;max-height:100%}
+.rkL{display:flex;flex-direction:column;min-height:0;flex:1 1 auto}
+.rkL .rankList{overflow-y:auto;min-height:72px;flex:1 1 auto;padding:2px 4px 4px 2px}
+.rkR{flex:0 0 auto}
 
 /* modo compacto: celulares acostados / pantalla completa -> el juego ocupa todo */
 body.compact #app{padding:0}
@@ -202,6 +267,116 @@ body.portrait #rotate{display:block}
 }
 body.compact.short .chars,body.compact.short .outfits{grid-template-columns:repeat(4,minmax(0,1fr))}
 body.compact.short .card .ds{display:none}
+
+/* ---------- celular parado ---------- */
+@media (max-width:560px){
+  body.compact #menu{padding:12px 10px}
+  body.compact .menuTop{margin-bottom:8px;gap:6px}
+  body.compact .ibtn{width:36px;height:36px;font-size:16px}
+  body.compact .chars{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
+  body.compact .card{padding:4px;border-width:3px;box-shadow:3px 3px 0 var(--ink);border-radius:12px!important}
+  body.compact .card .pic{border-width:2px;border-radius:8px}
+  body.compact .card .nm{font-size:12px;margin:3px 1px 0;text-align:center}
+  body.compact .card .ds{display:none}
+  body.compact .card .chk{top:6px;left:6px;width:20px;height:20px;font-size:11px}
+  body.compact .card .lock span{font-size:10px;padding:0 5px;border-width:2px}
+  body.compact .outfits{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
+  body.compact .ofit{flex-direction:column;gap:2px;padding:6px 3px;text-align:center;box-shadow:3px 3px 0 var(--ink)}
+  body.compact .ofit .t{font-size:11px}
+  body.compact .ofit .s{font-size:12px}
+  body.compact .secTitle{font-size:22px;margin-bottom:6px}
+  body.compact .retoPill{font-size:12px;margin-bottom:8px;padding:4px 10px}
+  body.compact .go{gap:7px}
+  body.compact .bigBtn{font-size:20px;padding:10px 30px}
+  body.compact .help{font-size:15px}
+  body.compact #over,body.compact #rank,body.compact #ach,body.compact #news{padding:10px}
+  body.compact .goCard{padding:14px 12px}
+  body.compact .goTitle{font-size:34px}
+  body.compact .goBtns{gap:8px}
+  body.compact .goBtns .btn{padding:7px 15px;font-size:15px}
+  body.compact .achGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  body.compact .achItem{padding:5px 6px;gap:5px;border-width:2px}
+  body.compact .achItem .e{font-size:20px;width:24px}
+  body.compact .achItem .t{font-size:12px}
+  body.compact .achItem .d{font-size:13px}
+}
+
+/* ---------- celular acostado (pantalla baja) ---------- */
+body.compact.short #menu{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,250px);column-gap:16px;align-content:start;padding:8px 14px;
+  grid-template-areas:"top top" "toast toast" "reto reto" "s1 go" "chars go" "s2 go" "out go";grid-template-rows:auto auto auto auto auto auto 1fr}
+body.compact.short .menuTop{grid-area:top}
+body.compact.short #toast{grid-area:toast}
+body.compact.short .retoPill{grid-area:reto}
+body.compact.short #sec1{grid-area:s1}
+body.compact.short .chars{grid-area:chars}
+body.compact.short #sec2{grid-area:s2}
+body.compact.short .outfits{grid-area:out;align-self:start}
+body.compact.short .ibtn{width:34px;height:34px;font-size:15px}
+body.compact.short .menuTop .pill{font-size:14px;padding:3px 10px}
+body.compact.short #playBtn2{font-size:14px!important;padding:3px 12px!important}
+body.compact.short .menuTop{margin-bottom:6px}
+body.compact.short #toast{justify-self:start;margin-bottom:6px}
+body.compact.short .retoPill{font-size:12px;padding:3px 12px;margin-bottom:6px;max-width:none}
+body.compact.short #sec1,body.compact.short .chars,body.compact.short #sec2,body.compact.short .outfits{max-width:none}
+body.compact.short #sec1,body.compact.short #sec2{font-size:20px;margin:0 0 4px}
+body.compact.short .secTitle .n{padding:0 9px}
+body.compact.short .chars{gap:8px;margin-bottom:6px;justify-content:stretch}
+body.compact.short .card{padding:4px;border-width:3px;box-shadow:3px 3px 0 var(--ink)}
+body.compact.short .card .pic{aspect-ratio:auto;height:min(19vh,92px);border-width:2px}
+body.compact.short .card .pic img{width:auto;height:88%;max-width:88%;aspect-ratio:1}
+body.compact.short .card .nm{font-size:13px;margin-top:2px;text-align:center}
+body.compact.short .card .chk{top:6px;left:6px;width:20px;height:20px;font-size:11px}
+body.compact.short .outfits{gap:8px;margin-bottom:0;justify-content:stretch}
+body.compact.short .ofit{padding:5px 6px;gap:5px;box-shadow:3px 3px 0 var(--ink)}
+body.compact.short .ofit .em{font-size:18px}
+body.compact.short .ofit .t{font-size:12px}
+body.compact.short .ofit .s{font-size:12px}
+body.compact.short .go{grid-area:go;align-self:start;gap:5px;margin-top:0}
+body.compact.short .bigBtn{font-size:19px;padding:9px 22px}
+body.compact.short .help{font-size:13px;line-height:1.05}
+body.compact.short #loadPill{display:none}
+body.compact.short .credit{font-size:15px}
+body.compact.short .partyBtn{font-size:14px;padding:6px 14px}
+body.compact.short .partyBtn:disabled{font-size:12px}
+/* pantalla de Dina en dos columnas */
+body.compact.short #over{padding:8px}
+body.compact.short #overCard{max-width:720px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:12px 16px}
+body.compact.short #overCard .goTitle{font-size:32px}
+body.compact.short #overCard .blob{display:none}
+body.compact.short #overCard .stats{margin-top:8px;gap:8px}
+body.compact.short #overCard .stat .v{font-size:20px}
+body.compact.short #overCard .dinaRow{margin-top:8px}
+body.compact.short .dinaWrap{width:110px}
+body.compact.short .bubble{font-size:16px}
+body.compact.short #overCard .rankLine{margin-top:0}
+body.compact.short #overCard .goBtns{margin-top:10px}
+/* ranking en dos columnas */
+body.compact.short #rank{padding:8px}
+body.compact.short #rank .goCard{max-width:760px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);column-gap:16px;padding:10px 14px;height:100%}
+body.compact.short #rank .goTitle{grid-column:1/-1;font-size:30px!important}
+body.compact.short .rkR{align-self:center}
+body.compact.short .tabs{margin-top:4px}
+/* logros y novedades más compactos */
+body.compact.short #ach,body.compact.short #news{padding:8px}
+body.compact.short #ach .goCard{max-width:900px;padding:10px 14px}
+body.compact.short #ach .goTitle,body.compact.short #news .goTitle{font-size:30px!important}
+body.compact.short .achCount{font-size:18px}
+body.compact.short .achGrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:6px}
+body.compact.short .achItem{padding:4px 6px;border-width:2px}
+body.compact.short .achItem .e{font-size:20px;width:26px}
+body.compact.short .achItem .t{font-size:12px}
+body.compact.short .achItem .d{font-size:13px}
+body.compact.short #news .goCard{max-width:760px;padding:10px 14px}
+body.compact.short .newsVer ul{grid-template-columns:1fr 1fr;column-gap:14px}
+body.compact.short #news .goBtns,body.compact.short #ach .goBtns{margin-top:8px}
+/* fiesta con el celular acostado */
+body.compact.short #party{padding:8px}
+body.compact.short .partySide{gap:5px}
+body.compact.short .partySide .goTitle{font-size:34px}
+body.compact.short .partyMsg{font-size:18px}
+body.compact.short .mesa{margin-bottom:8px}
+body.compact.short .mesa img{height:40px}body.compact.short .mesa img.p{height:24px}body.compact.short .mesa img.k{height:44px}
+body.compact.short .partySide .btn{padding:5px 12px;font-size:14px}
 </style>
 
 </head>
@@ -220,6 +395,8 @@ body.compact.short .card .ds{display:none}
       <div class="grp">
         <div class="pill thick-sm">🍓 <b id="hFru">0</b></div>
         <div class="pill thick-sm" style="background:var(--cream)"><b id="hDist">0</b>&nbsp;m</div>
+        <div class="pill thick-sm" id="hDina" hidden style="background:#FFD9B0">🐱 <span class="pbar"><i id="hDinaBar" style="background:#F5A04A"></i></span></div>
+        <div class="pill thick-sm" id="hPow" hidden><span id="hPowEm">🧲</span><span class="pbar"><i id="hPowBar"></i></span></div>
       </div>
       <div class="grp">
         <div class="pill" id="speedPill"><span id="hSpd">0</span>&nbsp;km/h</div>
@@ -237,55 +414,66 @@ body.compact.short .card .ds{display:none}
         <div class="grp">
           <button class="btn thick-sm" id="playBtn2" style="background:var(--red);color:var(--white);padding:4px 16px;font-size:16px">¡Correr! ▶</button>
           <button class="ibtn thick-sm" id="rankBtn" aria-label="Ranking">🏆</button>
+          <button class="ibtn thick-sm" id="achBtn" aria-label="Logros">🏅</button>
+          <button class="ibtn thick-sm" id="newsBtn" aria-label="Novedades">📣</button>
           <button class="ibtn thick-sm" id="musicMenu" aria-label="Música">🎵</button>
           <button class="ibtn thick-sm" id="soundBtn" aria-label="Sonido">🔊</button>
           <button class="ibtn thick-sm" id="fsBtn" aria-label="Pantalla completa">⛶</button>
         </div>
       </div>
       <div id="toast" hidden></div>
-      <h2 class="secTitle"><span class="n thick-sm">1</span> Elegí tu corredor</h2>
+      <button class="btn thick-sm retoPill" id="retoPill"></button>
+      <h2 class="secTitle" id="sec1"><span class="n thick-sm">1</span> Elegí tu corredor</h2>
       <div class="chars" id="chars"></div>
-      <h2 class="secTitle"><span class="n thick-sm">2</span> Outfits</h2>
+      <h2 class="secTitle" id="sec2"><span class="n thick-sm">2</span> Outfits</h2>
       <div class="outfits" id="outfits"></div>
       <div class="go">
         <button class="btn bigBtn" id="playBtn">¡A CORRER! →</button>
         <div class="pill" id="loadPill">Cargando a la familia…</div>
-        <div class="help">Tocá la pantalla, clic o Espacio para saltar. ¡En el aire podés saltar otra vez! Esquivá las porciones de torta y juntá frutillas.</div>
+        <div class="help">Tocá la pantalla (o Espacio) para saltar, y otra vez en el aire para el doble salto. Juntá frutillas 🍓 y pancitos 🥪, tomá Kampitos para tener poderes y esquivá las tortas: si chocás, ¡Dina te persigue! 🐱</div>
         <div class="credit">Dibujos y animación de Sofía 🎨</div>
+        <button class="verLink" id="verLink"></button>
         <button class="btn partyBtn" id="partyBtn" disabled>🔒 La fiesta</button>
         <div><button class="linkBtn" id="resetBtn">Borrar mi progreso</button>
-          <span class="resetAsk" id="resetAsk" hidden>¿Seguro? Se pierden las frutillas y los desbloqueos. <button id="resetYes">Sí, borrar</button><button id="resetNo">No</button></span></div>
+          <span class="resetAsk" id="resetAsk" hidden>¿Seguro? Se pierden las frutillas, los desbloqueos y los logros. <button id="resetYes">Sí, borrar</button><button id="resetNo">No</button></span></div>
         <div id="rotate">📱↻ Girá el teléfono para jugar más cómodo</div>
       </div>
     </div>
 
     <div id="over" class="overlay" hidden>
-      <div class="goCard thick">
+      <div class="goCard thick" id="overCard">
         <div class="blob"></div>
+        <div class="goL">
         <div class="goTitle">¡Uy! Te caíste</div>
-        <div class="goSub">Dina se comió la torta 🍰</div>
+        <div class="goSub" id="goSub">Dina se comió la torta 🍰</div>
         <div id="recBadge" class="newRec" hidden>⭐ ¡Nuevo récord!</div>
         <div class="stats">
           <div class="stat thick-sm" style="background:var(--cream)"><div class="k">DISTANCIA</div><div class="v"><span id="oDist">0</span> m</div></div>
           <div class="stat thick-sm" style="background:var(--bg)"><div class="k">FRUTILLAS</div><div class="v">+<span id="oFru">0</span> 🍓</div></div>
         </div>
         <div class="dinaRow">
-          <img src="assets/dina.webp" alt="Dina comiendo la torta">
-          <div class="bubble thick-sm">miau… ¡la torta era mía!<br>— Dina</div>
+          <div class="dinaWrap"><img class="dinaImg" src="assets/dina.webp" alt="Dina comiendo la torta"><img class="dinaPan" id="dinaPan" src="assets/pancito.webp" alt="" hidden></div>
+          <div class="bubble thick-sm"><span id="dinaTxt">miau… ¡la torta era mía!</span><br>— Dina</div>
         </div>
+        </div>
+        <div class="goR">
         <div class="rankLine" id="rankLine"></div>
+        <div class="achLine" id="retoLine"></div>
+        <div class="achLine" id="achLine"></div>
         <div class="nameRow" id="nameAsk" hidden>
           <label for="goName" id="goNameLabel">Anotate en el ranking:</label>
           <input id="goName" maxlength="16" placeholder="Tu nombre" autocomplete="nickname">
           <button id="goNameOk">Guardar</button>
         </div>
         <div class="goBtns">
-          <button class="btn thick-sm" id="rankBtn2" style="background:var(--white)">🏆</button>
+          <button class="btn thick-sm" id="rankBtn2" style="background:var(--white)" aria-label="Ranking">🏆</button>
+          <button class="btn thick-sm" id="achBtn2" style="background:var(--white)" aria-label="Logros">🏅</button>
           <button class="btn thick-sm" id="menuBtn" style="background:var(--white)">Menú</button>
           <button class="btn thick-sm" id="partyBtn2" style="background:var(--sun)" hidden>🎉 Fiesta</button>
           <button class="btn thick-sm" id="againBtn" style="background:var(--red);color:var(--white)">¡Otra vez! →</button>
         </div>
         <div class="note">Total: <span id="oTotal">0</span> 🍓 · tu progreso queda guardado en este dispositivo</div>
+        </div>
       </div>
     </div>
 
@@ -299,8 +487,16 @@ body.compact.short .card .ds{display:none}
     <div id="rank" class="overlay" hidden>
       <div class="goCard rankCard thick">
         <div class="goTitle" style="font-size:38px">🏆 Ranking familiar</div>
+        <div class="rkL">
+        <div class="tabs" role="tablist">
+          <button id="tabRec" class="sel" role="tab">🏆 Récords</button>
+          <button id="tabReto" role="tab">🎯 Desafío de la semana</button>
+        </div>
+        <div class="retoBox" id="retoBox" hidden></div>
         <div class="rankMode" id="rankMode">Ranking de este dispositivo</div>
         <ol class="rankList" id="rankList"></ol>
+        </div>
+        <div class="rkR">
         <div class="nameRow">
           <label for="nameIn">Tu nombre:</label>
           <input id="nameIn" maxlength="16" placeholder="Ej: Nora" autocomplete="nickname">
@@ -311,8 +507,27 @@ body.compact.short .card .ds{display:none}
           <div class="avRow" id="avRow"></div>
         </div>
         <div class="goBtns"><button class="btn thick-sm" id="rankBack" style="background:var(--red);color:var(--white)">Volver</button></div>
+        </div>
       </div>
     </div>
+
+    <div id="news" class="overlay" hidden>
+      <div class="goCard newsCard thick">
+        <div class="goTitle" style="font-size:38px">📣 Novedades</div>
+        <div id="newsList"></div>
+        <div class="goBtns"><button class="btn thick-sm" id="newsOk" style="background:var(--red);color:var(--white)">¡A jugar! →</button></div>
+      </div>
+    </div>
+
+    <div id="ach" class="overlay" hidden>
+      <div class="goCard achCard thick">
+        <div class="goTitle" style="font-size:38px">🏅 Logros</div>
+        <div class="achCount" id="achCount"></div>
+        <div class="achGrid" id="achGrid"></div>
+        <div class="goBtns"><button class="btn thick-sm" id="achBack" style="background:var(--red);color:var(--white)">Volver</button></div>
+      </div>
+    </div>
+    <div id="achPop" hidden><span class="e" id="achPopEm"></span><span><small>¡NUEVO LOGRO!</small><b id="achPopNm"></b></span></div>
 
     <div id="party" class="overlay" hidden>
       <div class="partyWrap">
@@ -324,6 +539,7 @@ body.compact.short .card .ds{display:none}
           <button class="btn bigBtn blowBtn" id="blowBtn" hidden>💨 ¡Soplá la vela!</button>
         </div>
         <div class="partySide">
+          <div class="mesa" aria-label="La mesa de la fiesta: torta, pancito con salame y los tres Kampitos"><img src="assets/torta.webp" alt=""><img class="p" src="assets/pancito.webp" alt=""><img class="k" src="assets/kampito_verde.webp" alt=""><img class="k" src="assets/kampito_tropical.webp" alt=""><img class="k" src="assets/kampito.webp" alt=""></div>
           <div class="goTitle">¡A la fiesta!</div>
           <div class="partyMsg" id="partyMsg">Contá hasta uno… y soplá la vela</div>
           <div class="credit" style="font-size:16px">Animación de Sofía 🎨</div>
@@ -378,11 +594,88 @@ const OUTFITS=[
   {id:'corazon',name:'Corazón',     need:45, em:'💘', desc:'Corazón flotante'},
   {id:'corona', name:'Torta Queen', need:90, em:'👑', desc:'Corona de cumple'},
 ];
-const IMG_FILES=['sofi','sofi_hoodie','deisy','leandro','cinthia','dina','frutilla','torta','nubes','texto'];
+const IMG_FILES=['sofi','sofi_hoodie','deisy','leandro','cinthia','dina','frutilla','torta','nubes','texto','pancito','kampito','kampito_verde','kampito_tropical','dina_corre'];
+
+/* comiditas de la fiesta: el pancito con salame vale 5 y cada sabor de Kampito da su poder */
+const PAN_VALUE=5;
+const POWERS={
+  iman:  {em:'🧲',name:'Green: ¡Imán!',             dur:360,img:'kampito_verde',   glow:'#B5F56A'},
+  doble: {em:'✖️2',name:'Tropical: ¡Frutillas x2!', dur:360,img:'kampito_tropical',glow:'#FFD93D'},
+  escudo:{em:'🛡️',name:'Citrus: ¡Escudo!',          dur:480,img:'kampito',         glow:'#FFB27A'},
+};
+
+/* novedades: cada versión que ven los jugadores, la más nueva primero */
+const VERSION='2.0';
+const NEWS=[
+  {v:'2.0',fecha:'octubre 2026',titulo:'¡Llegó la comida de la fiesta!',items:[
+    ['🥪','Pancito con salame: vale 5 frutillas.'],
+    ['🧃','Kampito en sus 3 sabores, cada uno con su poder: Green 🧲 imán, Tropical ✖️2 frutillas dobles y Citrus 🛡️ escudo.'],
+    ['🏅','19 logros para ganar, 4 de ellos con Dina. Se ven con el botón 🏅.'],
+    ['🎯','Desafío de la semana: sale uno nuevo todos los lunes.'],
+    ['🏆','En el ranking ahora se ven los logros de cada uno y el desafío de la semana.'],
+    ['🐱','¡Dina te persigue! Si chocás una torta, tropezás y Dina sale a correrte. Si chocás otra vez antes de que se canse, te alcanza.'],
+    ['🥪','Dina a veces también se come el pancito.'],
+    ['🎂','La mesa de la fiesta tiene pancito y los tres Kampitos.'],
+    ['🎨','Dibujos nuevos de Sofía: el pancito y los Kampitos.'],
+    ['📱','Se ve mejor en el celular, parado o acostado: el juego ocupa toda la pantalla y casi no hace falta deslizar.'],
+    ['📣','Esta pantalla de novedades, que aparece sola cuando hay una versión nueva.'],
+  ]},
+  {v:'1.0',fecha:'octubre 2026',titulo:'El juego de cumple de Cinthia',items:[
+    ['🏃','Corré con Sofi, Deisy, Leandro y Cinthia, con outfits para desbloquear.'],
+    ['🍓','Juntá frutillas y esquivá las porciones de torta.'],
+    ['🎉','La fiesta final con la animación de Sofía.'],
+    ['🏆','Ranking familiar y música de cajita.'],
+  ]},
+];
+
+/* logros */
+const ACH=[
+  {id:'primera', em:'🏃',name:'Primera carrera',      desc:'Terminá tu primera partida'},
+  {id:'fru100',  em:'🍓',name:'Frutillera',           desc:'Juntá 100 frutillas en total'},
+  {id:'fru500',  em:'🧺',name:'Canasta llena',        desc:'Juntá 500 frutillas en total'},
+  {id:'run50',   em:'💥',name:'Lluvia de frutillas',  desc:'50 frutillas en una sola partida'},
+  {id:'m300',    em:'👟',name:'Calentando motores',   desc:'Llegá a 300 m'},
+  {id:'m1000',   em:'🚀',name:'Mil metros',           desc:'Llegá a 1000 m en una partida'},
+  {id:'pan5',    em:'🥪',name:'Picadita',             desc:'5 pancitos en una partida'},
+  {id:'pan20',   em:'🥖',name:'Panadería',            desc:'Comé 20 pancitos en total'},
+  {id:'kamp10',  em:'🧃',name:'Bien hidratada',       desc:'Tomá 10 Kampitos'},
+  {id:'tres',    em:'✨',name:'Los tres poderes',     desc:'Tomá los 3 sabores de Kampito'},
+  {id:'escudo',  em:'🛡️',name:'¡Crash!',              desc:'Rompé una torta con el escudo'},
+  {id:'tortas100',em:'🍰',name:'Esquiva tortas',      desc:'Esquivá 100 tortas en total'},
+  {id:'cuatro',  em:'👯',name:'Corre toda la familia',desc:'Jugá con los 4 personajes'},
+  {id:'familia', em:'🔓',name:'Familia completa',     desc:'Desbloqueá a Cinthia'},
+  {id:'fiesta',  em:'🎂',name:'¡A soplar!',           desc:'Soplá la vela en la fiesta'},
+  {id:'casi',    em:'😅',name:'¡Casi!',               desc:'Escapate de Dina: que se canse después de un tropezón'},
+  {id:'fuera',   em:'🍊',name:'¡Fuera, Dina!',        desc:'Espantá a Dina con el Kampito Citrus'},
+  {id:'escurridiza',em:'💨',name:'Escurridiza',       desc:'Escapate de Dina 3 veces en una partida'},
+  {id:'limpia',  em:'✨',name:'Sin rasguños',         desc:'Llegá a 500 m sin tropezar ni una vez'},
+];
+
+/* desafío de la semana: cambia todos los lunes a las 00:00 y van rotando */
+const RETOS=[
+  {id:'pancitos',  em:'🥪',name:'Más pancitos en una partida',          unit:'🥪',val:r=>r.pans},
+  {id:'metros',    em:'👟',name:'Llegá lo más lejos posible',           unit:'m', val:r=>r.metros},
+  {id:'tortas',    em:'🍰',name:'Más tortas esquivadas en una partida', unit:'🍰',val:r=>r.tortas},
+  {id:'frutillas', em:'🍓',name:'Más frutillas en una partida',         unit:'🍓',val:r=>r.frutillas},
+  {id:'sinkampito',em:'🚫',name:'Lo más lejos antes de tomar un Kampito',unit:'m',val:r=>r.sinKamp},
+  {id:'kampitos',  em:'🧃',name:'Más Kampitos en una partida',          unit:'🧃',val:r=>r.kamps},
+];
+const pad2=n=>String(n).padStart(2,'0');
+function weekInfo(d=new Date()){
+  const mon=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  mon.setDate(mon.getDate()-(mon.getDay()+6)%7);              // lunes de esta semana
+  const idx=Math.round((mon-new Date(2026,9,19))/604800000);   // semana 0 = lunes 19/10/2026
+  const next=new Date(mon);next.setDate(mon.getDate()+7);
+  return {key:'S'+mon.getFullYear()+'-'+pad2(mon.getMonth()+1)+'-'+pad2(mon.getDate()),
+          reto:RETOS[((idx%RETOS.length)+RETOS.length)%RETOS.length],
+          daysLeft:Math.max(1,Math.ceil((next-d)/86400000))};
+}
+const whenNext=w=>w.daysLeft===1?'mañana':`en ${w.daysLeft} días`;
 
 /* ---------- guardado (tolerante a fallos) ---------- */
 const KEY='tortaRunner.v15';
-const save={total:0,best:0,char:'sofi',outfit:'default',muted:false,seen:['sofi','default'],name:'',runs:[],pending:[],avatars:{},anonBest:null,lastTop:[]};
+const save={total:0,best:0,char:'sofi',outfit:'default',muted:false,seen:['sofi','default'],name:'',runs:[],pending:[],avatars:{},anonBest:null,lastTop:[],
+  ach:{},st:{},wk:{key:'',rows:{}},lastWeek:{key:'',reto:'',top:[]}};
 try{
   const raw=localStorage.getItem(KEY);
   if(raw) Object.assign(save,JSON.parse(raw));
@@ -390,6 +683,8 @@ try{
     const t=parseInt(localStorage.getItem('sofi_total')||'0',10); if(t>0) save.total=t;
   }
 }catch(e){}
+save.st=Object.assign({runs:0,pans:0,kamps:0,tortas:0,escudos:0,bestFru:0,bestPans:0,powers:[],chars:[],fiesta:false,escapes:0,scared:0,bestEscapes:0,cleanBest:0},save.st);
+if(!save.st.runs&&(save.best>0||save.total>0)) save.st.runs=1; // ya había jugado antes de los logros
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
 const charUnlocked=c=>save.total>=c.need;
 const partyOpen=()=>CHARS.every(c=>save.total>=c.need);
@@ -421,17 +716,21 @@ const sJump2=()=>tone('sine',560,1100,.2,.22);
 const sFru=()=>{tone('triangle',660,0,.25,.3);tone('triangle',990,0,.28,.3,.06)};
 const sHit=()=>tone('sawtooth',180,60,.4,.35);
 const sUnlock=()=>{[523,659,784,1046].forEach((f,i)=>tone('triangle',f,0,.3,.25,i*.09))};
+const sPan=()=>{tone('triangle',520,0,.18,.28);tone('triangle',780,0,.2,.26,.07);tone('triangle',1040,0,.26,.22,.14)};
+const sKamp=()=>{tone('sine',300,900,.3,.25);tone('sine',500,1300,.25,.18,.1);tone('triangle',900,1800,.22,.14,.2)};
+const sCrash=()=>{tone('triangle',1000,250,.3,.28);tone('sine',1400,0,.2,.15,.08)};
+const sAch=()=>{[784,988,1175,1568].forEach((f,i)=>tone('sine',f,0,.25,.18,i*.07))};
 
 /* ---------- canvas y escala ---------- */
 const stage=$('stage'),cv=$('game'),ctx=cv.getContext('2d');
 let dpr=1,cssW=900,cssH=500,scale=1,VW=900,VH=500,GROUND=430;
-const MIN_VW=720, BASE_VH=500;
+const BASE_VH=500;
 let pseudoFS=false;
 
 function layout(){
   const iw=window.innerWidth, ih=window.innerHeight;
   const fs=!!document.fullscreenElement||pseudoFS;
-  const compact=fs||ih<620;
+  const compact=fs||ih<620||iw<760; // en celulares el juego ocupa toda la pantalla
   document.body.classList.toggle('compact',compact);
   document.body.classList.toggle('short',ih<480);
   document.body.classList.toggle('portrait',ih>iw&&iw<760);
@@ -449,23 +748,35 @@ function layout(){
   dpr=Math.min(window.devicePixelRatio||1,2);
   cv.width=Math.round(cssW*dpr); cv.height=Math.round(cssH*dpr);
   stage.classList.toggle('tall',cssH>cssW*1.05);
-  scale=Math.min(cssH/BASE_VH,cssW/MIN_VW);
-  VW=cssW/scale; VH=cssH/scale; GROUND=VH-72;
+  // celular parado: mundo un poco más angosto (personajes más grandes) y el piso más arriba
+  const tall=cssH>cssW;
+  const minVW=tall?560:720;
+  scale=Math.min(cssH/BASE_VH,cssW/minVW);
+  VW=cssW/scale; VH=cssH/scale;
+  GROUND=tall?Math.round(Math.min(VH-72,VH*.66)):VH-72;
+  PX=tall?118:150;
   draw();
 }
 window.addEventListener('resize',layout);
 document.addEventListener('fullscreenchange',layout);
 
 /* ---------- estado del juego ---------- */
-const PH=112, PX=150;               // alto del personaje y x fija (unidades virtuales)
+const PH=112;                        // alto del personaje (unidades virtuales)
+let PX=150;                          // x fija del personaje (más a la izquierda con el celular parado)
 const GRAV=.95, JUMP=-17, JUMP2=-14; // misma física que la v14
 let state='menu';                    // menu | playing | dying | over | paused
-let P, obs, fru, parts, conf, speed, dist, got, tick, nextSpawn, textX, nubesX, dieT, cloudT;
+let P, obs, fru, parts, conf, speed, dist, got, tick, nextSpawn, textX, nubesX, dieT, cloudT, R, pow, kampIn, dina;
+const DINA_CALM=540; // 9 s sin chocar y Dina se cansa
+const DINA_W=98;      // ancho de Dina corriendo en pantalla
 
 function reset(){
-  P={y:0,vy:0,onG:true,jumps:2,coyote:0,buffer:0,squash:1,rot:0};
+  P={y:0,vy:0,onG:true,jumps:2,coyote:0,buffer:0,squash:1,rot:0,inv:0};
   obs=[];fru=[];parts=[];conf=[];
   speed=6.5;dist=0;got=0;tick=0;nextSpawn=260;textX=0;nubesX=0;dieT=0;
+  R={pans:0,kamps:0,tortas:0,escudos:0,sinKamp:null,powers:[],escapes:0,scared:0,stumbles:0}; // lo que pasó en esta partida
+  pow={type:'',t:0,max:1};
+  dina={stage:0,x:-260,calm:0,caught:false}; // Dina te persigue (prueba)
+  kampIn=2400+Math.random()*1600; // el primer Kampito sale a los ~7-10 s
   P.y=GROUND;
 }
 reset();
@@ -496,20 +807,50 @@ function spawnChunk(){
   const span=two?tw*2-6:tw;
   const r=Math.random();
   let extra=0;
-  if(r<.38){ // arco sobre la torta (sigue la curva del salto)
-    for(let i=0;i<5;i++){const dx=(i-2)*46;fru.push({x:x+span/2+dx,y:GROUND-170+Math.abs(i-2)**2*14,bob:Math.random()*6})}
+  if(r<.38){ // arco sobre la torta (sigue la curva del salto); a veces la punta es un pancito
+    const pan=Math.random()<.22;
+    for(let i=0;i<5;i++){const dx=(i-2)*46;fru.push({x:x+span/2+dx,y:GROUND-170+Math.abs(i-2)**2*14,bob:Math.random()*6,kind:(pan&&i===2)?'pan':''})}
   }else if(r<.72){ // línea a ras del piso después de la torta
     for(let i=0;i<4;i++) fru.push({x:x+span+150+i*44,y:GROUND-40,bob:Math.random()*6});
     extra=150+4*44;
-  }else if(r<.9){ // premio alto: hace falta doble salto
-    fru.push({x:x+span/2+70,y:GROUND-262,bob:0});fru.push({x:x+span/2+116,y:GROUND-252,bob:2});
+  }else if(r<.9){ // premio alto: hace falta doble salto (a veces es un pancito)
+    const pan=Math.random()<.4;
+    fru.push({x:x+span/2+70,y:GROUND-262,bob:0});fru.push({x:x+span/2+116,y:GROUND-252,bob:2,kind:pan?'pan':''});
   }
   const minGap=Math.max(320,speed*44)+(two?60:0);
   nextSpawn=Math.max(minGap+Math.random()*320,extra+130);
+  // Kampito: más raro, flotando a media altura en el hueco entre dos tortas
+  if(kampIn<=0&&!extra){
+    fru.push({x:x+span+Math.max(170,nextSpawn*.5),y:GROUND-150,bob:Math.random()*6,kind:'kamp',flavor:['iman','doble','escudo'][Math.random()*3|0]});
+    kampIn=4800+Math.random()*3600;
+  }
+}
+function setPower(type){
+  const p=POWERS[type];pow={type,t:p.dur,max:p.dur};
+  if(!R.powers.includes(type)) R.powers.push(type);
+  if(type==='escudo'&&dina.stage){R.scared++;dinaAway('¡Fuera, Dina! 🛡️');}
+  $('hPowEm').textContent=p.em;show('hPow',true);
+  parts.push({x:PX+pw()/2,y:P.y-PH-22,vx:0,vy:-.9,life:1.4,type:'plus',txt:p.name,big:1});
+}
+function say(t,x,y){parts.push({x,y,vx:0,vy:-.8,life:1.5,type:'plus',txt:t,big:1})}
+function dinaAway(t){dina.stage=0;dina.calm=0;show('hDina',false);say(t,PX+60,P.y-PH-30)}
+function stumble(o){ // primer choque: tropezás, perdés velocidad y Dina se acerca
+  o.gone=true;
+  for(let i=0;i<12;i++)parts.push({x:o.x+o.w/2,y:GROUND-o.h/2,vx:(Math.random()-.2)*6,vy:-Math.random()*5-1,life:1,type:'crumb',c:i%3?'#FFF0A0':'#FF9EBB'});
+  speed=Math.max(6.5,speed-1.6);P.inv=50;P.vy=Math.min(P.vy,-7);P.onG=false;
+  dina.stage=1;dina.calm=DINA_CALM;R.stumbles++;show('hDina',true);
+  tone('sawtooth',260,150,.25,.22);tone('triangle',700,1100,.18,.16,.15); // ¡miau!
+  say('¡Uy! Dina te persigue 🐱',PX+90,P.y-PH-30);
+  if(navigator.vibrate) try{navigator.vibrate(40)}catch(e){}
+}
+function breakCake(o){ // el escudo rompe la torta en migas
+  o.gone=true;R.escudos++;
+  for(let i=0;i<16;i++)parts.push({x:o.x+o.w/2,y:GROUND-o.h/2,vx:(Math.random()-.2)*7,vy:-Math.random()*6-1,life:1,type:'crumb',c:i%3?'#FFF0A0':'#FF9EBB'});
 }
 
 function update(){
   tick++;
+  dina.x+=((dina.caught?PX-DINA_W*.55:dina.stage?Math.max(6,PX-DINA_W-8):-280)-dina.x)*(dina.caught?.12:.04);
   if(state==='dying'){
     P.vy+=GRAV*.6;P.y+=P.vy;P.rot+=.12;dieT++;
     stepParts();
@@ -529,32 +870,63 @@ function update(){
   if(P.buffer>0)P.buffer--;
   P.squash+=(1-P.squash)*.18;
   // mundo
-  nextSpawn-=speed; if(nextSpawn<=0) spawnChunk();
-  for(const o of obs) o.x-=speed;
+  nextSpawn-=speed; kampIn-=speed; if(nextSpawn<=0) spawnChunk();
+  for(const o of obs){ o.x-=speed; if(!o.passed&&o.x+o.w<PX){o.passed=true;R.tortas++} }
   for(const f of fru) f.x-=speed;
-  obs=obs.filter(o=>o.x>-120); fru=fru.filter(f=>!f.taken&&f.x>-60);
-  // colisiones
+  obs=obs.filter(o=>!o.gone&&o.x>-120); fru=fru.filter(f=>!f.taken&&f.x>-60);
+  // poder del Kampito
+  if(pow.t>0){ pow.t--; if(!pow.t){pow.type='';show('hPow',false)} }
+  if(P.inv>0) P.inv--;
   const w=pw();
-  const L=PX+w*.27,R=PX+w*.73,T=P.y-PH*.8,B=P.y-6;
+  if(pow.type==='iman'){ // las frutillas y pancitos cercanos vuelan hacia vos
+    const cx=PX+w/2,cy=P.y-PH*.5;
+    for(const f of fru){ if(f.kind==='kamp') continue;
+      const dx=cx-f.x,dy=cy-f.y; if(dx*dx+dy*dy<300*300&&f.x>PX-40){f.x+=dx*.14;f.y+=dy*.14;f.bob=0;f.mag=1} }
+  }
+  // colisiones
+  const L=PX+w*.27,Rr=PX+w*.73,T=P.y-PH*.8,B=P.y-6;
   for(const o of obs){
     const oL=o.x+o.w*.14,oR=o.x+o.w*.86,oT=GROUND-o.h*.72;
-    if(R>oL&&L<oR&&B>oT){ die(); return; }
-  }
-  for(const f of fru){
-    const fy=f.y+Math.sin(tick*.12+f.bob)*5;
-    if(f.x>L-16&&f.x<R+16&&fy>T-16&&fy<B+16){
-      f.taken=true;got++;sFru();
-      for(let i=0;i<7;i++)parts.push({x:f.x,y:fy,vx:(Math.random()-.5)*6,vy:-Math.random()*5-1,life:1,type:'heart'});
-      parts.push({x:f.x,y:fy-10,vx:0,vy:-1.2,life:1,type:'plus'});
+    if(Rr>oL&&L<oR&&B>oT){
+      if(P.inv>0) continue;
+      if(pow.type==='escudo'){ // el escudo rompe la torta (y la de al lado) y se gasta
+        for(const o2 of obs) if(Math.abs(o2.x-o.x)<140) breakCake(o2);
+        sCrash();pow.t=0;pow.type='';show('hPow',false);P.inv=30;
+        if(navigator.vibrate) try{navigator.vibrate(25)}catch(e){}
+        continue;
+      }
+      if(!dina.stage){ stumble(o); continue; }
+      dina.caught=true; die(); return;
     }
   }
+  // Dina: se acerca después de un tropezón y se cansa si corrés un rato sin chocar
+  if(dina.stage){ dina.calm--; if(dina.calm<=0){R.escapes++;dinaAway('Dina se cansó 😹');} }
+  for(const f of fru){
+    const fy=f.mag?f.y:f.y+Math.sin(tick*.12+f.bob)*5;
+    const rad=f.kind?24:16;
+    if(f.x>L-rad&&f.x<Rr+rad&&fy>T-rad&&fy<B+rad){
+      f.taken=true;
+      if(f.kind==='kamp'){
+        R.kamps++; if(R.sinKamp===null) R.sinKamp=Math.floor(dist);
+        sKamp(); setPower(f.flavor||'escudo');
+        for(let i=0;i<10;i++)parts.push({x:f.x,y:fy,vx:(Math.random()-.5)*6,vy:-Math.random()*5-1,life:1,type:'bubble'});
+        continue;
+      }
+      const v=(f.kind==='pan'?PAN_VALUE:1)*(pow.type==='doble'?2:1);
+      got+=v;
+      if(f.kind==='pan'){R.pans++;sPan()}else sFru();
+      for(let i=0;i<(f.kind?10:7);i++)parts.push({x:f.x,y:fy,vx:(Math.random()-.5)*6,vy:-Math.random()*5-1,life:1,type:'heart'});
+      parts.push({x:f.x,y:fy-10,vx:0,vy:-1.2,life:1,type:'plus',txt:'+'+v,big:f.kind?1:0});
+    }
+  }
+  if(tick%20===0) achCheck(true);
   // confeti de Cinthia
   if(save.char==='cinthia'&&Math.random()<.45) conf.push({x:PX+w*.2,y:P.y-PH*.5,vx:-Math.random()*2-.5-speed*.3,vy:(Math.random()-.5)*2,rot:Math.random()*6,vr:(Math.random()-.5)*.25,c:['#FF9EBB','#FFD93D','#4ADE80','#60A5FA','#FF4D6D'][Math.random()*5|0],life:1});
   stepParts();
   hud();
 }
 function stepParts(){
-  for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=p.type==='plus'?0:.15;p.life-=p.type==='plus'?.02:.03}
+  for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=p.type==='plus'?0:p.type==='bubble'?-.12:.15;p.life-=p.type==='plus'?.02:.03}
   parts=parts.filter(p=>p.life>0);
   if(parts.length>160) parts.splice(0,parts.length-160);
   for(const c of conf){c.x+=c.vx;c.y+=c.vy;c.vy+=.04;c.rot+=c.vr;c.life-=.012}
@@ -620,13 +992,42 @@ function drawPlayer(){
     ctx.fillStyle='#FF4D6D';for(const dx of[-cw/4,0,cw/4]){ctx.beginPath();ctx.arc(dx,cy-5,3,0,7);ctx.fill()}
   }
   ctx.restore();
+  // poder activo (parpadea cuando se está terminando)
+  if(pow.type&&!(pow.t<90&&Math.floor(tick/6)%2)){
+    const cx=PX+w/2,cy=P.y+bob-PH*.5;
+    ctx.save();
+    if(pow.type==='escudo'){
+      ctx.fillStyle='rgba(96,165,250,.18)';ctx.strokeStyle='#60A5FA';ctx.lineWidth=4;
+      ctx.setLineDash([14,8]);ctx.lineDashOffset=-tick*.8;
+      ctx.beginPath();ctx.ellipse(cx,cy,w*.75,PH*.66,0,0,7);ctx.fill();ctx.stroke();
+    }else if(pow.type==='iman'){
+      ctx.strokeStyle='#FF4D6D';ctx.lineWidth=3;
+      for(let k=0;k<2;k++){const ph=((tick*.02+k*.5)%1);ctx.globalAlpha=1-ph;ctx.beginPath();ctx.arc(cx,cy,40+ph*120,0,7);ctx.stroke()}
+    }else if(pow.type==='doble'){
+      ctx.font='700 34px Caveat, cursive';ctx.textAlign='center';ctx.fillStyle='#FFD93D';ctx.strokeStyle='#000';ctx.lineWidth=4;
+      const y=P.y+bob-PH-14+Math.sin(tick*.2)*4;ctx.strokeText('x2',cx,y);ctx.fillText('x2',cx,y);
+    }
+    ctx.restore();
+  }
+  if(P.inv>0&&P.inv%6<3){ctx.save();ctx.globalAlpha=.35;ctx.fillStyle='#fff';ctx.fillRect(PX,P.y-PH,w,PH);ctx.restore()}
+}
+function drawDina(){
+  const im=IMG.dina_corre; if(dina.x<-220||!ok(im)) return;
+  const w=DINA_W,h=w*im.naturalHeight/im.naturalWidth;
+  const run=state==='playing'||dina.caught;
+  const hop=run?Math.abs(Math.sin(tick*.28))*16:0;
+  ctx.save();ctx.fillStyle='rgba(0,0,0,.12)';ctx.beginPath();ctx.ellipse(dina.x+w/2,GROUND+4,w*.38*(1-hop/40),6,0,0,7);ctx.fill();
+  ctx.translate(dina.x+w/2,GROUND-hop-2);ctx.rotate(run?Math.sin(tick*.28)*.07:0); // galopa: sube, baja y se balancea
+  ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();
 }
 function drawParts(){
   for(const c of conf){ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.rot);ctx.globalAlpha=c.life;ctx.fillStyle=c.c;ctx.fillRect(-4,-6,8,12);ctx.restore()}
   for(const p of parts){
     ctx.save();ctx.globalAlpha=Math.max(0,p.life);
     if(p.type==='heart'){ctx.fillStyle='#FF4D6D';ctx.strokeStyle='#000';ctx.lineWidth=2;heartPath(p.x,p.y,8);ctx.fill();ctx.stroke()}
-    else if(p.type==='plus'){ctx.font='700 30px Caveat, cursive';ctx.fillStyle='#FF2D78';ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.strokeText('+1',p.x,p.y);ctx.fillText('+1',p.x,p.y)}
+    else if(p.type==='plus'){const t=p.txt||'+1';ctx.font='700 '+(p.big?36:30)+'px Caveat, cursive';ctx.textAlign='center';ctx.fillStyle=p.big?'#FFD93D':'#FF2D78';ctx.strokeStyle='#000';ctx.lineWidth=p.big?4:3;ctx.globalAlpha=Math.min(1,p.life);ctx.strokeText(t,p.x,p.y);ctx.fillText(t,p.x,p.y)}
+    else if(p.type==='crumb'){ctx.fillStyle=p.c;ctx.strokeStyle='#000';ctx.lineWidth=1.5;ctx.fillRect(p.x-4,p.y-4,8,8);ctx.strokeRect(p.x-4,p.y-4,8,8)}
+    else if(p.type==='bubble'){ctx.strokeStyle='#FFA36C';ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,5+(1-p.life)*4,0,7);ctx.stroke()}
     else if(p.type==='star'){ctx.fillStyle='#FFD93D';ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,7);ctx.fill()}
     else{ctx.fillStyle='rgba(0,0,0,.25)';ctx.beginPath();ctx.arc(p.x,p.y,3+ (1-p.life)*3,0,7);ctx.fill()}
     ctx.restore();
@@ -636,12 +1037,20 @@ function draw(){
   ctx.setTransform(dpr*scale,0,0,dpr*scale,0,0);
   ctx.imageSmoothingQuality='high';
   drawBG();
-  const ti=IMG.torta,fi=IMG.frutilla;
+  const ti=IMG.torta,fi=IMG.frutilla,pi=IMG.pancito;
   for(const o of obs){ if(ok(ti)) ctx.drawImage(ti,o.x,GROUND-o.h+4,o.w,o.h) }
   for(const f of fru){
-    const fy=f.y+Math.sin(tick*.12+f.bob)*5;
-    if(ok(fi)) ctx.drawImage(fi,f.x-14,fy-20,28,41);
+    const fy=f.mag?f.y:f.y+Math.sin(tick*.12+f.bob)*5;
+    if(f.kind==='pan'){ if(ok(pi)) ctx.drawImage(pi,f.x-25,fy-21,50,41) }
+    else if(f.kind==='kamp'){
+      const g=.5+Math.sin(tick*.15)*.2; // brillo para que se note que es especial
+      const pw2=POWERS[f.flavor||'escudo'],ki=IMG[pw2.img];
+      ctx.save();ctx.globalAlpha=g;ctx.fillStyle=pw2.glow;ctx.beginPath();ctx.arc(f.x,fy,44,0,7);ctx.fill();ctx.restore();
+      if(ok(ki)) ctx.drawImage(ki,f.x-15,fy-46,30,92);
+    }
+    else if(ok(fi)) ctx.drawImage(fi,f.x-14,fy-20,28,41);
   }
+  drawDina();
   drawPlayer();
   drawParts();
 }
@@ -663,7 +1072,10 @@ function loop(now){
 
 /* ---------- HUD y pantallas ---------- */
 let hudCache='';
+let powCache=-1;
 function hud(){
+  if(dina.stage)$('hDinaBar').style.width=(dina.calm/DINA_CALM*100)+'%';
+  if(pow.type){const pc=Math.ceil(pow.t/pow.max*40);if(pc!==powCache){powCache=pc;$('hPowBar').style.width=(pc*2.5)+'%'}}
   const s=got+'|'+Math.floor(dist)+'|'+Math.round(speed*3);
   if(s===hudCache) return; hudCache=s;
   $('hFru').textContent=got;$('hDist').textContent=Math.floor(dist);$('hSpd').textContent=Math.round(speed*3);
@@ -673,13 +1085,13 @@ function show(id,on){$(id).hidden=!on}
 function start(){
   ac();
   if(!charUnlocked(CHARS.find(c=>c.id===save.char))) save.char='sofi';
-  reset();state='playing';hudCache='';hud();
-  show('menu',false);show('over',false);show('pause',false);show('rank',false);show('hud',true);
+  reset();state='playing';hudCache='';powCache=-1;achThisRun=0;hud();
+  show('menu',false);show('over',false);show('pause',false);show('rank',false);show('ach',false);show('news',false);show('hPow',false);show('hDina',false);show('hud',true);
   refreshMusic();
   stage.focus?.();
 }
 function die(){
-  state='dying';sHit();P.vy=-9;P.rot=0;dieT=0;refreshMusic();
+  state='dying';sHit();P.vy=-9;P.rot=0;dieT=0;pow.type='';pow.t=0;show('hDina',false);show('hPow',false);refreshMusic();
   if(navigator.vibrate) try{navigator.vibrate([30,40,60])}catch(e){}
 }
 function gameOver(){
@@ -688,18 +1100,100 @@ function gameOver(){
   const before=save.total;
   save.total+=got;
   const rec=m>save.best; if(rec) save.best=m;
+  // estadísticas para los logros
+  const S=save.st;
+  S.runs++;S.pans+=R.pans;S.kamps+=R.kamps;S.tortas+=R.tortas;S.escudos+=R.escudos;
+  S.bestFru=Math.max(S.bestFru,got);S.bestPans=Math.max(S.bestPans,R.pans);
+  S.escapes+=R.escapes;S.scared+=R.scared;S.bestEscapes=Math.max(S.bestEscapes,R.escapes);
+  if(!R.stumbles) S.cleanBest=Math.max(S.cleanBest,m);
+  for(const p of R.powers) if(!S.powers.includes(p)) S.powers.push(p);
+  if(!S.chars.includes(save.char)) S.chars.push(save.char);
   persist();
+  achCheck(false);
   $('oDist').textContent=m;$('oFru').textContent=got;$('oTotal').textContent=save.total;
   show('recBadge',rec);
   show('partyBtn2',partyOpen());
+  // a veces Dina también se come el pancito
+  const panDina=R.pans>0?Math.random()<.6:Math.random()<.15;
+  show('dinaPan',panDina);
+  $('goSub').textContent=R&&dina.caught?'¡Dina te alcanzó y se comió la torta! 🐱':panDina?'Dina se comió la torta… ¡y el pancito! 🥪':'Dina se comió la torta 🍰';
+  $('dinaTxt').textContent=panDina?'miau… ¡el pancito con salame también era mío!':'miau… ¡la torta era mía!';
+  const nAch=Object.keys(save.ach).length,nNew=achThisRun;
+  $('achLine').textContent=`🏅 Logros: ${nAch} de ${ACH.length}`+(nNew?` · ¡${nNew===1?'uno nuevo':nNew+' nuevos'}!`:'');
   show('over',true);
-  rankAfterRun({metros:m,frutillas:got,personaje:save.char});
+  const run={metros:m,frutillas:got,pans:R.pans,kamps:R.kamps,tortas:R.tortas,sinKamp:R.sinKamp===null?m:R.sinKamp};
+  const wk=weekInfo();
+  const val=wk.reto.val(run)|0;
+  const wbest=Math.max(val,(save.wk.key===wk.key&&save.name&&save.wk.rows[save.name.toLowerCase()]||{valor:0}).valor||0);
+  $('retoLine').textContent=`🎯 Desafío (${wk.reto.name.toLowerCase()}): ${val} ${wk.reto.unit}`+(save.name?` · tu mejor de la semana: ${wbest} ${wk.reto.unit}`:'');
+  rankAfterRun({metros:m,frutillas:got,personaje:save.char,logros:nAch,semana:wk.key,reto:wk.reto.id,valor:val});
   // desbloqueos nuevos -> cola de modales
   const news=[...CHARS.map(c=>({k:'char',...c})),...OUTFITS.map(o=>({k:'outfit',...o}))]
     .filter(x=>x.need>before&&x.need<=save.total&&!save.seen.includes(x.id));
   if(news.length){news.forEach(n=>save.seen.push(n.id));persist();unlockQueue.push(...news);setTimeout(nextUnlock,700)}
 }
-function toMenu(){state='menu';reset();show('over',false);show('pause',false);show('hud',false);show('rank',false);renderMenu();show('menu',true);refreshMusic()}
+function toMenu(){state='menu';reset();show('over',false);show('pause',false);show('hud',false);show('rank',false);show('ach',false);renderMenu();show('menu',true);refreshMusic()}
+
+/* ---------- logros ---------- */
+let achThisRun=0;const achQueue=[];let achT=0;
+function achCheck(live,silent){
+  const S=save.st,l=!!live;
+  const tot=save.total+(l?got:0);
+  const runFru=Math.max(S.bestFru,l?got:0), runM=Math.max(save.best,l?Math.floor(dist):0);
+  const pans=S.pans+(l?R.pans:0), runPans=Math.max(S.bestPans,l?R.pans:0);
+  const powers=new Set([...S.powers,...(l?R.powers:[])]), chars=new Set([...S.chars,...(l?[save.char]:[])]);
+  const cond={
+    primera:S.runs>=1, fru100:tot>=100, fru500:tot>=500, run50:runFru>=50,
+    m300:runM>=300, m1000:runM>=1000, pan5:runPans>=5, pan20:pans>=20,
+    kamp10:S.kamps+(l?R.kamps:0)>=10, tres:powers.size>=3, escudo:S.escudos+(l?R.escudos:0)>=1,
+    tortas100:S.tortas+(l?R.tortas:0)>=100, cuatro:chars.size>=4,
+    familia:tot>=CHARS[CHARS.length-1].need, fiesta:!!S.fiesta,
+    casi:S.escapes+(l?R.escapes:0)>=1, fuera:S.scared+(l?R.scared:0)>=1,
+    escurridiza:Math.max(S.bestEscapes,l?R.escapes:0)>=3,
+    limpia:Math.max(S.cleanBest,(l&&!R.stumbles)?Math.floor(dist):0)>=500,
+  };
+  let n=0;
+  for(const a of ACH) if(cond[a.id]&&!save.ach[a.id]){save.ach[a.id]=Date.now();n++;if(!silent){achQueue.push(a);achThisRun++}}
+  if(n){persist();if(!silent)nextAchPop()}
+  return n;
+}
+function nextAchPop(){
+  if(achT) return;
+  const a=achQueue.shift(); if(!a){show('achPop',false);return}
+  $('achPopEm').textContent=a.em;$('achPopNm').textContent=a.name;
+  const el=$('achPop');el.hidden=true;void el.offsetWidth;el.hidden=false; // reinicia la animación
+  sAch();
+  achT=setTimeout(()=>{achT=0;show('achPop',false);nextAchPop()},2600);
+}
+function openAch(){
+  const g=$('achGrid');g.textContent='';
+  const n=Object.keys(save.ach).length;
+  $('achCount').textContent=`${n} de ${ACH.length}`+(n===ACH.length?' · ¡los tenés todos! 🎉':'');
+  for(const a of ACH){
+    const has=!!save.ach[a.id];
+    const d=document.createElement('div');d.className='achItem'+(has?' got':'');
+    d.innerHTML=`<span class="e">${a.em}</span><span><div class="t">${a.name}${has?' ✓':''}</div><div class="d">${a.desc}</div></span>`;
+    g.appendChild(d);
+  }
+  show('ach',true);
+}
+function openNews(){
+  const box=$('newsList');box.textContent='';
+  NEWS.forEach((n,i)=>{
+    const d=document.createElement('div');d.className='newsVer'+(i===0?' now':'');
+    const h=document.createElement('h3');h.textContent='Versión '+n.v+' ';
+    const sm=document.createElement('small');sm.textContent=n.fecha;h.appendChild(sm);
+    if(i===0&&save.seenVersion!==n.v){const t=document.createElement('span');t.className='newsTag';t.textContent='NUEVO';h.appendChild(t)}
+    const tt=document.createElement('div');tt.style.cssText='font-size:14px;margin-top:2px;opacity:.8';tt.textContent=n.titulo;
+    const ul=document.createElement('ul');
+    for(const [em,tx] of n.items){const li=document.createElement('li');const e=document.createElement('span');e.textContent=em;const t=document.createElement('span');t.textContent=tx;li.append(e,t);ul.appendChild(li)}
+    d.append(h,tt,ul);box.appendChild(d);
+  });
+  show('news',true);
+}
+function closeNews(){show('news',false);if(save.seenVersion!==VERSION){save.seenVersion=VERSION;persist()}}
+$('newsBtn').onclick=openNews;$('verLink').onclick=openNews;$('newsOk').onclick=closeNews;
+$('achBtn').onclick=openAch;$('achBtn2').onclick=openAch;$('achBack').onclick=()=>show('ach',false);
 function pause(){if(state!=='playing')return;state='paused';show('pause',true);refreshMusic()}
 function resume(){if(state!=='paused')return;state='playing';last=performance.now();show('pause',false);refreshMusic()}
 
@@ -708,6 +1202,8 @@ function toast(msg){const t=$('toast');t.textContent='💬 '+msg;t.hidden=false;
 
 function renderMenu(){
   $('mTotal').textContent=save.total;$('mBest').textContent=save.best;
+  const wk=weekInfo();
+  $('retoPill').textContent=`🎯 Desafío de la semana: ${wk.reto.name} · el próximo sale el lunes (${whenNext(wk)})`;
   $('soundBtn').textContent=save.muted?'🔇':'🔊';
   const ch=$('chars');ch.innerHTML='';
   for(const c of CHARS){
@@ -772,6 +1268,8 @@ $('pause').addEventListener('pointerdown',e=>{if(!e.target.closest('button'))res
 window.addEventListener('keydown',e=>{
   if(e.target&&e.target.tagName==='INPUT') return; // escribiendo un nombre
   if(!$('rank').hidden){ if(e.code==='Escape') show('rank',false); return }
+  if(!$('ach').hidden){ if(e.code==='Escape') show('ach',false); return }
+  if(!$('news').hidden){ if(e.code==='Escape'||e.code==='Enter'){e.preventDefault();closeNews()} return }
   if(e.code==='KeyM'){toggleMusic();return}
   if(!$('unlock').hidden){ if(e.code==='Enter'||e.code==='Space'){e.preventDefault();nextUnlock()} return }
   const k=e.code;
@@ -869,6 +1367,7 @@ function blow(){
   if(partyStage!=='vela') return; partyStage='fiesta';
   countT.forEach(clearTimeout);
   show('blowBtn',false);blowSound();show('blackout',true);
+  if(!save.st.fiesta){save.st.fiesta=true;persist();setTimeout(()=>achCheck(false),1200)}
   $('partyMsg').textContent='¡Se apagó!';
   setTimeout(()=>{
     $('vVela').hidden=true;show('blackout',false);
@@ -896,7 +1395,8 @@ $('partyBtn2').onclick=openParty;
 $('resetBtn').onclick=()=>{show('resetAsk',true);$('resetBtn').hidden=true};
 $('resetNo').onclick=()=>{show('resetAsk',false);$('resetBtn').hidden=false};
 $('resetYes').onclick=()=>{
-  Object.assign(save,{total:0,best:0,char:'sofi',outfit:'default',seen:['sofi','default']});persist();
+  Object.assign(save,{total:0,best:0,char:'sofi',outfit:'default',seen:['sofi','default'],ach:{},
+    st:{runs:0,pans:0,kamps:0,tortas:0,escudos:0,bestFru:0,bestPans:0,powers:[],chars:[],fiesta:false,escapes:0,scared:0,bestEscapes:0,cleanBest:0}});persist();
   show('resetAsk',false);$('resetBtn').hidden=false;renderMenu();toast('Progreso borrado. ¡A empezar de nuevo!');
 };
 
@@ -950,7 +1450,21 @@ const myAvatar=()=>(save.name&&save.avatars[save.name.toLowerCase()])||'';
 function localTop(){
   const best={};
   for(const r of save.runs){const k=r.nombre.toLowerCase();if(!best[k]||r.metros>best[k].metros)best[k]=r}
-  return Object.values(best).map(r=>({...r,avatar:save.avatars[r.nombre.toLowerCase()]||r.avatar||''})).sort((a,b)=>b.metros-a.metros).slice(0,20);
+  const lg=save.logrosBy||{};
+  return Object.values(best).map(r=>({...r,avatar:save.avatars[r.nombre.toLowerCase()]||r.avatar||'',logros:Math.max(r.logros|0,lg[r.nombre.toLowerCase()]|0)})).sort((a,b)=>b.metros-a.metros).slice(0,20);
+}
+// desafío de la semana guardado en este dispositivo (mejor valor de cada nombre)
+function localWeek(){
+  const wk=weekInfo();
+  if(save.wk.key!==wk.key||save.wk.reto!==wk.reto.id) return [];
+  return Object.values(save.wk.rows);
+}
+function knownWeek(){
+  const wk=weekInfo(),best={};
+  const srv=(save.lastWeek.key===wk.key&&save.lastWeek.reto===wk.reto.id)?save.lastWeek.top:[];
+  for(const r of [...srv,...localWeek()]){const k=String(r.nombre).toLowerCase();if(!best[k]||r.valor>best[k].valor)best[k]={...r}}
+  for(const k in best){const av=save.avatars[k];if(av)best[k].avatar=av}
+  return Object.values(best).sort((a,b)=>b.valor-a.valor);
 }
 async function sendRun(run){
   try{const r=await fetch(RANKING_URL,{method:'POST',body:JSON.stringify(run)});const j=await r.json();return !!(j&&j.ok)}catch(e){return false}
@@ -961,33 +1475,65 @@ async function flushPending(){
   save.pending=left;persist();
 }
 async function submitRun(run){
+  const k=run.nombre.toLowerCase();
+  save.logrosBy=save.logrosBy||{};save.logrosBy[k]=Math.max(save.logrosBy[k]|0,run.logros|0);
+  const wk=weekInfo();
+  if(run.semana===wk.key&&run.reto===wk.reto.id){
+    if(save.wk.key!==wk.key||save.wk.reto!==wk.reto.id) save.wk={key:wk.key,reto:wk.reto.id,rows:{}};
+    const o=save.wk.rows[k];
+    if(!o||run.valor>o.valor) save.wk.rows[k]={nombre:run.nombre,valor:run.valor|0,personaje:run.personaje,avatar:run.avatar||''};
+  }
   save.runs.push(run);save.runs=localTop();persist();
   if(RANKING_URL){save.pending.push(run);persist();await flushPending();}
 }
 async function fetchTop(){
   if(!RANKING_URL) return {mode:'local',top:localTop()};
-  try{const r=await fetch(RANKING_URL+(RANKING_URL.includes('?')?'&':'?')+'t='+Date.now());const j=await r.json();
-    if(j&&j.ok&&Array.isArray(j.top)){save.lastTop=j.top.slice(0,20);persist();return {mode:'online',top:j.top}}}catch(e){}
+  const wk=weekInfo();
+  try{const r=await fetch(RANKING_URL+(RANKING_URL.includes('?')?'&':'?')+'semana='+wk.key+'&reto='+wk.reto.id+'&t='+Date.now());const j=await r.json();
+    if(j&&j.ok&&Array.isArray(j.top)){
+      save.lastTop=j.top.slice(0,20);
+      if(Array.isArray(j.semana)) save.lastWeek={key:wk.key,reto:wk.reto.id,top:j.semana.slice(0,20)};
+      persist();return {mode:'online',top:j.top}}}catch(e){}
   return {mode:'offline',top:localTop()};
 }
+let rankTab='rec';
 function renderRank(top){
   const ol=$('rankList');ol.textContent='';
-  if(!top.length){const li=document.createElement('li');li.className='empty';li.textContent='Todavía no hay récords. ¡Jugá una partida y anotate!';ol.appendChild(li);return}
+  const wk=weekInfo(),reto=rankTab==='reto';
+  if(reto) top=knownWeek();
+  if(!top.length){const li=document.createElement('li');li.className='empty';li.textContent=reto?'Nadie jugó el desafío todavía. ¡Sé la primera persona!':'Todavía no hay récords. ¡Jugá una partida y anotate!';ol.appendChild(li);return}
+  const myN=Object.keys(save.ach).length;
   top.slice(0,10).forEach((r,i)=>{
     const li=document.createElement('li'); if(save.name&&sameName(r.nombre,save.name)) li.className='me';
     const pos=document.createElement('span');pos.className='pos';pos.textContent=MEDALS[i]||(i+1);
     const img=document.createElement('img');img.alt='';img.src=avImg(r.avatar)||('assets/'+(CHARS.some(c=>c.id===r.personaje)?r.personaje:'sofi')+'.webp');
     const who=document.createElement('span');who.className='who';who.textContent=cleanName(r.nombre)||'Alguien';
-    const sc=document.createElement('span');sc.className='sc';sc.textContent=(r.metros|0)+' m';
-    const sm=document.createElement('small');sm.textContent=(r.frutillas|0)+' 🍓';sc.appendChild(sm);
+    const me=save.name&&sameName(r.nombre,save.name);
+    const nl=Math.max(r.logros|0,me?myN:0);
+    if(nl||me){const lg=document.createElement('small');lg.textContent=`🏅 ${nl}/${ACH.length} logros`;who.appendChild(lg)}
+    const sc=document.createElement('span');sc.className='sc';
+    if(reto){sc.textContent=(r.valor|0)+' '+wk.reto.unit;}
+    else{sc.textContent=(r.metros|0)+' m';const sm=document.createElement('small');sm.textContent=(r.frutillas|0)+' 🍓';sc.appendChild(sm);}
     li.append(pos,img,who,sc);ol.appendChild(li);
   });
 }
-async function openRank(){
+function setRankTab(t){
+  rankTab=t;$('tabRec').classList.toggle('sel',t==='rec');$('tabReto').classList.toggle('sel',t==='reto');
+  $('tabRec').setAttribute('aria-selected',t==='rec');$('tabReto').setAttribute('aria-selected',t==='reto');
+  const wk=weekInfo();show('retoBox',t==='reto');
+  $('retoBox').innerHTML='';
+  if(t==='reto'){const b=document.createElement('b');b.textContent=wk.reto.em+' '+wk.reto.name;
+    $('retoBox').append(b,`Vale tu mejor partida de esta semana. El próximo desafío sale el lunes (${whenNext(wk)}).`)}
+}
+const modeTxt=()=>{const t=$('rankMode').textContent;if(t.startsWith('Récords de toda')||t.startsWith('Desafío de toda'))$('rankMode').textContent=rankTab==='reto'?'Desafío de toda la familia':'Récords de toda la familia'};
+$('tabRec').onclick=()=>{setRankTab('rec');modeTxt();renderRank(knownTop())};
+$('tabReto').onclick=()=>{setRankTab('reto');modeTxt();renderRank([])};
+async function openRank(tab){
+  setRankTab(tab==='reto'?'reto':'rec');
   $('nameIn').value=save.name;show('rank',true);renderAvatars();
   $('rankMode').textContent='Actualizando…';renderRank(knownTop());
   const {mode,top}=await fetchTop();
-  $('rankMode').textContent=mode==='online'?'Récords de toda la familia':mode==='offline'?'Sin conexión: récords de este dispositivo':'Récords de este dispositivo';
+  $('rankMode').textContent=mode==='online'?(rankTab==='reto'?'Desafío de toda la familia':'Récords de toda la familia'):mode==='offline'?'Sin conexión: récords de este dispositivo':'Récords de este dispositivo';
   renderRank(top);
 }
 let lastRun=null;
@@ -1065,16 +1611,26 @@ async function chooseAvatar(id){
     const {mode,top}=await fetchTop(); if(mode==='online') renderRank(top);}
 }
 $('nameIn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('nameSave').click()}});
-$('rankBtn').onclick=openRank;
-$('rankBtn2').onclick=openRank;
+$('rankBtn').onclick=()=>openRank();
+$('rankBtn2').onclick=()=>openRank();
+$('retoPill').onclick=()=>openRank('reto');
 $('rankBack').onclick=()=>show('rank',false);
 flushPending();
 
 /* ---------- arranque ---------- */
+$('verLink').textContent=`Versión ${VERSION} · ver novedades`;
+// al abrir una versión nueva por primera vez se muestran las novedades
+if(save.seenVersion!==VERSION&&location.hash!=='#fiesta'&&location.hash!=='#prueba') setTimeout(openNews,400);
+{const pre=achCheck(false,true); // logros que ya se habían ganado antes de esta versión
+ if(pre) setTimeout(()=>toast(`¡Ya tenías ${pre} ${pre===1?'logro':'logros'}! Miralos en 🏅`),600);}
 renderMenu();layout();
 requestAnimationFrame(loop);
 ready.then(()=>{$('loadPill').textContent='Familia cargada ✓';layout();});
 if(location.hash==='#fiesta') openParty(); // vista previa del final
+if(location.hash==='#prueba') window.TR={ // solo para pruebas automáticas
+  get R(){return R},get pow(){return pow},get got(){return got},get state(){return state},get obs(){return obs},save,
+  item(kind,dx,dy,flavor){fru.push({x:PX+pw()/2+dx,y:GROUND-dy,bob:0,kind,flavor})},cake(dx){obs.push({x:PX+dx,w:60,h:64})},
+  get dina(){return dina},setDist(v){dist=v},power:setPower,hold(){nextSpawn=1e9;kampIn=1e9},weekInfo};
 if(window.PWA&&'serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 })();
 </script>
